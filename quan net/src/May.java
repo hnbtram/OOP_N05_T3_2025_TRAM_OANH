@@ -18,15 +18,14 @@ public class May {
 
 
     }
-    
     public void hienthi() {
-        System.out.println("MaMay: " + MaMay);
-        System.out.println("TenMay: " + TenMay);
-        System.out.println("HangMay: " + HangMay);
-        System.out.println("GiaGioChoi: " + GiaGioChoi);
-        System.out.println("SoGioDaChoi: " + SoGioDaChoi);
-        System.out.println("TongTien: " + TongTien);
-        System.out.println("SoGioConLai: " + SoGioConLai);
+        System.out.println("Ten May:" + TenMay);
+        System.out.println("Hang May:" + HangMay);
+        System.out.println("Gia Gio Choi:"+ GiaGioChoi);
+        System.out.println("So Gio Da Choi:" +SoGioDaChoi);
+        System.out.printkn("Tong Tien:" +TongTien);
+        System.out,println("So Gio Con Lai:" +SoGioConLai);
+
     }
 
 }
