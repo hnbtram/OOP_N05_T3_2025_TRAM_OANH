@@ -18,7 +18,13 @@ public class May {
 
 
     }
-    public void hienthi {
-        System.out.printfln()
+    public void hienthi() {
+        System.out.println("Ten May:" + TenMay);
+        System.out.println("Hang May:" + HangMay);
+        System.out.println("Gia Gio Choi:"+ GiaGioChoi);
+        System.out.println("So Gio Da Choi:" +SoGioDaChoi);
+        System.out.printkn("Tong Tien:" +TongTien);
+        System.out,println("So Gio Con Lai:" +SoGioConLai);
+
     }
 }
