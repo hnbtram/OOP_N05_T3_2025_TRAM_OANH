@@ -24,7 +24,7 @@ public class May {
         System.out.println("Gia Gio Choi:"+ GiaGioChoi);
         System.out.println("So Gio Da Choi:" +SoGioDaChoi);
         System.out.printkn("Tong Tien:" +TongTien);
-        System.out,println("So Gio Con Lai:" +SoGioConLai);
+        System.out.println("So Gio Con Lai:" +SoGioConLai);
 
     }
 
