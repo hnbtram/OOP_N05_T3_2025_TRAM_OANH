@@ -12,10 +12,10 @@
 ## Thuộc tính
 # **1. Khách hàng**
  - **Thuộc tính:**
-- Tên khách hàng
-- Mã khách hàng
-- Số điện thoại
- - **Hành vi (Method):**
+- Tên khách hàng (tenKH)
+- Mã khách hàng (maKH)
+- Số điện thoại (sdt)
+ - ** Phương thức (Method):**
 - Cập nhật thông tin
 - Xem lịch sử nạp tiên
   
