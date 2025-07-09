@@ -1,6 +1,6 @@
 public class Lop {
-    protected String tenLop = "12A1";
-    protected int siSo = 40;
+    protected String tenLop = "ICT1.2";
+    protected int siSo = 122;
 
     protected void HienThiThongTin(){
         System.out.println("Ten lop:" +tenLop);

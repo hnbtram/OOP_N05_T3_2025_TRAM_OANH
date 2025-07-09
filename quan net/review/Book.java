@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-public class book {
-    
-}
-=======
+
 public class Book {
     String title;
     String author;
@@ -18,4 +14,4 @@ public class Book {
         System.out.println(myObj.title);
     }
 }
->>>>>>> 01a2bb47a0ea5a75d6f510761c48ea3f9e621676
+
