@@ -5,6 +5,10 @@
 - khách hàng
 - thanh toán
 
+# Sơ đồ chức năng
+
+<img src='anh/NhomTramOanh.jpg'>
+
 ## Thuộc tính
 # **1. Khách hàng**
  - **Thuộc tính:**
