@@ -1,4 +1,4 @@
-public class testKhachHang {
+public class testkhachHang {
     public static void test(){
         KhachHang kh = new KhachHang(1, "Nguyen Van A", "0123456789");
 

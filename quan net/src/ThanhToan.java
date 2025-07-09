@@ -6,13 +6,13 @@ public class ThanhToan {
     private int tongTien;
     private String thoiGianThanhToan;
 
-    public ThanhToan(int maThanhToan, int maMay, int maKhachHang, int soGioDaChoi, int tongTien, int thoiGianThanhToan) {
+    public ThanhToan(int maThanhToan, int maMay, int maKhachHang, int soGioDaChoi, int tongTien, String thoiGianThanhToan) {
         this.maThanhToan = maThanhToan;
         this.maMay = maMay;
         this.maKhachHang = maKhachHang;
         this.soGioDaChoi = soGioDaChoi;
         this.tongTien = tongTien;
-        this.thoiGianThanhToan = thoiGianThanhToan;
+        this.thoiGianThanhToan =  thoiGianThanhToan;
 
     } 
     public int getMaThanhToan() {

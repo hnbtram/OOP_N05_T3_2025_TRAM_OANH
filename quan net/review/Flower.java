@@ -1,11 +1,11 @@
 public class Flower {
-    private int petalCount = 0;
+    private int petalsCount = 0;
     private String s = new String();
 
     Flower(int petals) {
         petalsCount = petals;
     }
-    Flower(string ss) {
+    Flower(String ss) {
         s = ss;
     }
     Flower(String s, int petals){
@@ -19,6 +19,6 @@ public class Flower {
         return petalsCount;
     }
     public void setPetalCount(int p) {
-        pentalsCount = p;
+        petalsCount = p;
     }
 }
