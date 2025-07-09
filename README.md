@@ -5,13 +5,17 @@
 - khách hàng
 - thanh toán
 
+# Sơ đồ chức năng
+
+<img src='anh/NhomTramOanh.jpg'>
+
 ## Thuộc tính
 # **1. Khách hàng**
  - **Thuộc tính:**
-- Tên khách hàng
-- Mã khách hàng
-- Số điện thoại
- - **Hành vi (Method):**
+- Tên khách hàng (tenKH)
+- Mã khách hàng (maKH)
+- Số điện thoại (sdt)
+ - ** Phương thức (Method):**
 - Cập nhật thông tin
 - Xem lịch sử nạp tiên
   
