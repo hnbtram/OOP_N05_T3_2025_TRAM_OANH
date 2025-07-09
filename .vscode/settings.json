@@ -2,7 +2,8 @@
     "java.project.sourcePaths": [
         "review/access control /ex3",
         "review/access control /ex4",
-        "review/access control /ex5"
+        "review/access control /ex5",
+        "review/access control /ex6"
     ],
     "java.project.referencedLibraries": []
 }
