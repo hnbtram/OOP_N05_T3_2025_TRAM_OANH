@@ -16,3 +16,8 @@
 ## 2. Sơ đồ khối yêu cầu
 ### 2.1 UML class diagram
 <img src='picture/Untitled.jpg'>
+
+
+### 2.2 UML activity diagram
+Class Khách Hàng
+<img src='picture/Untitled diagram _ Mermaid Chart-2025-07-12-111128.png'>
