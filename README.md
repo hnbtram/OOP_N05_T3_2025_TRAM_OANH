@@ -15,4 +15,4 @@
    - Tính toán thời gian sử dụng và chi phí phát sinh
 ## 2. Sơ đồ khối yêu cầu
 ### 2.1 UML class diagram
-<
+<img src='picture/Untitled.jpg'>
