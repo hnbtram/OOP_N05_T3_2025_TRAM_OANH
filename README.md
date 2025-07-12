@@ -1,52 +1,18 @@
-### OOP_N05_T3_2025_TRAM_OANH_DUC
-
-Ứng dụng quản lý quán net
-- mã máy
-- khách hàng
-- thanh toán
-
-# Sơ đồ chức năng
-
-<img src='anh/NhomTramOanh.jpg'>
-
-## Thuộc tính
-# **1. Khách hàng**
- - **Thuộc tính:**
-- Tên khách hàng (tenKH)
-- Mã khách hàng (maKH)
-- Số điện thoại (sdt)
- - ** Phương thức (Method):**
-- Cập nhật thông tin
-- Xem lịch sử nạp tiên
-  
-# **2. Mã máy**
- - **Thuộc tính:**
-- Tên máy
-- Mã máy
-- Giá chơi
-- Số giờ chơi
--	Số giờ còn lại
-  
-- **Hành vi (Method):**
--	Cập nhật giờ chơi
-  
-# **3. Thanh toán**
-- **Thuộc tính:**
--	Mã giao dịch
--	Tên khách hàng
--	Số giờ chơi
--	Thành tiền
-  
-- **Hành vi (Method):**
--	Tính tổng tiền giao dịch
--	Xuất hóa đơn
-
-
-
-
-
-# Thành viên
-- Hoàng Nhật Bảo Trâm(24100260)
-- Nguyễn Thị Kim Oanh(24100459)
-- Nguyễn Thanh Đức(24100273)
-- Nguyễn Lệ Thu
+## Thành viên
+1. Nguyễn Thị Kim Oanh - 24100459
+2. Hoàng Nhật Bảo Trâm - 24100260
+## 1. Nội Dung
+### Xây dựng ứng dụng quản lý quán net
+1. Quản lý khách hàng
+   - Thêm, sửa, xoá tên khách hàng
+   - Lưu trữ thông tin cá nhân: mã khách hàng, họ tên, số điện thoại
+   - Xem lịch sử nạp tiền
+   - Theo dõi các dịch vụ đã sử dụng (game, internet, đồ uống...)
+2. Quản lý máy tính
+   - Theo dõi trạng thái máy (đang hoạt động, bảo trì, hỏng)
+   - Ghi nhận thời gian bắt đầu/kết thúc sử dụng
+   - Cập nhật danh sách phần mềm/game trên các máy
+   - Tính toán thời gian sử dụng và chi phí phát sinh
+## 2. Sơ đồ khối yêu cầu
+### 2.1 UML class diagram
+<img src='picture/Untitled.jpg'>
