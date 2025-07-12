@@ -1,12 +1,13 @@
 {
     "java.project.sourcePaths": [
-        "review/access control /ex1",
-        "review/access control /ex2",
-        "review/access control /ex3",
-        "review/access control /ex4",
-        "review/access control /ex5",
+        "review/access control /ex7",
         "review/access control /ex6",
-        "review/access control /ex7"
+        "review/access control /ex5",
+        "review/access control /ex4",
+        "review/access control /ex3",
+        "review/access control /ex2",
+        "review/access control /ex1",
+        "quan net/src"
     ],
     "java.project.referencedLibraries": []
 }
