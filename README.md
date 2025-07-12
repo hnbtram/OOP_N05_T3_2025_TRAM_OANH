@@ -22,4 +22,4 @@
 Class Khách Hàng
 <img src='picture/Untitled diagram _ Mermaid Chart-2025-07-12-111128.png'>
 Class May Tinh
-<img src='picture/anhsodo.png'>
+<img src='picture/Anhsodo (2).png'>
