@@ -3,5 +3,6 @@ public class App {
         System.out.println("Hello, World!");
         //testNumBer.test();
         //testKhachHang.test();
+        KhachHang.main(args);
     }
 }
