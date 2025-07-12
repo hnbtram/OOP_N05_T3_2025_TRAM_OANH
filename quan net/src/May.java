@@ -23,9 +23,43 @@ public class May {
         System.out.println("Hang May:" + HangMay);
         System.out.println("Gia Gio Choi:"+ GiaGioChoi);
         System.out.println("So Gio Da Choi:" +SoGioDaChoi);
+<<<<<<< HEAD
         System.out.println("Tong Tien:" +TongTien);
+=======
+
+        System.out.println("Tong Tien:" +TongTien);
+        System.out.println("Tong Tien:" +TongTien);
+
+>>>>>>> a136a68867218f063c16a7041086852a8e85f71e
         System.out.println("So Gio Con Lai:" +SoGioConLai);
 
+    }
+      public int getMaMay() {
+        return MaMay;
+    }
+
+    public String getTenMay() {
+        return TenMay;
+    }
+
+    public String getHangMay() {
+        return HangMay;
+    }
+
+    public int getGiaGioChoi() {
+        return GiaGioChoi;
+    }
+
+    public int getSoGioDaChoi() {
+        return SoGioDaChoi;
+    }
+
+    public int getTongTien() {
+        return TongTien;
+    }
+
+    public int getSoGioConLai() {
+        return SoGioConLai;
     }
 
 }
