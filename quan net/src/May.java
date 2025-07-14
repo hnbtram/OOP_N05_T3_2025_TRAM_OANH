@@ -23,9 +23,13 @@ public class May {
         System.out.println("Hang May:" + HangMay);
         System.out.println("Gia Gio Choi:"+ GiaGioChoi);
         System.out.println("So Gio Da Choi:" +SoGioDaChoi);
+<<<<<<< HEAD
         System.out.println("Ma May:" + MaMay);
         System.out.println("So Gio Con Lai:" + SoGioConLai);
         System.out.println("Tong Tien:" + TongTien);
+=======
+
+>>>>>>> 388910cf9fc844f89ef9f82d49ea495e15a6f476
         System.out.println("Tong Tien:" +TongTien);
 
 
