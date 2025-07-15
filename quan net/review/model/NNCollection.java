@@ -1,4 +1,4 @@
-package quan.net.review.model;
+
 public class NNCollection {
     private NameNumber[] nnArray = new NameNumber[100];
     private int free;

@@ -1,4 +1,4 @@
-package quan.net.review.model;
+
 import java.util.ArrayList;
 
 public class TelList {

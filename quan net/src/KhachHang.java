@@ -19,12 +19,13 @@ public class KhachHang {
         this.lichSuNapTien = new ArrayList<>();
         this.cacDichVuDaSuDung = new ArrayList<>();
     }
-
+ 
     
     public void setHoTen(String newHoTen) {
         this.hoTen = newHoTen;
         System.out.println("Đã cập nhật tên khách hàng " + this.maKhachHang + " thành: " + newHoTen);
     }
+
 
     
     public String getMaKhachHang() {
@@ -38,7 +39,11 @@ public class KhachHang {
     public String getSoDienThoai() {
         return soDienThoai;
     }
-
+    
+    public String setTenKH(String ten){
+        this.hoTen = ten;
+        return hoTen;
+    }
    
     public void xemLichSuNapTien() {
         System.out.println("Lịch sử nạp tiền của " + hoTen + ": " + lichSuNapTien);
@@ -98,5 +103,11 @@ public class KhachHang {
         khach1.xemCacDichVuDaSuDung();
 
         
+    }
+
+    public void hienthi() {
+        System.out.println("Ma khach hang: " + maKhachHang);
+        System.out.println("Ho ten: " + hoTen);
+        System.out.println("So dien thoai: " + soDienThoai);
     }
 }

@@ -8,12 +8,13 @@ public class App {
         //KhachHang.main(args);
 
         // testNumBer.test();
-        // testKhachHang.test();
+         // testKhachHang.test();
+         testMay.test();
 
 
-        KhachHang.main(args);
-        QuanLyMayTinh.main(args);
-        ThanhToan.main(args);
+        //KhachHang.main(args);
+        //QuanLyMayTinh.main(args);
+        //ThanhToan.main(args);
         //testCollection.test();
         //testTelList.test();
         //testLeaf.test();

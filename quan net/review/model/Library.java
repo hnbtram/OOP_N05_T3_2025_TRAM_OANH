@@ -1,38 +1,34 @@
-import Book;
+
+
+import java.util.List;
+import java.util.ArrayList;
+
 public class Library {
-    private String name;
-    private String address;
-    private Book[] books;
+    private final List<Book> books;
 
-    public Library(String name, String address, Book[] books) {
-        this.name = name;
-        this.address = address;
+    public Library() {
+        this.books = new ArrayList<>();
+    }
+
+    public Library(List<Book> books) {
         this.books = books;
-
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public Book[] getBooks() {
+    // get book list
+    public List<Book> getList() {
         return books;
     }
+
     public static void main(String[] args) {
-        Book book1 = new Book("1984", "George Orwell", 328, 1);
-        Book book2 = new Book("To Kill a Mockingbird", "Harper Lee", 281, 2);
-        Book[] books = {book1, book2};
-
-        Library library = new Library("City Library", "123 Main St", books);
-
-        System.out.println("Library Name: " + library.getName());
-        System.out.println("Library Address: " + library.getAddress());
-        for (Book book : library.getBooks()) {
-            System.out.println("Book Title: " + book.getTitle() + ", Author: " + book.getAuthor());
+        Book b1 = new Book("Book 1", "Author 1", 100, 1);
+        Book b2 = new Book("Book 2", "Author 2", 200, 2);
+        List<Book> bookList = new ArrayList<>();
+        bookList.add(b1);
+        bookList.add(b2);
+        Library library = new Library(bookList);
+        System.out.println("Thu vien co " + library.getList().size() + " sach.");
+        for (Book b : library.getList()) {
+            System.out.println("Book: " + b.getTitle() + ", Author: " + b.getAuthor());
         }
     }
 }
