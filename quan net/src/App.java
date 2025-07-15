@@ -11,9 +11,15 @@ public class App {
         // testKhachHang.test();
 
 
-        //KhachHang.main(args);
-        //QuanLyMayTinh.main(args);
-       
+        KhachHang.main(args);
+        QuanLyMayTinh.main(args);
+        ThanhToan.main(args);
+        //testCollection.test();
+        //testTelList.test();
+        //testLeaf.test();
+        //testNumber.test();
+
+        //System.out.println("Hello, World!");
       
 
        

@@ -67,6 +67,17 @@ public class ThanhToan {
         this.thoiGianThanhToan = thoiGianThanhToan;
 
     }
-
+public static void main(String[] args) {
+        // Thêm code mẫu để chạy thử chức năng của ThanhToan
+        System.out.println("ThanhToan main method is running.");
+        // Ví dụ: ThanhToan tt = new ThanhToan(); tt.thanhToan();
+        System.out.println("Mã Thanh Toán: " + 1);
+        System.out.println("Mã Máy: " + 101);
+        System.out.println("Mã Khách Hàng: " + 202);
+        System.out.println("Số Giờ Đã Chơi: " + 3);
+        System.out.println("Tổng Tiền: " + 15000);
+        System.out.println("Thời Gian Thanh Toán: " + "2025-01-01 10:00:00");
+    }
+   
     
 }
