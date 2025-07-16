@@ -3,9 +3,9 @@ public class App {
 
         
 
-        testQuanLyKhachHang.main(args);
-        testQuanLyMayTinh.main(args);
-        testThanhToan.main(args);
+        //testQuanLyKhachHang.main(args);
+        //testQuanLyMayTinh.main(args);
+        testThanhToanQuanNet.main(args);
         
         
        

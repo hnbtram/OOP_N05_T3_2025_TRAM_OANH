@@ -10,5 +10,6 @@
         "quan net/src",
         "quan net/test"
     ],
-    "java.project.referencedLibraries": []
+    "java.project.referencedLibraries": [],
+    "java.debug.settings.onBuildFailureProceed": true
 }
