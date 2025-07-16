@@ -1,113 +1,259 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class KhachHang {
-    
-    private String maKhachHang;
-    private String hoTen;
-    private String soDienThoai;
+    private String MaKhachHang;
+    private String HoTen;
+    private String SoDienThoai;
+    private List<LichSuNapTien> lichSuNapTien;
+    private List<DichVuDaSuDung> dichVuDaSuDung;
 
-    
-    private List<Double> lichSuNapTien;
-    private List<String> cacDichVuDaSuDung;
-
-    
-    public KhachHang(String maKhachHang, String hoTen, String soDienThoai) {
-        this.maKhachHang = maKhachHang;
-        this.hoTen = hoTen;
-        this.soDienThoai = soDienThoai;
+    // Constructor
+    public KhachHang(String MaKhachHang, String HoTen, String SoDienThoai) {
+        this.MaKhachHang = MaKhachHang;
+        this.HoTen = HoTen;
+        this.SoDienThoai = SoDienThoai;
         this.lichSuNapTien = new ArrayList<>();
-        this.cacDichVuDaSuDung = new ArrayList<>();
-    }
- 
-    
-    public void setHoTen(String newHoTen) {
-        this.hoTen = newHoTen;
-        System.out.println("Đã cập nhật tên khách hàng " + this.maKhachHang + " thành: " + newHoTen);
+        this.dichVuDaSuDung = new ArrayList<>();
     }
 
-
-    
-    public String getMaKhachHang() {
-        return maKhachHang;
+    // CRUD operations for KhachHang
+    public void capNhatThongTin(String HoTenMoi, String SoDienThoaiMoi) {
+        this.HoTen = HoTenMoi;
+        this.SoDienThoai = SoDienThoaiMoi;
+        System.out.println("Đã cập nhật thông tin khách hàng " + this.MaKhachHang);
     }
 
-    public String getHoTen() {
-        return hoTen;
+    // Lịch sử nạp tiền
+    public void themLichSuNapTien(double soTien, Date thoiGian, String phuongThuc) {
+        LichSuNapTien ls = new LichSuNapTien(soTien, thoiGian, phuongThuc);
+        this.lichSuNapTien.add(ls);
+        System.out.println("Đã thêm lịch sử nạp tiền cho khách hàng " + this.MaKhachHang);
     }
 
-    public String getSoDienThoai() {
-        return soDienThoai;
-    }
-    
-    public String setTenKH(String ten){
-        this.hoTen = ten;
-        return hoTen;
-    }
-   
-    public void xemLichSuNapTien() {
-        System.out.println("Lịch sử nạp tiền của " + hoTen + ": " + lichSuNapTien);
-    }
-
-    
-    public void napTien(double amount) {
-        if (amount > 0) {
-            lichSuNapTien.add(amount);
-            System.out.println(hoTen + " đã nạp thành công: " + amount + " VND");
+    public void xoaLichSuNapTien(int index) {
+        if (index >= 0 && index < lichSuNapTien.size()) {
+            lichSuNapTien.remove(index);
+            System.out.println("Đã xóa lịch sử nạp tiền tại vị trí " + index);
         } else {
-            System.out.println("Số tiền nạp phải lớn hơn 0.");
+            System.out.println("Vị trí không hợp lệ");
         }
     }
 
-    
-    public void themDichVuDaSuDung(String service) {
-        cacDichVuDaSuDung.add(service);
-        System.out.println("Dịch vụ '" + service + "' đã được thêm vào lịch sử của " + hoTen);
+    public void hienThiLichSuNapTien() {
+        System.out.println("Lịch sử nạp tiền của khách hàng " + this.HoTen + ":");
+        for (int i = 0; i < lichSuNapTien.size(); i++) {
+            LichSuNapTien ls = lichSuNapTien.get(i);
+            System.out.println((i + 1) + ". Số tiền: " + ls.getSoTien() + 
+                              ", Thời gian: " + ls.getThoiGian() + 
+                              ", Phương thức: " + ls.getPhuongThuc());
+        }
     }
 
-    public void xemCacDichVuDaSuDung() {
-        System.out.println("Các dịch vụ " + hoTen + " đã sử dụng: " + cacDichVuDaSuDung);
+    // Dịch vụ đã sử dụng
+    public void themDichVuDaSuDung(String tenDichVu, double gia, Date thoiGianSuDung) {
+        DichVuDaSuDung dv = new DichVuDaSuDung(tenDichVu, gia, thoiGianSuDung);
+        this.dichVuDaSuDung.add(dv);
+        System.out.println("Đã thêm dịch vụ đã sử dụng cho khách hàng " + this.MaKhachHang);
     }
 
-    
-    public static void main(String[] args) {
-        
-        KhachHang khach1 = new KhachHang("KH001", "Nguyen Van A", "0912345678");
-
-        
-        System.out.println("--- Thông tin Khách hàng 1 ---");
-        System.out.println("Mã: " + khach1.getMaKhachHang());
-        System.out.println("Tên: " + khach1.getHoTen());
-        System.out.println("SĐT: " + khach1.getSoDienThoai());
-        khach1.xemLichSuNapTien();
-        khach1.xemCacDichVuDaSuDung();
-
-       
-        khach1.napTien(50000.0);
-        khach1.napTien(100000.0);
-
-       
-        khach1.themDichVuDaSuDung("Game Lien Minh");
-        khach1.themDichVuDaSuDung("Internet 1 ngay");
-        khach1.themDichVuDaSuDung("Cafe sua da");
-
-        
-        khach1.setHoTen("Nguyen Van An");
-
-       
-        System.out.println("\n--- Thông tin Khách hàng 1 (sau khi cập nhật) ---");
-        System.out.println("Mã: " + khach1.getMaKhachHang());
-        System.out.println("Tên: " + khach1.getHoTen());
-        System.out.println("SĐT: " + khach1.getSoDienThoai());
-        khach1.xemLichSuNapTien();
-        khach1.xemCacDichVuDaSuDung();
-
-        
+    public void capNhatDichVuDaSuDung(int index, String tenDichVuMoi, double giaMoi, Date thoiGianSuDungMoi) {
+        if (index >= 0 && index < dichVuDaSuDung.size()) {
+            DichVuDaSuDung dv = dichVuDaSuDung.get(index);
+            dv.setTenDichVu(tenDichVuMoi);
+            dv.setGia(giaMoi);
+            dv.setThoiGianSuDung(thoiGianSuDungMoi);
+            System.out.println("Đã cập nhật dịch vụ tại vị trí " + index);
+        } else {
+            System.out.println("Vị trí không hợp lệ");
+        }
     }
 
-    public void hienthi() {
-        System.out.println("Ma khach hang: " + maKhachHang);
-        System.out.println("Ho ten: " + hoTen);
-        System.out.println("So dien thoai: " + soDienThoai);
+    public void xoaDichVuDaSuDung(int index) {
+        if (index >= 0 && index < dichVuDaSuDung.size()) {
+            dichVuDaSuDung.remove(index);
+            System.out.println("Đã xóa dịch vụ tại vị trí " + index);
+        } else {
+            System.out.println("Vị trí không hợp lệ");
+        }
+    }
+
+    public void hienThiDichVuDaSuDung() {
+        System.out.println("Dịch vụ đã sử dụng của khách hàng " + this.HoTen + ":");
+        for (int i = 0; i < dichVuDaSuDung.size(); i++) {
+            DichVuDaSuDung dv = dichVuDaSuDung.get(i);
+            System.out.println((i + 1) + ". Tên dịch vụ: " + dv.getTenDichVu() + 
+                              ", Giá: " + dv.getGia() + 
+                              ", Thời gian sử dụng: " + dv.getThoiGianSuDung());
+        }
+    }
+
+    // Getters and Setters
+    public String getMaKhachHang() {
+        return MaKhachHang;
+    }
+    public void setMaKhachHang(String maKhachHang) {
+        this.MaKhachHang = maKhachHang;
+    }
+    public String getHoTen() {
+        return HoTen;
+    }
+    public void setHoTen(String hoTen) {
+        this.HoTen = hoTen;
+    }
+    public void setSoDienThoai(String soDienThoai) {
+        this.SoDienThoai = soDienThoai;
+    }
+    public String getSoDienThoai() {
+        return SoDienThoai;
+    }
+
+    public List<LichSuNapTien> getLichSuNapTien() {
+        return lichSuNapTien;
+    }
+
+    public List<DichVuDaSuDung> getDichVuDaSuDung() {
+        return dichVuDaSuDung;
+    }
+
+    @Override
+    public String toString() {
+        return "KhachHang{" +
+                "MaKhachHang:'" + MaKhachHang + '\'' +
+                ", HoTen:'" + HoTen + '\'' +
+                ", SoDienThoai: '" + SoDienThoai + '\'' +
+                '}';
     }
 }
+
+class LichSuNapTien {
+    private double soTien;
+    private Date thoiGian;
+    private String phuongThuc;
+
+    public LichSuNapTien(double soTien, Date thoiGian, String phuongThuc) {
+        this.soTien = soTien;
+        this.thoiGian = thoiGian;
+        this.phuongThuc = phuongThuc;
+    }
+
+    // Getters and Setters
+    public double getSoTien() {
+        return soTien;
+    }
+
+    public Date getThoiGian() {
+        return thoiGian;
+    }
+
+    public String getPhuongThuc() {
+        return phuongThuc;
+    }
+
+    public void setSoTien(double soTien) {
+        this.soTien = soTien;
+    }
+
+    public void setThoiGian(Date thoiGian) {
+        this.thoiGian = thoiGian;
+    }
+
+    public void setPhuongThuc(String phuongThuc) {
+        this.phuongThuc = phuongThuc;
+    }
+}
+
+class DichVuDaSuDung {
+    private String tenDichVu;
+    private double gia;
+    private Date thoiGianSuDung;
+
+    public DichVuDaSuDung(String tenDichVu, double gia, Date thoiGianSuDung) {
+        this.tenDichVu = tenDichVu;
+        this.gia = gia;
+        this.thoiGianSuDung = thoiGianSuDung;
+    }
+
+    // Getters and Setters
+    public String getTenDichVu() {
+        return tenDichVu;
+    }
+
+    public double getGia() {
+        return gia;
+    }
+
+    public Date getThoiGianSuDung() {
+        return thoiGianSuDung;
+    }
+
+    public void setTenDichVu(String tenDichVu) {
+        this.tenDichVu = tenDichVu;
+    }
+
+    public void setGia(double gia) {
+        this.gia = gia;
+    }
+
+    public void setThoiGianSuDung(Date thoiGianSuDung) {
+        this.thoiGianSuDung = thoiGianSuDung;
+    }
+}
+
+// Class để quản lý danh sách khách hàng
+class QuanLyKhachHang {
+    private List<KhachHang> danhSachKhachHang;
+
+    public QuanLyKhachHang() {
+        this.danhSachKhachHang = new ArrayList<>();
+    }
+
+    // Thêm khách hàng mới
+    public void themKhachHang(KhachHang kh) {
+        danhSachKhachHang.add(kh);
+        System.out.println("Đã thêm khách hàng " + kh.getMaKhachHang());
+    }
+
+    // Sửa thông tin khách hàng
+    public void suaKhachHang(String MaKhachHang, String HoTenMoi, String SoDienThoaiMoi) {
+        for (KhachHang kh : danhSachKhachHang) {
+            if (kh.getMaKhachHang().equals(MaKhachHang)) {
+                kh.capNhatThongTin(HoTenMoi, SoDienThoaiMoi);
+                return;
+            }
+        }
+        System.out.println("Không tìm thấy khách hàng với mã " + MaKhachHang);
+    }
+
+    // Xóa khách hàng
+    public void xoaKhachHang(String MaKhachHang) {
+        for (int i = 0; i < danhSachKhachHang.size(); i++) {
+            if (danhSachKhachHang.get(i).getMaKhachHang().equals(MaKhachHang)) {
+                danhSachKhachHang.remove(i);
+                System.out.println("Đã xóa khách hàng " + MaKhachHang);
+                return;
+            }
+        }
+        System.out.println("Không tìm thấy khách hàng với mã " + MaKhachHang);
+    }
+
+    // Hiển thị tất cả khách hàng
+    public void hienThiTatCaKhachHang() {
+        System.out.println("Danh sách khách hàng:");
+        for (KhachHang kh : danhSachKhachHang) {
+            System.out.println(kh);
+        }
+    }
+
+    // Tìm khách hàng theo mã
+    public KhachHang timKhachHangTheoMa(String maKhachHang) {
+        for (KhachHang kh : danhSachKhachHang) {
+            if (kh.getMaKhachHang().equals(maKhachHang)) {
+                return kh;
+            }
+        }
+        return null;
+    }
+}
+

@@ -68,8 +68,8 @@ public class ThanhToan {
 
     }
 public static void main(String[] args) {
-        // Thêm code mẫu để chạy thử chức năng của ThanhToan
-        System.out.println("ThanhToan main method is running.");
+        
+        System.out.println("Đang thanh toán");
         // Ví dụ: ThanhToan tt = new ThanhToan(); tt.thanhToan();
         System.out.println("Mã Thanh Toán: " + 1);
         System.out.println("Mã Máy: " + 101);
