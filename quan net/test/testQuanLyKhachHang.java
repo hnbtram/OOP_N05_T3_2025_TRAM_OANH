@@ -8,7 +8,8 @@ public class testQuanLyKhachHang {
         
         // Định dạng ngày tháng
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        
+        Date now = new Date(); 
+        System.out.println("Thời gian: " + dateFormat.format(now));
         try {
             // 1. Thêm khách hàng mới
             System.out.println("=== THÊM KHÁCH HÀNG MỚI ===");
@@ -23,12 +24,13 @@ public class testQuanLyKhachHang {
             
             // 3. Thêm lịch sử nạp tiền cho khách hàng
             System.out.println("\n=== THÊM LỊCH SỬ NẠP TIỀN ===");
-            Date now = new Date();
+           
             kh1.themLichSuNapTien(500000, now, "Chuyển khoản");
             kh1.themLichSuNapTien(200000, new Date(now.getTime() + 1000000), "Tiền mặt");
             kh2.themLichSuNapTien(1000000, now, "Thẻ tín dụng");
             
             // Hiển thị lịch sử nạp tiền
+            System.out.println("Thời gian nap tiền: " + dateFormat.format(now));
             System.out.println("\nLịch sử nạp tiền của KH001:");
             kh1.hienThiLichSuNapTien();
             
