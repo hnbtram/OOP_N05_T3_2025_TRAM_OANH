@@ -5,7 +5,7 @@ public class App {
 
         //testQuanLyKhachHang.main(args);
         //testQuanLyMayTinh.main(args);
-        testThanhToanQuanNet.main(args);
+        //testThanhToanQuanNet.main(args);
         
         
        
