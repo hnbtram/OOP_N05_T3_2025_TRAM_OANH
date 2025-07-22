@@ -14,7 +14,7 @@ public class QuanNetConsoleApp {
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
     private static NumberFormat nf = NumberFormat.getNumberInstance(Locale.of("vi", "VN"));
 
-    public static void main(String[] args) {
+    public static void test() {
         khoiTaoDuLieuMau();
         
         while (true) {
@@ -63,10 +63,14 @@ public class QuanNetConsoleApp {
         quanLyMayTinh.themMayTinh(new MayTinh(2, 20000));
         quanLyMayTinh.themMayTinh(new MayTinh(3, 18000));
         ;
-        
+        // Thêm phần mềm mẫu vào máy tính
+        quanLyMayTinh.themPhanMemVaoMay(1, "Liên Minh ");
+        quanLyMayTinh.themPhanMemVaoMay(2, "Valorant");
+        quanLyMayTinh.themPhanMemVaoMay(3, "Minecraft");
+       
         // Thêm khách hàng mẫu
-        quanLyKhachHang.themKhachHang(new KhachHang("001", "Nguyễn Văn A", "0912345678"));
-        quanLyKhachHang.themKhachHang(new KhachHang("002", "Trần Thị B", "0987654321"));
+        quanLyKhachHang.themKhachHang(new KhachHang("001", "Nguyễn Thị Kim Oanh", "0924899873"));
+        quanLyKhachHang.themKhachHang(new KhachHang("002", "Hoàng Nhật Bảo Trâm", "0914324828"));
     }
 
     private static void quanLyMayTinhMenu() {
@@ -79,14 +83,15 @@ public class QuanNetConsoleApp {
             System.out.println("║ 3. Cập nhật giá máy            ║");
             System.out.println("║ 4. Xóa máy tính                ║");
             System.out.println("║ 5. Quản lý trạng thái máy      ║");
-            System.out.println("║ 6. Quay lại menu chính         ║");
+            System.out.println("║ 6. Quản lý phần mềm            ║");
+            System.out.println("║ 7. Quay lại menu chính         ║");
             System.out.println("╚════════════════════════════════╝");
-            System.out.print("Chọn chức năng (1-6): ");
+            System.out.print("Chọn chức năng (1-7): ");
 
             try {
                 int choice = Integer.parseInt(scanner.nextLine());
 
-                if (choice == 6) break;
+                if (choice == 7) break;
 
                 switch (choice) {
                     case 1:
@@ -103,6 +108,9 @@ public class QuanNetConsoleApp {
                         break;
                     case 5:
                         quanLyTrangThaiMayTinh();
+                        break;
+                    case 6:
+                         quanLyPhanMemMayTinh();
                         break;
                     default:
                         System.out.println("Lựa chọn không hợp lệ!");
@@ -298,6 +306,64 @@ public class QuanNetConsoleApp {
                 break;
             default:
                 System.out.println("Lựa chọn không hợp lệ!");
+        }
+    }
+     
+      private static void quanLyPhanMemMayTinh() {
+        while (true) {
+            System.out.println("\n--- QUẢN LÝ PHẦN MỀM ---");
+            System.out.println("1. Thêm phần mềm vào máy");
+            System.out.println("2. Xóa phần mềm khỏi máy");
+            System.out.println("3. Quay lại menu quản lý máy tính");
+            System.out.print("Chọn chức năng (1-3): ");
+
+            try {
+                int choice = Integer.parseInt(scanner.nextLine());
+                if (choice == 3) break;
+
+                switch (choice) {
+                    case 1:
+                        themPhanMemVaoMay();
+                        break;
+                    case 2:
+                        xoaPhanMemKhoiMay();
+                        break;
+                    default:
+                        System.out.println("Lựa chọn không hợp lệ!");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập số từ 1 đến 3!");
+            }
+        }
+    }
+
+    private static void themPhanMemVaoMay() {
+        System.out.println("\n--- THÊM PHẦN MỀM VÀO MÁY ---");
+        System.out.print("Nhập ID máy tính: ");
+        int idMay = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Nhập tên phần mềm muốn thêm: ");
+        String tenPhanMem = scanner.nextLine();
+
+        if (quanLyMayTinh.themPhanMemVaoMay(idMay, tenPhanMem)) {
+            System.out.println("Đã thêm phần mềm '" + tenPhanMem + "' vào máy ID " + idMay + " thành công!");
+        } else {
+            System.out.println("Không tìm thấy máy tính hoặc có lỗi!");
+        }
+    }
+
+    private static void xoaPhanMemKhoiMay() {
+        System.out.println("\n--- XÓA PHẦN MỀM KHỎI MÁY ---");
+        System.out.print("Nhập ID máy tính: ");
+        int idMay = Integer.parseInt(scanner.nextLine());
+
+        System.out.print("Nhập tên phần mềm muốn xóa: ");
+        String tenPhanMem = scanner.nextLine();
+
+        if (quanLyMayTinh.xoaPhanMemKhoiMay(idMay, tenPhanMem)) {
+            System.out.println("Đã xóa phần mềm '" + tenPhanMem + "' khỏi máy ID " + idMay + " thành công!");
+        } else {
+            System.out.println("Không tìm thấy máy tính hoặc phần mềm không có trên máy!");
         }
     }
 

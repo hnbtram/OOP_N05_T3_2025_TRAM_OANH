@@ -39,6 +39,22 @@ public class QuanLyMayTinh {
         }
         return false;
     }
+    public boolean themPhanMemVaoMay(int idMay, String tenPhanMem) {
+        MayTinh may = timMayTinh(idMay);
+        if (may != null) {
+            may.themPhanMem(tenPhanMem);
+            return true;
+        }
+        return false;
+    }
+    public boolean xoaPhanMemKhoiMay(int idMay, String tenPhanMem) {
+        MayTinh may = timMayTinh(idMay);
+        if (may != null) {
+            may.xoaPhanMem(tenPhanMem);
+            return true;
+        }
+        return false;
+    }
 
     public boolean batDauSuDungMay(int id, String maKhachHang) {
         MayTinh may = timMayTinh(id);

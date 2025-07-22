@@ -1,3 +1,4 @@
+package QuanNet;
 public class App {
     public static void main(String[] args) throws Exception {
 
@@ -8,7 +9,7 @@ public class App {
         //testThanhToanQuanNet.main(args);
         //testTune.test();
         
-       
+        QuanNetConsoleApp.test();
 
 
     }
