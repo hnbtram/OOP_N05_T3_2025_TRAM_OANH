@@ -37,4 +37,15 @@ public class QuanLyKhachHang {
         }
         return false;
     }
+    public void lichSuDichVu(String maKhachHang) {
+        KhachHang kh = timKhachHang(maKhachHang);
+        if (kh != null) {
+            System.out.println("Lịch sử dịch vụ của " + kh.getTenKhachHang() + ":");
+            for (String dichVu : kh.getLichSuDichVu()) {
+                System.out.println("- " + dichVu);
+            }
+        } else {
+            System.out.println("Không tìm thấy khách hàng với mã: " + maKhachHang);
+        }
+    }
 }

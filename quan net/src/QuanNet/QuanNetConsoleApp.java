@@ -62,10 +62,11 @@ public class QuanNetConsoleApp {
         quanLyMayTinh.themMayTinh(new MayTinh(1, 15000));
         quanLyMayTinh.themMayTinh(new MayTinh(2, 20000));
         quanLyMayTinh.themMayTinh(new MayTinh(3, 18000));
+        ;
         
         // Thêm khách hàng mẫu
-        quanLyKhachHang.themKhachHang(new KhachHang("KH001", "Nguyễn Văn A", "0912345678"));
-        quanLyKhachHang.themKhachHang(new KhachHang("KH002", "Trần Thị B", "0987654321"));
+        quanLyKhachHang.themKhachHang(new KhachHang("001", "Nguyễn Văn A", "0912345678"));
+        quanLyKhachHang.themKhachHang(new KhachHang("002", "Trần Thị B", "0987654321"));
     }
 
     private static void quanLyMayTinhMenu() {
@@ -146,6 +147,9 @@ public class QuanNetConsoleApp {
                         break;
                     case 5:
                         napTienKhachHang();
+                        break;
+                    case 7:
+                        xemLichSuThanhToan();
                         break;
                     default:
                         System.out.println("Lựa chọn không hợp lệ!");
