@@ -9,7 +9,8 @@ public class App {
         //testThanhToanQuanNet.main(args);
         //testTune.test();
         
-        QuanNetConsoleApp.test();
+     //QuanNetConsoleApp.test();
+      
 
 
     }

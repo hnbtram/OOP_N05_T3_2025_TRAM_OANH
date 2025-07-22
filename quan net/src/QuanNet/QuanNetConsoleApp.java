@@ -383,7 +383,6 @@ public class QuanNetConsoleApp {
         quanLyKhachHang.themKhachHang(khachHang);
         System.out.println("Đã thêm khách hàng thành công!");
     }
-
     private static void hienThiDanhSachKhachHang() {
         System.out.println("\n--- DANH SÁCH KHÁCH HÀNG ---");
         List<KhachHang> danhSach = quanLyKhachHang.getDanhSachKhachHang();
@@ -393,16 +392,15 @@ public class QuanNetConsoleApp {
             return;
         }
         
-        System.out.printf("%-10s %-20s %-15s %-15s%n", 
-            "Mã KH", "Tên KH", "Số ĐT", "Số dư");
-        System.out.println("----------------------------------------------------");
+        System.out.printf("%-10s %-20s %-15s%n", "Mã KH", "Tên khách hàng", "Số điện thoại");
+        System.out.println("-----------------------------------------------------");
         
         for (KhachHang kh : danhSach) {
-            System.out.printf("%-10s %-20s %-15s %15s VND%n", 
-                kh.getMaKhachHang(), kh.getTenKhachHang(), 
-                kh.getSoDienThoai(), nf.format(kh.getSoDuTaiKhoan()));
+            System.out.printf("%-10s %-20s %-15s%n", 
+                kh.getMaKhachHang(), kh.getTenKhachHang(), kh.getSoDienThoai());
         }
     }
+    
 
     private static void capNhatKhachHang() {
         System.out.println("\n--- CẬP NHẬT THÔNG TIN KHÁCH HÀNG ---");
