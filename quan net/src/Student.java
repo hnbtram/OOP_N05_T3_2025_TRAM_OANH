@@ -22,5 +22,5 @@ public class Student implements Comparable {
     private String name;
     private float gpa;
     
-    
+
 }
