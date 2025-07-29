@@ -6,6 +6,10 @@ import java.util.*;
 import java.text.NumberFormat;
 import java.util.stream.Collectors;
 
+import com.example.servingwebcontent.Model.KhachHang;
+import com.example.servingwebcontent.Model.MayTinh;
+import com.example.servingwebcontent.Model.ThanhToan;
+
 public class QuanNetConsoleApp {
     private static QuanLyMayTinh quanLyMayTinh = new QuanLyMayTinh();
     private static QuanLyKhachHang quanLyKhachHang = new QuanLyKhachHang();

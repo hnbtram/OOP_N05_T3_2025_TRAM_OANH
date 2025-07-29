@@ -1,5 +1,5 @@
 //package QuanNet;
-package com.example.servingwebcontent.Controller;
+package com.example.servingwebcontent.Model;
 
 import java.util.ArrayList;
 import java.util.List;

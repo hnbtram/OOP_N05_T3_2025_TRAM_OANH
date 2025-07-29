@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head> 
+    <title>Quan Net Tram Oanh</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
+</head>
+<body>
+
+    <h1>Quan Net Tram Oanh</h1>
+
+    <form action="/netOanhTram" method="get">
+        <label for="hovaten">Ho va ten:</label>
+        <input type="text" id="hovaten" name="hovaten" />
+        <img src="https://tse3.mm.bing.net/th/id/OIP.E_uXJT-cFRPYYoXkXH4jwwHaEK?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="icon" width="100" height="100">
+        <button type="submit">Gui</button>
+    </form>
+
+    <p th:text="'Xin chao, ' + ${hovaten} + '!'"></p>
+    <p>Chao mung den Quan Net Tram Oanh!</p>
+   <form id="bookingForm">
+        <label for="dichvu">Chọn dịch vụ:</label>
+        <select name="maytinh" id="dichvu">
+            <option value="may1">Máy tính 1</option>
+            <option value="may2">Máy tính 2</option>
+        </select>
+        <button type="button" onclick="datMay()">Đặt máy</button>
+        
+        <div id="maySuccess" class="success-message"></div>
+
+        <label for="gio">Chọn giờ:</label>
+        <select name="gio" id="gio">
+            <option value="gio1">Giờ 1</option>
+            <option value="gio2">Giờ 2</option>
+        </select>
+        <button type="button" onclick="datGio()">Đặt giờ</button>
+        
+        <div id="gioSuccess" class="success-message"></div>
+    </form>
+
+    <p>Cảm ơn bạn đã sử dụng dịch vụ của chúng tôi!</p>
+
+    <script>
+        function datMay() {
+            const may = document.getElementById('dichvu').value;
+            document.getElementById('maySuccess').textContent = 
+                `✅ Đã đặt ${may === 'may1' ? 'Máy tính 1' : 'Máy tính 2'} thành công!`;
+        }
+
+        function datGio() {
+            const gio = document.getElementById('gio').value;
+            document.getElementById('gioSuccess').textContent = 
+                `⏰ Đã đặt ${gio === 'gio1' ? 'Giờ 1' : 'Giờ 2'} thành công!`;
+        }
+    </script>
+</body>
+</html>

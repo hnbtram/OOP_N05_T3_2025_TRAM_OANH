@@ -3,6 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.example.servingwebcontent.Model.KhachHang;
+import com.example.servingwebcontent.Model.MayTinh;
+import com.example.servingwebcontent.Model.ThanhToan;
+
 public class QuanLyThanhToan {
     private QuanLyKhachHang quanLyKhachHang;
     private QuanLyMayTinh quanLyMayTinh;

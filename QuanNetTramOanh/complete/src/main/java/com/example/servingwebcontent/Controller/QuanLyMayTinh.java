@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.servingwebcontent.Model.MayTinh;
+
 public class QuanLyMayTinh {
     private List<MayTinh> danhSachMayTinh;
 
