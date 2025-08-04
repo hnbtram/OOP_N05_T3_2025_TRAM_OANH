@@ -17,3 +17,13 @@
 👨🏻‍💻 Dự án được xây dựng và phát triển bằng **Java**.
 
 ---
+
+## Main class ( các class chính )
+
+| Class              | 📝 Mô tả chức năng |
+|------------------------|--------------------|
+| `KhachHang`            | Quản lý thông tin khách hàng: mã, tên, số điện thoại, số dư trong tài khoản.|
+| `MayTinh`              | Quản lý máy tính: mã, hãng, cấu hình, trạng thái, giá chơi, phần mềm, thời gian chơi.|
+| `ThanhToan`            | Tính tiền, xem số dư, in hoá đơn.|
+
+---
