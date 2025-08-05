@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.example.servingwebcontent.Model.KhachHang;
-
+import java.util.ArrayList; 
 @Controller
 public class GreetingController {
 
@@ -29,11 +29,20 @@ public class GreetingController {
 
 }
 	@GetMapping("/khachHang")
-	public String khachHang(@RequestParam(name="maKhachHang", required=false, defaultValue="KH001") String maKhachHang, Model model) {
+	public String khachHang(Model model) {
 		// Simulate fetching customer data
-		KhachHang kh = new KhachHang(maKhachHang, "Nguyen Van A", "0123456789");
+		KhachHang kh = new KhachHang("kh01", "Nguyen Van A", "0123456789");
+
 		model.addAttribute("khachHang", kh);
-		System.out.println("Customer request received with ID: " + maKhachHang);
+		System.out.println("Customer request received with ID: " + kh.getMaKhachHang());
+		ArrayList<KhachHang> listKhachHang = new ArrayList<>();
+		listKhachHang.add(kh);
+		model.addAttribute("listKhachHang", listKhachHang);
+		model.addAttribute("tenKhachHang", kh.getTenKhachHang());
+		model.addAttribute("soDienThoai", kh.getSoDienThoai());
+		model.addAttribute("maKhachHang", kh.getMaKhachHang());
+		System.out.println("Customer details: " + kh.getTenKhachHang() + ", " + kh.getSoDienThoai());
+		// Return the view name
 		return "khachHang";
 	}
 }
