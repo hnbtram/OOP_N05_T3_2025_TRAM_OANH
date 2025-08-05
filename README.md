@@ -2,7 +2,7 @@
 
 <h1 align="center">Ứng Dụng Quản Lý Quán Net 👩🏻‍❤️‍👩🏻 </h1>
 <p align="center">
-  📚 <strong>Java OOP Project</strong> – Nhóm: 3 <code>OOP_N05_T3_2025_GROUP_Tram_Oanh</code><br>
+  📚 <strong>Java OOP Project</strong> – Nhóm 3: <code>OOP_N05_T3_2025_GROUP_Tram_Oanh</code><br>
 
 
 ## 📍 Giới thiệu Dự án
