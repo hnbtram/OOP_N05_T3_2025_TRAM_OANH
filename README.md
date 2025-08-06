@@ -19,7 +19,7 @@
 - 🛎️ Quản lý yêu cầu dịch vụ kèm theo
 
 #### 🖥️ Quản lý Máy tính
-- � Phân loại theo trạng thái (Đang hoạt động/Bảo trì/Trống)
+- � Phân loại theo trạng thái (Đang hoạt động / Bảo trì / Trống)
 - ⚙️ Quản lý cấu hình phần cứng
 - 📦 Kiểm soát phần mềm cài đặt sẵn
 - ⏱️ Tính giờ sử dụng tự động
