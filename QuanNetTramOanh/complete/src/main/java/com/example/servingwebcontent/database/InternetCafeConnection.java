@@ -1,8 +1,13 @@
+package com.example.servingwebcontent.database;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 public class InternetCafeConnection {
     public void checkConnection() {
         try (Connection conn = DBConnection.getConnection()) {
-            System.out.println("Kết nối quán nét thành công!");
-            // Kiểm tra trạng thái các máy
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM may_tinh WHERE trang_thai = 'san_sang'");
             rs.next();
