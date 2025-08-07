@@ -11,6 +11,7 @@
 
 ### 🌟 Tính năng nổi bật
 
+
 #### 👤 Quản lý Khách hàng
 - 📝 Đăng ký/Chỉnh sửa thông tin khách hàng
 - 💳 Hệ thống thẻ thành viên tích điểm
@@ -18,7 +19,7 @@
 - 🛎️ Quản lý yêu cầu dịch vụ kèm theo
 
 #### 🖥️ Quản lý Máy tính
-- � Phân loại theo trạng thái (Đang hoạt động/Bảo trì/Trống)
+- � Phân loại theo trạng thái (Đang hoạt động / Bảo trì / Trống)
 - ⚙️ Quản lý cấu hình phần cứng
 - 📦 Kiểm soát phần mềm cài đặt sẵn
 - ⏱️ Tính giờ sử dụng tự động
@@ -32,6 +33,7 @@
 ## 🛠️ Kiến trúc Hệ thống
 
 ```mermaid
+Sơ đồ chức năng ( sơ đồ liên quan đến 3 chức năng )
 classDiagram
     class KhachHang{
         +String maKH
