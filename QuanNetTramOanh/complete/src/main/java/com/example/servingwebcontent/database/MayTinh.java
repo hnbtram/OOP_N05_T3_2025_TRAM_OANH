@@ -1,27 +1,43 @@
-package com.example.quannet.database;
+package com.example.servingwebcontent.database;
 
 public class MayTinh {
-    private int id;
+    private int id;          // Sẽ dùng trong getMaMay()
     private String tenMay;
-    private String cauHinh; // CPU, RAM, VGA...
-    private String trangThai; // "dang_hoat_dong", "bao_tri", "trong"
+    private String cauHinh;
+    private String trangThai; // Sẽ dùng trong kiemTraTrangThai()
     private double giaTheoGio;
-    
-    // Constructor
+
     public MayTinh(int id, String tenMay, String cauHinh, double giaTheoGio) {
         this.id = id;
         this.tenMay = tenMay;
         this.cauHinh = cauHinh;
-        this.trangThai = "trong";
+        this.trangThai = "trong"; // Mặc định là trống
         this.giaTheoGio = giaTheoGio;
     }
-    
-    // Getter methods
-    public int getId() { return id; }
-    public String getTrangThai() { return trangThai; }
-    
-    // Phương thức tính tiền
-    public double tinhTien(int gioSuDung) {
-        return giaTheoGio * gioSuDung;
+
+    // Phương thức mới sử dụng id
+    public String getMaMay() {
+        return "MT" + String.format("%03d", id); // Ví dụ: MT001
+    }
+
+    // Phương thức sử dụng trangThai
+    public boolean kiemTraTrangThai() {
+        return !"bao_tri".equals(trangThai);
+    }
+
+    // Sử dụng tất cả các trường
+    public String getThongTinMay() {
+        return String.format("%s - %s | %s | Giá: %.0f/h | Trạng thái: %s", 
+               getMaMay(), tenMay, cauHinh, giaTheoGio, trangThai);
+    }
+
+    // Setter cho trangThai
+    public void setTrangThai(String trangThai) {
+        this.trangThai = trangThai;
+    }
+
+    // Getter cho id
+    public int getId() {
+        return id;
     }
 }
