@@ -1,4 +1,4 @@
-package com.example.servingwebcontent.database;
+package com.example.quannet.database;
 
 public class KhachHang {
     private int id;
@@ -6,27 +6,19 @@ public class KhachHang {
     private String sdt;
     private int diemTichLuy;
     
-    // Thêm getters và setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public KhachHang(int id, String ten, String sdt) {
+        this.id = id;
+        this.ten = ten;
+        this.sdt = sdt;
+        this.diemTichLuy = 0;
+    }
     
-    public String getTen() { return ten; }
-    public void setTen(String ten) { this.ten = ten; }
-    
-    public String getSdt() { return sdt; }
-    public void setSdt(String sdt) { this.sdt = sdt; }
-    
-    public int getDiemTichLuy() { return diemTichLuy; }
-    
-    // Thêm logic nghiệp vụ
+    // Tích điểm khi sử dụng dịch vụ
     public void tangDiem(int diem) {
-        if (diem > 0) {
-            this.diemTichLuy += diem;
-        }
+        this.diemTichLuy += diem;
     }
     
-    public String getThongTin() {
-        return String.format("KH: %s (ID: %d) - Điểm: %d - SĐT: %s", 
-                           ten, id, diemTichLuy, sdt);
-    }
+    // Getter methods
+    public int getId() { return id; }
+    public String getTen() { return ten; }
 }

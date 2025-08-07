@@ -1,46 +1,27 @@
-package com.example.servingwebcontent.database;
-
-import java.util.List;
+package com.example.quannet.database;
 
 public class MayTinh {
     private int id;
     private String tenMay;
-    private String cauHinh;
-    private String trangThai;
+    private String cauHinh; // CPU, RAM, VGA...
+    private String trangThai; // "dang_hoat_dong", "bao_tri", "trong"
     private double giaTheoGio;
     
-    // Thêm getters và setters
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    
-    public String getTenMay() { return tenMay; }
-    public void setTenMay(String tenMay) { this.tenMay = tenMay; }
-    
-    public String getCauHinh() { return cauHinh; }
-    public void setCauHinh(String cauHinh) { this.cauHinh = cauHinh; }
-    
-    public String getTrangThai() { return trangThai; }
-    public void setTrangThai(String trangThai) { this.trangThai = trangThai; }
-    
-    public double getGiaTheoGio() { return giaTheoGio; }
-    public void setGiaTheoGio(double giaTheoGio) { this.giaTheoGio = giaTheoGio; }
-    
-    // Thêm phương thức sử dụng các trường
-    public boolean isAvailable() {
-        return "san_sang".equals(trangThai);
+    // Constructor
+    public MayTinh(int id, String tenMay, String cauHinh, double giaTheoGio) {
+        this.id = id;
+        this.tenMay = tenMay;
+        this.cauHinh = cauHinh;
+        this.trangThai = "trong";
+        this.giaTheoGio = giaTheoGio;
     }
     
+    // Getter methods
+    public int getId() { return id; }
+    public String getTrangThai() { return trangThai; }
+    
+    // Phương thức tính tiền
     public double tinhTien(int gioSuDung) {
         return giaTheoGio * gioSuDung;
-    }
-    
-    public String getThongTin() {
-        return String.format("Máy %d: %s - %s - Giá: %.2f/h - Trạng thái: %s",
-                           id, tenMay, cauHinh, giaTheoGio, trangThai);
-    }
-    
-    public List<MayTinh> getAvailableComputers() {
-        // Implementation
-        return null;
     }
 }
