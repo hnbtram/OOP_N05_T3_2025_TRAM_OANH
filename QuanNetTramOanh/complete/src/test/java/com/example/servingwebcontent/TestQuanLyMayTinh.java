@@ -1,7 +1,7 @@
+package com.example.servingwebcontent;
+import com.example.servingwebcontent.Model.MayTinh;
+import com.example.servingwebcontent.Controller.QuanLyMayTinh;
 
-
-import QuanNet.MayTinh;
-import QuanNet.QuanLyMayTinh;
 
 public class TestQuanLyMayTinh {
     public static void test() {

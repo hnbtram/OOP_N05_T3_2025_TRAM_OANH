@@ -16,7 +16,7 @@ public class QuanNetConsoleApp {
     private static QuanLyThanhToan quanLyThanhToan = new QuanLyThanhToan(quanLyKhachHang, quanLyMayTinh);
     private static Scanner scanner = new Scanner(System.in);
     private static DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
-    private static NumberFormat nf = NumberFormat.getNumberInstance(Locale.of("vi", "VN"));
+    private static NumberFormat nf = NumberFormat.getNumberInstance(new Locale("vi", "VN"));
 
     public static void test() {
         khoiTaoDuLieuMau();
