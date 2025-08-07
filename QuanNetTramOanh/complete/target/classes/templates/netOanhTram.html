@@ -1,0 +1,1529 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quán Net Trâm Oanh - Hệ thống quản lý</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #ff7e5f;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #ffc107;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7ff;
+            color: var(--dark-color);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s;
+        }
+        
+        .main-title {
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-top: 1rem;
+        }
+        
+        .nav-tabs .nav-link {
+            font-weight: 600;
+            color: var(--dark-color);
+            border: none;
+            padding: 12px 20px;
+        }
+        
+        .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
+            background-color: transparent;
+        }
+        
+        .tab-content {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .form-control, .form-select {
+            border-radius: 8px;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary:hover {
+            background-color: #3a5bef;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+            color: #212529;
+        }
+        
+        .receipt {
+            background-color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 0 auto;
+            display: none;
+        }
+        
+        .receipt-header {
+            text-align: center;
+            border-bottom: 2px dashed #ddd;
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .receipt-title {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .receipt-body {
+            margin-bottom: 1.5rem;
+        }
+        
+        .receipt-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+        
+        .receipt-total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            border-top: 2px dashed #ddd;
+            padding-top: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .service-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .service-item:hover {
+            background-color: rgba(74, 107, 255, 0.1);
+        }
+        
+        .service-item input[type="checkbox"] {
+            margin-right: 1rem;
+            transform: scale(1.3);
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(74, 107, 255, 0.05);
+        }
+        
+        .status-active {
+            background-color: rgba(40, 167, 69, 0.1);
+            color: var(--success-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .status-maintenance {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--warning-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .status-broken {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: var(--danger-color);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+        
+        .customer-id {
+            font-family: monospace;
+            background-color: #f8f9fa;
+            padding: 2px 5px;
+            border-radius: 3px;
+            color: var(--primary-color);
+        }
+        
+        .promo-badge {
+            background-color: var(--warning-color);
+            color: #212529;
+            font-weight: 600;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .receipt, .receipt * {
+                visibility: visible;
+            }
+            .receipt {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                box-shadow: none;
+            }
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header text-center">
+        <div class="container">
+            <img src="https://tse3.mm.bing.net/th/id/OIP.E_uXJT-cFRPYYoXkXH4jwwHaEK?pid=ImgDet&rs=1" alt="Logo Quán Net Trâm Oanh" class="logo mb-3">
+            <h1 class="main-title">QUÁN NET TRÂM OANH</h1>
+            <p class="lead">Hệ thống quản lý và thanh toán</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Navigation Tabs -->
+        <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking" type="button" role="tab">Đặt chỗ</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="customers-tab" data-bs-toggle="tab" data-bs-target="#customers" type="button" role="tab">Khách hàng</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="computers-tab" data-bs-toggle="tab" data-bs-target="#computers" type="button" role="tab">Máy tính</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="history-tab" data-bs-toggle="tab" data-bs-target="#history" type="button" role="tab">Lịch sử</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="games-tab" data-bs-toggle="tab" data-bs-target="#games" type="button" role="tab">Game & Phần mềm</button>
+            </li>
+        </ul>
+        
+        <!-- Tab Contents -->
+        <div class="tab-content" id="myTabContent">
+            <!-- Booking Tab -->
+            <div class="tab-pane fade show active" id="booking" role="tabpanel">
+                <h3 class="text-center mb-4"><i class="fas fa-user-edit me-2"></i>Thông tin đặt chỗ</h3>
+                
+                <form id="customerForm">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="fullName" class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="phone" class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" id="phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="startTime" class="form-label">Thời gian bắt đầu</label>
+                            <input type="datetime-local" class="form-control" id="startTime" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="endTime" class="form-label">Thời gian kết thúc</label>
+                            <input type="datetime-local" class="form-control" id="endTime" required>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Chọn máy tính</label>
+                        <select class="form-select" id="computerSelect" required>
+                            <option value="" selected disabled>-- Chọn máy --</option>
+                            <option value="may1">Máy 1 - 15.000đ/giờ</option>
+                            <option value="may2">Máy 2 - 20.000đ/giờ</option>
+                            <option value="may3">Máy VIP - 30.000đ/giờ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="form-label">Dịch vụ đi kèm</label>
+                        <div class="service-item">
+                            <input type="checkbox" id="water" class="form-check-input" value="10000">
+                            <label for="water" class="form-check-label flex-grow-1">Nước suối - 10.000đ</label>
+                        </div>
+                        <div class="service-item">
+                            <input type="checkbox" id="softDrink" class="form-check-input" value="15000">
+                            <label for="softDrink" class="form-check-label flex-grow-1">Nước ngọt - 15.000đ</label>
+                        </div>
+                        <div class="service-item">
+                            <input type="checkbox" id="snack" class="form-check-input" value="20000">
+                            <label for="snack" class="form-check-label flex-grow-1">Bánh snack - 20.000đ</label>
+                        </div>
+                        <div class="service-item">
+                            <input type="checkbox" id="noodle" class="form-check-input" value="25000">
+                            <label for="noodle" class="form-check-label flex-grow-1">Mì gói - 25.000đ</label>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="deposit" class="form-label">Nạp tiền (VND)</label>
+                        <input type="number" class="form-control" id="deposit" min="0" value="0">
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="promoCode" class="form-label">Mã khuyến mãi (nếu có)</label>
+                        <input type="text" class="form-control" id="promoCode" placeholder="Nhập mã khuyến mãi">
+                    </div>
+                    
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary" onclick="calculateBill()">
+                            <i class="fas fa-calculator me-2"></i>Tính tiền
+                        </button>
+                    </div>
+                </form>
+                
+                <!-- Receipt -->
+                <div class="receipt mt-4" id="receipt">
+                    <div class="receipt-header">
+                        <h3 class="receipt-title">QUÁN NET TRÂM OANH</h3>
+                        <p>123 Đường ABC, Quận XYZ, TP. HCM</p>
+                        <p>Hotline: 0909 123 456</p>
+                        <p id="receiptDate"></p>
+                    </div>
+                    
+                    <div class="receipt-body">
+                        <div class="receipt-item">
+                            <span>Mã KH:</span>
+                            <span id="receiptCustomerId"></span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Khách hàng:</span>
+                            <span id="receiptName"></span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>SĐT:</span>
+                            <span id="receiptPhone"></span>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="receipt-item">
+                            <span>Máy tính:</span>
+                            <span id="receiptComputer"></span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Thời gian:</span>
+                            <span id="receiptTime"></span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Thời lượng:</span>
+                            <span id="receiptDuration"></span>
+                        </div>
+                        
+                        <hr>
+                        
+                        <h6 class="mt-3">Dịch vụ đi kèm:</h6>
+                        <div id="receiptServices"></div>
+                        
+                        <hr>
+                        
+                        <div class="receipt-item">
+                            <span>Tạm tính:</span>
+                            <span id="receiptSubtotal"></span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Khuyến mãi:</span>
+                            <span id="receiptPromo"></span>
+                        </div>
+                        <div class="receipt-item">
+                            <span>Đã nạp:</span>
+                            <span id="receiptDeposit"></span>
+                        </div>
+                        <div class="receipt-item receipt-total">
+                            <span>Còn lại:</span>
+                            <span id="receiptTotal"></span>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center no-print mt-4">
+                        <button class="btn btn-success me-2" onclick="window.print()">
+                            <i class="fas fa-print me-2"></i>In hóa đơn
+                        </button>
+                        <button class="btn btn-primary" onclick="resetForm()">
+                            <i class="fas fa-redo me-2"></i>Đặt mới
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Customers Tab -->
+            <div class="tab-pane fade" id="customers" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3><i class="fas fa-users me-2"></i>Quản lý khách hàng</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCustomerModal">
+                        <i class="fas fa-plus me-2"></i>Thêm khách hàng
+                    </button>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã KH</th>
+                                <th>Họ tên</th>
+                                <th>SĐT</th>
+                                <th>Lần cuối</th>
+                                <th>Tổng chi</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="customerTable">
+                            <!-- Customer data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Computers Tab -->
+            <div class="tab-pane fade" id="computers" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3><i class="fas fa-desktop me-2"></i>Quản lý máy tính</h3>
+                    <div>
+                        <button class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#addComputerModal">
+                            <i class="fas fa-plus me-2"></i>Thêm máy
+                        </button>
+                        <button class="btn btn-warning" onclick="updateComputerStatuses()">
+                            <i class="fas fa-sync-alt me-2"></i>Cập nhật trạng thái
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã máy</th>
+                                <th>Tên máy</th>
+                                <th>Giá/giờ</th>
+                                <th>Trạng thái</th>
+                                <th>Khách hàng</th>
+                                <th>Thời gian</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="computerTable">
+                            <!-- Computer data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- History Tab -->
+            <div class="tab-pane fade" id="history" role="tabpanel">
+                <h3 class="mb-4"><i class="fas fa-history me-2"></i>Lịch sử giao dịch</h3>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <label for="historyDateFilter" class="form-label">Lọc theo ngày</label>
+                        <input type="date" class="form-control" id="historyDateFilter">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="historyCustomerFilter" class="form-label">Lọc theo khách hàng</label>
+                        <select class="form-select" id="historyCustomerFilter">
+                            <option value="">Tất cả khách hàng</option>
+                            <!-- Customer options will be loaded here -->
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Mã GD</th>
+                                <th>Thời gian</th>
+                                <th>Khách hàng</th>
+                                <th>Máy tính</th>
+                                <th>Dịch vụ</th>
+                                <th>Tổng tiền</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="historyTable">
+                            <!-- History data will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Games & Software Tab -->
+            <div class="tab-pane fade" id="games" role="tabpanel">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h3><i class="fas fa-gamepad me-2"></i>Danh sách Game & Phần mềm</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addGameModal">
+                        <i class="fas fa-plus me-2"></i>Thêm Game/PM
+                    </button>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-gamepad me-2"></i>Game phổ biến</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group" id="gameList">
+                                    <!-- Game list will be loaded here -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header bg-primary text-white">
+                                <h5 class="mb-0"><i class="fas fa-laptop me-2"></i>Phần mềm</h5>
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group" id="softwareList">
+                                    <!-- Software list will be loaded here -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-desktop me-2"></i>Cấu hình máy</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-microchip me-2"></i>CPU: Intel Core i7-10700K</h6>
+                                <h6><i class="fas fa-memory me-2"></i>RAM: 16GB DDR4 3200MHz</h6>
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-gamepad me-2"></i>GPU: NVIDIA RTX 3060 Ti 8GB</h6>
+                                <h6><i class="fas fa-hdd me-2"></i>Storage: 512GB SSD + 1TB HDD</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Customer Modal -->
+    <div class="modal fade" id="addCustomerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm khách hàng mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newCustomerForm">
+                        <div class="mb-3">
+                            <label for="newCustomerName" class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" id="newCustomerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newCustomerPhone" class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" id="newCustomerPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newCustomerEmail" class="form-label">Email (tuỳ chọn)</label>
+                            <input type="email" class="form-control" id="newCustomerEmail">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="addCustomer()">Lưu khách hàng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Customer Modal -->
+    <div class="modal fade" id="editCustomerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chỉnh sửa khách hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editCustomerForm">
+                        <input type="hidden" id="editCustomerId">
+                        <div class="mb-3">
+                            <label for="editCustomerName" class="form-label">Họ và tên</label>
+                            <input type="text" class="form-control" id="editCustomerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCustomerPhone" class="form-label">Số điện thoại</label>
+                            <input type="tel" class="form-control" id="editCustomerPhone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editCustomerEmail" class="form-label">Email (tuỳ chọn)</label>
+                            <input type="email" class="form-control" id="editCustomerEmail">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="updateCustomer()">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Computer Modal -->
+    <div class="modal fade" id="addComputerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm máy tính mới</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newComputerForm">
+                        <div class="mb-3">
+                            <label for="newComputerName" class="form-label">Tên máy</label>
+                            <input type="text" class="form-control" id="newComputerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newComputerPrice" class="form-label">Giá mỗi giờ (VND)</label>
+                            <input type="number" class="form-control" id="newComputerPrice" min="10000" value="15000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newComputerStatus" class="form-label">Trạng thái</label>
+                            <select class="form-select" id="newComputerStatus" required>
+                                <option value="active">Đang hoạt động</option>
+                                <option value="maintenance">Bảo trì</option>
+                                <option value="broken">Hỏng</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="addComputer()">Thêm máy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Edit Computer Modal -->
+    <div class="modal fade" id="editComputerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chỉnh sửa máy tính</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editComputerForm">
+                        <input type="hidden" id="editComputerId">
+                        <div class="mb-3">
+                            <label for="editComputerName" class="form-label">Tên máy</label>
+                            <input type="text" class="form-control" id="editComputerName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editComputerPrice" class="form-label">Giá mỗi giờ (VND)</label>
+                            <input type="number" class="form-control" id="editComputerPrice" min="10000" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="editComputerStatus" class="form-label">Trạng thái</label>
+                            <select class="form-select" id="editComputerStatus" required>
+                                <option value="active">Đang hoạt động</option>
+                                <option value="maintenance">Bảo trì</option>
+                                <option value="broken">Hỏng</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="updateComputer()">Cập nhật</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add Game/Software Modal -->
+    <div class="modal fade" id="addGameModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Thêm Game/Phần mềm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="newGameForm">
+                        <div class="mb-3">
+                            <label for="newGameName" class="form-label">Tên Game/Phần mềm</label>
+                            <input type="text" class="form-control" id="newGameName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newGameType" class="form-label">Loại</label>
+                            <select class="form-select" id="newGameType" required>
+                                <option value="game">Game</option>
+                                <option value="software">Phần mềm</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="newGameCategory" class="form-label">Thể loại</label>
+                            <input type="text" class="form-control" id="newGameCategory">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="addGame()">Thêm mới</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Transaction Modal -->
+    <div class="modal fade" id="viewTransactionModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chi tiết giao dịch</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="receipt">
+                        <div class="receipt-header">
+                            <h3 class="receipt-title">QUÁN NET TRÂM OANH</h3>
+                            <p>123 Đường ABC, Quận XYZ, TP. HCM</p>
+                            <p>Hotline: 0909 123 456</p>
+                            <p id="viewTransactionDate"></p>
+                        </div>
+                        
+                        <div class="receipt-body">
+                            <div class="receipt-item">
+                                <span>Mã GD:</span>
+                                <span id="viewTransactionId"></span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>Khách hàng:</span>
+                                <span id="viewTransactionCustomer"></span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>SĐT:</span>
+                                <span id="viewTransactionPhone"></span>
+                            </div>
+                            
+                            <hr>
+                            
+                            <div class="receipt-item">
+                                <span>Máy tính:</span>
+                                <span id="viewTransactionComputer"></span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>Thời gian:</span>
+                                <span id="viewTransactionTime"></span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>Thời lượng:</span>
+                                <span id="viewTransactionDuration"></span>
+                            </div>
+                            
+                            <hr>
+                            
+                            <h6 class="mt-3">Dịch vụ đi kèm:</h6>
+                            <div id="viewTransactionServices"></div>
+                            
+                            <hr>
+                            
+                            <div class="receipt-item">
+                                <span>Tạm tính:</span>
+                                <span id="viewTransactionSubtotal"></span>
+                            </div>
+                            <div class="receipt-item">
+                                <span>Khuyến mãi:</span>
+                                <span id="viewTransactionPromo"></span>
+                            </div>
+                            <div class="receipt-item receipt-total">
+                                <span>Tổng cộng:</span>
+                                <span id="viewTransactionTotal"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    <button type="button" class="btn btn-primary" onclick="window.print()">
+                        <i class="fas fa-print me-2"></i>In hóa đơn
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Dữ liệu mẫu
+        let customers = [
+            { id: 'KH001', name: 'Nguyễn Văn A', phone: '0909123456', email: '', lastVisit: '2023-07-20', totalSpent: 250000 },
+            { id: 'KH002', name: 'Trần Thị B', phone: '0918123456', email: 'tranthiB@gmail.com', lastVisit: '2023-07-18', totalSpent: 180000 },
+            { id: 'KH003', name: 'Lê Văn C', phone: '0987123456', email: '', lastVisit: '2023-07-15', totalSpent: 320000 }
+        ];
+        
+        let computers = [
+            { id: 'MAY001', name: 'Máy 1', price: 15000, status: 'active', customer: '', startTime: '' },
+            { id: 'MAY002', name: 'Máy 2', price: 20000, status: 'active', customer: '', startTime: '' },
+            { id: 'MAY003', name: 'Máy VIP', price: 30000, status: 'active', customer: '', startTime: '' },
+            { id: 'MAY004', name: 'Máy 3', price: 15000, status: 'maintenance', customer: '', startTime: '' },
+            { id: 'MAY005', name: 'Máy 4', price: 20000, status: 'broken', customer: '', startTime: '' }
+        ];
+        
+        let transactions = [
+            { id: 'GD001', customerId: 'KH001', customerName: 'Nguyễn Văn A', phone: '0909123456', 
+              computer: 'Máy VIP - 30.000đ/giờ', startTime: '2023-07-20 10:00', endTime: '2023-07-20 12:30',
+              services: ['Nước suối - 10.000đ', 'Bánh snack - 20.000đ'], subtotal: 125000, promo: 0, total: 125000 },
+            { id: 'GD002', customerId: 'KH002', customerName: 'Trần Thị B', phone: '0918123456', 
+              computer: 'Máy 2 - 20.000đ/giờ', startTime: '2023-07-18 14:00', endTime: '2023-07-18 16:00',
+              services: ['Nước ngọt - 15.000đ'], subtotal: 55000, promo: 5000, total: 50000 },
+            { id: 'GD003', customerId: 'KH003', customerName: 'Lê Văn C', phone: '0987123456', 
+              computer: 'Máy 1 - 15.000đ/giờ', startTime: '2023-07-15 09:00', endTime: '2023-07-15 13:00',
+              services: ['Mì gói - 25.000đ', 'Nước ngọt - 15.000đ'], subtotal: 100000, promo: 0, total: 100000 }
+        ];
+        
+        let games = [
+            { name: 'Liên Minh Huyền Thoại', type: 'game', category: 'MOBA' },
+            { name: 'PUBG', type: 'game', category: 'Battle Royale' },
+            { name: 'Valorant', type: 'game', category: 'FPS' },
+            { name: 'FIFA Online 4', type: 'game', category: 'Thể thao' },
+            { name: 'Genshin Impact', type: 'game', category: 'Nhập vai' }
+        ];
+        
+        let software = [
+            { name: 'Microsoft Office', type: 'software', category: 'Văn phòng' },
+            { name: 'Photoshop', type: 'software', category: 'Đồ họa' },
+            { name: 'Visual Studio Code', type: 'software', category: 'Lập trình' },
+            { name: 'Zoom', type: 'software', category: 'Họp trực tuyến' },
+            { name: 'Chrome', type: 'software', category: 'Trình duyệt' }
+        ];
+        
+        // Khởi tạo dữ liệu
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCustomers();
+            loadComputers();
+            loadTransactions();
+            loadGames();
+            
+            // Tự động điền thời gian kết thúc khi chọn thời gian bắt đầu
+            document.getElementById('startTime').addEventListener('change', function() {
+                const startTime = new Date(this.value);
+                if (!isNaN(startTime.getTime())) {
+                    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // +1 giờ
+                    document.getElementById('endTime').value = endTime.toISOString().slice(0, 16);
+                }
+            });
+            
+            // Lọc lịch sử
+            document.getElementById('historyDateFilter').addEventListener('change', filterTransactions);
+            document.getElementById('historyCustomerFilter').addEventListener('change', filterTransactions);
+        });
+        
+        // ========== CÁC HÀM CHUNG ==========
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+        }
+        
+        function formatDateTime(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' }) + 
+                   ' ' + date.toLocaleDateString('vi-VN');
+        }
+        
+        function calculateDuration(startStr, endStr) {
+            const start = new Date(startStr);
+            const end = new Date(endStr);
+            const durationHours = (end - start) / (1000 * 60 * 60);
+            return durationHours.toFixed(1) + ' giờ';
+        }
+        
+        function generateId(prefix) {
+            return prefix + Math.floor(1000 + Math.random() * 9000);
+        }
+        
+        // ========== TÍNH TOÁN HÓA ĐƠN ==========
+        function calculateBill() {
+            // Lấy thông tin khách hàng
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+            
+            if (!fullName || !phone || !startTime || !endTime) {
+                alert('Vui lòng điền đầy đủ thông tin khách hàng và thời gian!');
+                return;
+            }
+            
+            // Tính thời lượng sử dụng
+            const start = new Date(startTime);
+            const end = new Date(endTime);
+            const durationHours = (end - start) / (1000 * 60 * 60);
+            
+            if (durationHours <= 0) {
+                alert('Thời gian kết thúc phải sau thời gian bắt đầu!');
+                return;
+            }
+            
+            // Tính tiền máy tính
+            const computerSelect = document.getElementById('computerSelect');
+            const computer = computerSelect.options[computerSelect.selectedIndex].text;
+            const computerPrice = parseInt(computer.split('-')[1].trim().split('đ')[0].replace('.', ''));
+            const computerCost = Math.ceil(durationHours * computerPrice);
+            
+            // Tính tiền dịch vụ
+            let servicesCost = 0;
+            const services = [];
+            
+            const serviceItems = [
+                { id: 'water', name: 'Nước suối', price: 10000 },
+                { id: 'softDrink', name: 'Nước ngọt', price: 15000 },
+                { id: 'snack', name: 'Bánh snack', price: 20000 },
+                { id: 'noodle', name: 'Mì gói', price: 25000 }
+            ];
+            
+            serviceItems.forEach(item => {
+                if (document.getElementById(item.id).checked) {
+                    servicesCost += item.price;
+                    services.push({
+                        name: item.name,
+                        price: item.price
+                    });
+                }
+            });
+            
+            // Tính khuyến mãi
+            const promoCode = document.getElementById('promoCode').value;
+            let promoDiscount = 0;
+            if (promoCode === 'VIP100K') {
+                promoDiscount = 100000;
+            } else if (promoCode === 'GIAM50K') {
+                promoDiscount = 50000;
+            }
+            
+            // Tính tổng tiền
+            const deposit = parseInt(document.getElementById('deposit').value) || 0;
+            const subtotal = computerCost + servicesCost;
+            const total = Math.max(0, subtotal - promoDiscount);
+            const remaining = Math.max(0, total - deposit);
+            
+            // Hiển thị hóa đơn
+            const customerId = generateId('KH');
+            document.getElementById('receiptCustomerId').textContent = customerId;
+            document.getElementById('receiptName').textContent = fullName;
+            document.getElementById('receiptPhone').textContent = phone;
+            document.getElementById('receiptComputer').textContent = computer;
+            document.getElementById('receiptTime').textContent = `${formatDateTime(start)} - ${formatDateTime(end)}`;
+            document.getElementById('receiptDuration').textContent = `${durationHours.toFixed(1)} giờ`;
+            document.getElementById('receiptSubtotal').textContent = formatCurrency(subtotal);
+            document.getElementById('receiptPromo').textContent = formatCurrency(promoDiscount);
+            document.getElementById('receiptDeposit').textContent = formatCurrency(deposit);
+            document.getElementById('receiptTotal').textContent = formatCurrency(remaining);
+            
+            // Hiển thị dịch vụ
+            const receiptServices = document.getElementById('receiptServices');
+            receiptServices.innerHTML = '';
+            
+            if (services.length > 0) {
+                services.forEach(service => {
+                    const div = document.createElement('div');
+                    div.className = 'receipt-item';
+                    div.innerHTML = `
+                        <span>${service.name}:</span>
+                        <span>${formatCurrency(service.price)}</span>
+                    `;
+                    receiptServices.appendChild(div);
+                });
+            } else {
+                const div = document.createElement('div');
+                div.className = 'receipt-item';
+                div.textContent = 'Không có dịch vụ đi kèm';
+                receiptServices.appendChild(div);
+            }
+            
+            // Ngày hóa đơn
+            document.getElementById('receiptDate').textContent = `Ngày: ${new Date().toLocaleDateString('vi-VN')} ${new Date().toLocaleTimeString('vi-VN')}`;
+            
+            // Hiển thị hóa đơn
+            document.getElementById('receipt').style.display = 'block';
+            
+            // Lưu giao dịch
+            saveTransaction(customerId, fullName, phone, computer, startTime, endTime, services, subtotal, promoDiscount, total);
+            
+            // Cuộn xuống hóa đơn
+            document.getElementById('receipt').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function resetForm() {
+            document.getElementById('customerForm').reset();
+            document.getElementById('receipt').style.display = 'none';
+            document.getElementById('fullName').focus();
+        }
+        
+        function saveTransaction(customerId, customerName, phone, computer, startTime, endTime, services, subtotal, promo, total) {
+            // Tạo mã giao dịch
+            const transactionId = generateId('GD');
+            
+            // Format dịch vụ
+            const serviceList = services.map(service => `${service.name} - ${formatCurrency(service.price)}`);
+            
+            // Thêm vào lịch sử
+            transactions.unshift({
+                id: transactionId,
+                customerId: customerId,
+                customerName: customerName,
+                phone: phone,
+                computer: computer,
+                startTime: startTime,
+                endTime: endTime,
+                services: serviceList,
+                subtotal: subtotal,
+                promo: promo,
+                total: total
+            });
+            
+            // Cập nhật khách hàng
+            const existingCustomer = customers.find(c => c.phone === phone);
+            if (existingCustomer) {
+                existingCustomer.lastVisit = new Date().toISOString().split('T')[0];
+                existingCustomer.totalSpent += total;
+            } else {
+                customers.push({
+                    id: customerId,
+                    name: customerName,
+                    phone: phone,
+                    email: '',
+                    lastVisit: new Date().toISOString().split('T')[0],
+                    totalSpent: total
+                });
+            }
+            
+            // Cập nhật máy tính
+            const computerName = computer.split(' - ')[0];
+            const computerObj = computers.find(c => c.name === computerName);
+            if (computerObj) {
+                computerObj.customer = customerName;
+                computerObj.startTime = startTime;
+            }
+            
+            // Reload data
+            loadCustomers();
+            loadComputers();
+            loadTransactions();
+        }
+        
+        // ========== QUẢN LÝ KHÁCH HÀNG ==========
+        function loadCustomers() {
+            const customerTable = document.getElementById('customerTable');
+            customerTable.innerHTML = '';
+            
+            customers.forEach(customer => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="customer-id">${customer.id}</span></td>
+                    <td>${customer.name}</td>
+                    <td>${customer.phone}</td>
+                    <td>${customer.lastVisit}</td>
+                    <td>${formatCurrency(customer.totalSpent)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning me-2" onclick="editCustomer('${customer.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteCustomer('${customer.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                customerTable.appendChild(row);
+            });
+            
+            // Cập nhật dropdown lọc khách hàng
+            const customerFilter = document.getElementById('historyCustomerFilter');
+            customerFilter.innerHTML = '<option value="">Tất cả khách hàng</option>';
+            customers.forEach(customer => {
+                const option = document.createElement('option');
+                option.value = customer.id;
+                option.textContent = `${customer.name} (${customer.phone})`;
+                customerFilter.appendChild(option);
+            });
+        }
+        
+        function addCustomer() {
+            const name = document.getElementById('newCustomerName').value;
+            const phone = document.getElementById('newCustomerPhone').value;
+            const email = document.getElementById('newCustomerEmail').value;
+            
+            if (!name || !phone) {
+                alert('Vui lòng điền đầy đủ thông tin khách hàng!');
+                return;
+            }
+            
+            // Kiểm tra trùng số điện thoại
+            if (customers.some(c => c.phone === phone)) {
+                alert('Số điện thoại đã tồn tại trong hệ thống!');
+                return;
+            }
+            
+            // Thêm khách hàng mới
+            const customerId = generateId('KH');
+            customers.push({
+                id: customerId,
+                name: name,
+                phone: phone,
+                email: email,
+                lastVisit: '',
+                totalSpent: 0
+            });
+            
+            // Đóng modal và reload
+            bootstrap.Modal.getInstance(document.getElementById('addCustomerModal')).hide();
+            document.getElementById('newCustomerForm').reset();
+            loadCustomers();
+        }
+        
+        function editCustomer(customerId) {
+            const customer = customers.find(c => c.id === customerId);
+            if (!customer) return;
+            
+            document.getElementById('editCustomerId').value = customer.id;
+            document.getElementById('editCustomerName').value = customer.name;
+            document.getElementById('editCustomerPhone').value = customer.phone;
+            document.getElementById('editCustomerEmail').value = customer.email || '';
+            
+            // Hiển thị modal
+            const modal = new bootstrap.Modal(document.getElementById('editCustomerModal'));
+            modal.show();
+        }
+        
+        function updateCustomer() {
+            const customerId = document.getElementById('editCustomerId').value;
+            const name = document.getElementById('editCustomerName').value;
+            const phone = document.getElementById('editCustomerPhone').value;
+            const email = document.getElementById('editCustomerEmail').value;
+            
+            if (!name || !phone) {
+                alert('Vui lòng điền đầy đủ thông tin khách hàng!');
+                return;
+            }
+            
+            // Cập nhật thông tin
+            const customer = customers.find(c => c.id === customerId);
+            if (customer) {
+                customer.name = name;
+                customer.phone = phone;
+                customer.email = email;
+            }
+            
+            // Đóng modal và reload
+            bootstrap.Modal.getInstance(document.getElementById('editCustomerModal')).hide();
+            loadCustomers();
+        }
+        
+        function deleteCustomer(customerId) {
+            if (confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) {
+                customers = customers.filter(c => c.id !== customerId);
+                loadCustomers();
+            }
+        }
+        
+        // ========== QUẢN LÝ MÁY TÍNH ==========
+        function loadComputers() {
+            const computerTable = document.getElementById('computerTable');
+            computerTable.innerHTML = '';
+            
+            computers.forEach(computer => {
+                let statusBadge;
+                if (computer.status === 'active') {
+                    statusBadge = '<span class="status-active">Đang hoạt động</span>';
+                } else if (computer.status === 'maintenance') {
+                    statusBadge = '<span class="status-maintenance">Bảo trì</span>';
+                } else {
+                    statusBadge = '<span class="status-broken">Hỏng</span>';
+                }
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="customer-id">${computer.id}</span></td>
+                    <td>${computer.name}</td>
+                    <td>${formatCurrency(computer.price)}</td>
+                    <td>${statusBadge}</td>
+                    <td>${computer.customer || '-'}</td>
+                    <td>${computer.startTime ? formatDateTime(computer.startTime) : '-'}</td>
+                    <td>
+                        <button class="btn btn-sm btn-warning me-2" onclick="editComputer('${computer.id}')">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger" onclick="deleteComputer('${computer.id}')">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                computerTable.appendChild(row);
+            });
+        }
+        
+        function addComputer() {
+            const name = document.getElementById('newComputerName').value;
+            const price = parseInt(document.getElementById('newComputerPrice').value);
+            const status = document.getElementById('newComputerStatus').value;
+            
+            if (!name || !price) {
+                alert('Vui lòng điền đầy đủ thông tin máy tính!');
+                return;
+            }
+            
+            // Thêm máy mới
+            const computerId = generateId('MAY');
+            computers.push({
+                id: computerId,
+                name: name,
+                price: price,
+                status: status,
+                customer: '',
+                startTime: ''
+            });
+            
+            // Đóng modal và reload
+            bootstrap.Modal.getInstance(document.getElementById('addComputerModal')).hide();
+            document.getElementById('newComputerForm').reset();
+            loadComputers();
+            
+            // Cập nhật dropdown chọn máy
+            updateComputerDropdown();
+        }
+        
+        function editComputer(computerId) {
+            const computer = computers.find(c => c.id === computerId);
+            if (!computer) return;
+            
+            document.getElementById('editComputerId').value = computer.id;
+            document.getElementById('editComputerName').value = computer.name;
+            document.getElementById('editComputerPrice').value = computer.price;
+            document.getElementById('editComputerStatus').value = computer.status;
+            
+            // Hiển thị modal
+            const modal = new bootstrap.Modal(document.getElementById('editComputerModal'));
+            modal.show();
+        }
+        
+        function updateComputer() {
+            const computerId = document.getElementById('editComputerId').value;
+            const name = document.getElementById('editComputerName').value;
+            const price = parseInt(document.getElementById('editComputerPrice').value);
+            const status = document.getElementById('editComputerStatus').value;
+            
+            if (!name || !price) {
+                alert('Vui lòng điền đầy đủ thông tin máy tính!');
+                return;
+            }
+            
+            // Cập nhật thông tin
+            const computer = computers.find(c => c.id === computerId);
+            if (computer) {
+                computer.name = name;
+                computer.price = price;
+                computer.status = status;
+            }
+            
+            // Đóng modal và reload
+            bootstrap.Modal.getInstance(document.getElementById('editComputerModal')).hide();
+            loadComputers();
+            
+            // Cập nhật dropdown chọn máy
+            updateComputerDropdown();
+        }
+        
+        function deleteComputer(computerId) {
+            if (confirm('Bạn có chắc chắn muốn xóa máy tính này?')) {
+                computers = computers.filter(c => c.id !== computerId);
+                loadComputers();
+                updateComputerDropdown();
+            }
+        }
+        
+        function updateComputerStatuses() {
+            // Đây là hàm mẫu, trong thực tế có thể cập nhật trạng thái từ server
+            alert('Đã cập nhật trạng thái tất cả máy tính!');
+        }
+        
+        function updateComputerDropdown() {
+            const computerSelect = document.getElementById('computerSelect');
+            computerSelect.innerHTML = '<option value="" selected disabled>-- Chọn máy --</option>';
+            
+            computers.filter(c => c.status === 'active').forEach(computer => {
+                const option = document.createElement('option');
+                option.value = computer.id;
+                option.textContent = `${computer.name} - ${formatCurrency(computer.price)}/giờ`;
+                computerSelect.appendChild(option);
+            });
+        }
+        
+        // ========== LỊCH SỬ GIAO DỊCH ==========
+        function loadTransactions() {
+            const historyTable = document.getElementById('historyTable');
+            historyTable.innerHTML = '';
+            
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="customer-id">${transaction.id}</span></td>
+                    <td>${formatDateTime(transaction.startTime)}</td>
+                    <td>${transaction.customerName}<br><small>${transaction.phone}</small></td>
+                    <td>${transaction.computer}</td>
+                    <td>${transaction.services.join('<br>') || '-'}</td>
+                    <td>${formatCurrency(transaction.total)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewTransaction('${transaction.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                historyTable.appendChild(row);
+            });
+        }
+        
+        function filterTransactions() {
+            const dateFilter = document.getElementById('historyDateFilter').value;
+            const customerFilter = document.getElementById('historyCustomerFilter').value;
+            
+            let filtered = [...transactions];
+            
+            if (dateFilter) {
+                filtered = filtered.filter(t => t.startTime.startsWith(dateFilter));
+            }
+            
+            if (customerFilter) {
+                filtered = filtered.filter(t => t.customerId === customerFilter);
+            }
+            
+            const historyTable = document.getElementById('historyTable');
+            historyTable.innerHTML = '';
+            
+            filtered.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><span class="customer-id">${transaction.id}</span></td>
+                    <td>${formatDateTime(transaction.startTime)}</td>
+                    <td>${transaction.customerName}<br><small>${transaction.phone}</small></td>
+                    <td>${transaction.computer}</td>
+                    <td>${transaction.services.join('<br>') || '-'}</td>
+                    <td>${formatCurrency(transaction.total)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-primary" onclick="viewTransaction('${transaction.id}')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                historyTable.appendChild(row);
+            });
+        }
+        
+        function viewTransaction(transactionId) {
+            const transaction = transactions.find(t => t.id === transactionId);
+            if (!transaction) return;
+            
+            document.getElementById('viewTransactionId').textContent = transaction.id;
+            document.getElementById('viewTransactionCustomer').textContent = transaction.customerName;
+            document.getElementById('viewTransactionPhone').textContent = transaction.phone;
+            document.getElementById('viewTransactionComputer').textContent = transaction.computer;
+            document.getElementById('viewTransactionTime').textContent = `${formatDateTime(transaction.startTime)} - ${formatDateTime(transaction.endTime)}`;
+            document.getElementById('viewTransactionDuration').textContent = calculateDuration(transaction.startTime, transaction.endTime);
+            document.getElementById('viewTransactionSubtotal').textContent = formatCurrency(transaction.subtotal);
+            document.getElementById('viewTransactionPromo').textContent = formatCurrency(transaction.promo);
+            document.getElementById('viewTransactionTotal').textContent = formatCurrency(transaction.total);
+            document.getElementById('viewTransactionDate').textContent = `Ngày: ${new Date(transaction.startTime).toLocaleDateString('vi-VN')}`;
+            
+            // Hiển thị dịch vụ
+            const servicesDiv = document.getElementById('viewTransactionServices');
+            servicesDiv.innerHTML = '';
+            
+            if (transaction.services.length > 0) {
+                transaction.services.forEach(service => {
+                    const div = document.createElement('div');
+                    div.className = 'receipt-item';
+                    div.innerHTML = `
+                        <span>${service.split(' - ')[0]}:</span>
+                        <span>${service.split(' - ')[1]}</span>
+                    `;
+                    servicesDiv.appendChild(div);
+                });
+            } else {
+                const div = document.createElement('div');
+                div.className = 'receipt-item';
+                div.textContent = 'Không có dịch vụ đi kèm';
+                servicesDiv.appendChild(div);
+            }
+            
+            // Hiển thị modal
+            const modal = new bootstrap.Modal(document.getElementById('viewTransactionModal'));
+            modal.show();
+        }
+        
+        // ========== QUẢN LÝ GAME & PHẦN MỀM ==========
+        function loadGames() {
+            const gameList = document.getElementById('gameList');
+            const softwareList = document.getElementById('softwareList');
+            
+            gameList.innerHTML = '';
+            softwareList.innerHTML = '';
+            
+            games.forEach(game => {
+                const item = document.createElement('li');
+                item.className = 'list-group-item d-flex justify-content-between align-items-center';
+                item.innerHTML = `
+                    ${game.name}
+                    <span class="badge bg-primary rounded-pill">${game.category}</span>
+                `;
+                gameList.appendChild(item);
+            });
+            
+            software.forEach(soft => {
+                const item = document.createElement('li');
+                item.className = 'list-group-item d-flex justify-content-between align-items-center';
+                item.innerHTML = `
+                    ${soft.name}
+                    <span class="badge bg-primary rounded-pill">${soft.category}</span>
+                `;
+                softwareList.appendChild(item);
+            });
+        }
+        
+        function addGame() {
+            const name = document.getElementById('newGameName').value;
+            const type = document.getElementById('newGameType').value;
+            const category = document.getElementById('newGameCategory').value;
+            
+            if (!name || !type) {
+                alert('Vui lòng điền đầy đủ thông tin!');
+                return;
+            }
+            
+            // Thêm game/phần mềm mới
+            if (type === 'game') {
+                games.push({ name, type, category });
+            } else {
+                software.push({ name, type, category });
+            }
+            
+            // Đóng modal và reload
+            bootstrap.Modal.getInstance(document.getElementById('addGameModal')).hide();
+            document.getElementById('newGameForm').reset();
+            loadGames();
+        }
+    </script>
+</body>
+</html>
