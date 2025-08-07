@@ -33,6 +33,7 @@
 ## 🛠️ Kiến trúc Hệ thống
 
 ```mermaid
+Sơ đồ chức năng ( sơ đồ liên quan đến 3 chức năng )
 classDiagram
     class KhachHang{
         +String maKH
