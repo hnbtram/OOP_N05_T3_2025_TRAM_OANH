@@ -25,10 +25,10 @@
 - ⏱️ Tính giờ sử dụng tự động
 
 #### 💰 Hệ thống Thanh toán
-- 🧮 Tính tiền theo cấu hình máy
+- 🧮 Tính tiền theo thời gian sử dụng
 - 📈 Cộng dồn dịch vụ phát sinh
 - 🖨️ Xuất hóa đơn chi tiết
-- 📉 Cảnh báo số dư thấp
+- 📉 Xem số dư còn lại
 
 ## 🛠️ Kiến trúc Hệ thống
 
