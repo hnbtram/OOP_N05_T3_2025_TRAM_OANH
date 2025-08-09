@@ -1,5 +1,11 @@
 package com.example.servingwebcontent.Model;
+<<<<<<< HEAD
 import java.util.Date;
+=======
+
+import java.util.Date;
+
+>>>>>>> e48f9f2b497fd709c44972d314bb3722dbf49e46
 public class DichVu {
     private String maDichVu;
     private String tenDichVu;

@@ -25,46 +25,19 @@
 - ⏱️ Tính giờ sử dụng tự động
 
 #### 💰 Hệ thống Thanh toán
+<<<<<<< HEAD
 - 🧮 Tính tiền theo thời gian chơi
+=======
+- 🧮 Tính tiền theo thời gian sử dụng
+>>>>>>> e48f9f2b497fd709c44972d314bb3722dbf49e46
 - 📈 Cộng dồn dịch vụ phát sinh
 - 🖨️ Xuất hóa đơn chi tiết
-- 📉 Cảnh báo số dư thấp
+- 📉 Xem số dư còn lại
 
 ## 🛠️ Kiến trúc Hệ thống
 
 ```mermaid
-Sơ đồ chức năng ( sơ đồ liên quan đến 3 chức năng )
-classDiagram
-    class KhachHang{
-        +String maKH
-        +String tenKH
-        +String sdt
-        +double soDu
-        +List<DichVu> dichVuSuDung
-        +themDichVu()
-        +napTien()
-    }
-    
-    class MayTinh{
-        +String maMay
-        +String hangSanXuat
-        +String cauHinh
-        +String trangThai
-        +double giaTien
-        +List<String> phanMem
-        +LocalDateTime thoiGianBatDau
-    }
-    
-    class ThanhToan{
-        +KhachHang khachHang
-        +MayTinh mayTinh
-        +List<DichVu> dichVu
-        +tinhTongTien()
-        +inHoaDon()
-    }
-    
-    KhachHang "1" -- "n" ThanhToan
-    MayTinh "1" -- "1" ThanhToan
+
 ```
 
 ## 🚀 Công nghệ sử dụng
