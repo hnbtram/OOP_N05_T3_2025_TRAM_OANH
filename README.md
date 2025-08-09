@@ -33,38 +33,7 @@
 ## 🛠️ Kiến trúc Hệ thống
 
 ```mermaid
-Sơ đồ chức năng ( sơ đồ liên quan đến 3 chức năng )
-classDiagram
-    class KhachHang{
-        +String maKH
-        +String tenKH
-        +String sdt
-        +double soDu
-        +List<DichVu> dichVuSuDung
-        +themDichVu()
-        +napTien()
-    }
-    
-    class MayTinh{
-        +String maMay
-        +String hangSanXuat
-        +String cauHinh
-        +String trangThai
-        +double giaTien
-        +List<String> phanMem
-        +LocalDateTime thoiGianBatDau
-    }
-    
-    class ThanhToan{
-        +KhachHang khachHang
-        +MayTinh mayTinh
-        +List<DichVu> dichVu
-        +tinhTongTien()
-        +inHoaDon()
-    }
-    
-    KhachHang "1" -- "n" ThanhToan
-    MayTinh "1" -- "1" ThanhToan
+
 ```
 
 ## 🚀 Công nghệ sử dụng
