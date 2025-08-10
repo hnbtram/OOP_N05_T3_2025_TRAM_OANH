@@ -47,11 +47,10 @@ public class DichVu {
     @Override
     public String toString() {
         return "DichVu{" +
-                "maDichVu='" + maDichVu + '\'' +
-                ", tenDichVu='" + tenDichVu + '\'' +
-                ", giaDichVu=" + giaDichVu +
-                ", donViTinh='" + donViTinh + '\'' +
-                ", trangThai=" + trangThai +
+                "maDichVu: '" + maDichVu + '\'' +
+                ", tenDichVu: '" + tenDichVu + '\'' +
+                ", giaDichVu: " + giaDichVu +
+                ", donViTinh: '" + donViTinh + '\'' +
                 '}';
     }
 }
