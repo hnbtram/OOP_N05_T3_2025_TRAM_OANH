@@ -43,4 +43,13 @@ public class KhachHang {
     public void themLichSuDichVu(String dichVu) {
         lichSuDichVu.add(dichVu);
     }
+    private int diemTichLuy = 0;
+
+    public int getDiemTichLuy() {
+        return diemTichLuy;
+    }
+
+    public void setDiemTichLuy(int diemTichLuy) {
+        this.diemTichLuy = diemTichLuy;
+    }
 }

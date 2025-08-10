@@ -83,4 +83,12 @@ public class QuanLyMayTinh {
         }
         return 0;
     }
+    public MayTinh timMayTinhTheoMa(int maMayTinh) {
+    for (MayTinh mt : danhSachMayTinh) {
+        if (mt.getId() == maMayTinh) {
+            return mt;
+        }
+    }
+    return null;
+}
 }

@@ -18,18 +18,19 @@ public class App {
         //test.testKetThucSuDung();
         //test.testXoaMayTinh();
 
-        DichVuServiceTest test = new DichVuServiceTest();
-        test.setUp();
-        test.themDichVu_ThanhCong();
-        test.layTatCaDichVu_CoDuLieu();
-        test.timTheoMa_TonTai();
-        test.timTheoMa_KhongTonTai();
-        test.capNhatDichVu_ThanhCong();
-        test.capNhatDichVu_KhongTonTai();
-        test.xoaDichVu_ThanhCong();
-        test.xoaDichVu_KhongTonTai();
-        test.layDichVuDangHoatDong();
+        //DichVuServiceTest test = new DichVuServiceTest();
+        //test.setUp();
+        //test.themDichVu_ThanhCong();
+        //test.layTatCaDichVu_CoDuLieu();
+        //test.timTheoMa_TonTai();
+        //test.timTheoMa_KhongTonTai();
+        //test.capNhatDichVu_ThanhCong();
+        //test.capNhatDichVu_KhongTonTai();
+        //test.xoaDichVu_ThanhCong();
+        //test.xoaDichVu_KhongTonTai();
+        //test.layDichVuDangHoatDong();
         
+        QuanLyMayTinhTest.testQuanLyMayTinh();
 
 
     }

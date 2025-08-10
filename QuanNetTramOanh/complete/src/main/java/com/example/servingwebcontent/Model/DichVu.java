@@ -9,11 +9,10 @@ public class DichVu {
     private Date ngayTao;
     private Date ngayCapNhat;
 
-    public DichVu(String maDichVu, String tenDichVu, double giaDichVu, String donViTinh) {
+    public DichVu(String maDichVu, String tenDichVu, double giaDichVu) {
         this.maDichVu = maDichVu;
         this.tenDichVu = tenDichVu;
         this.giaDichVu = giaDichVu;
-        this.donViTinh = donViTinh;
         this.trangThai = true;
         this.ngayTao = new Date();
         this.ngayCapNhat = new Date();
@@ -50,7 +49,6 @@ public class DichVu {
                 "maDichVu: '" + maDichVu + '\'' +
                 ", tenDichVu: '" + tenDichVu + '\'' +
                 ", giaDichVu: " + giaDichVu +
-                ", donViTinh: '" + donViTinh + '\'' +
                 '}';
     }
 }
