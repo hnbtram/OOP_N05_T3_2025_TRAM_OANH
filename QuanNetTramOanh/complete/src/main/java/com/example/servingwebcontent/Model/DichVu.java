@@ -22,12 +22,12 @@ public class DichVu {
     // Getter & Setter
     public String getMaDichVu() { return maDichVu; }
     public String getTenDichVu() { return tenDichVu; }
-    public void setTenDichVu(String tenDichVu) { 
+    public void setTenDichVu(int tenDichVu) { 
         this.tenDichVu = tenDichVu; 
         this.ngayCapNhat = new Date();
     }
     public double getGiaDichVu() { return giaDichVu; }
-    public void setGiaDichVu(double giaDichVu) { 
+    public void setGiaDichVu(String giaDichVu) { 
         this.giaDichVu = giaDichVu; 
         this.ngayCapNhat = new Date();
     }

@@ -1,5 +1,9 @@
-import org.junit.jupiter.api.Test;
+package com.example.servingwebcontent;
+
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
+
+import com.example.servingwebcontent.database.KhachHang;
 
 public class KhachHangTest {
     
@@ -7,7 +11,7 @@ public class KhachHangTest {
     public void testKhachHangConstructorAndGetters() {
         KhachHang kh = new KhachHang("KH001", "Nguyễn Văn A", "0123456789", "a@gmail.com");
         
-        assertEquals("KH001", kh.getMaKhachHang());
+        assertEquals("KH001", kh.getMaKhach());
         assertEquals("Nguyễn Văn A", kh.getTenKhachHang());
         assertEquals("0123456789", kh.getSoDienThoai());
         assertEquals("a@gmail.com", kh.getEmail());
@@ -15,13 +19,13 @@ public class KhachHangTest {
     
     @Test
     public void testKhachHangSetters() {
-        KhachHang kh = new KhachHang();
+        KhachHang kh = new KhachHang(0, null, null);
         kh.setMaKhachHang("KH002");
-        kh.setTenKhachHang("Trần Thị B");
+        kh.setMaKhachHang("Trần Thị B");
         kh.setSoDienThoai("0987654321");
         kh.setEmail("b@gmail.com");
         
-        assertEquals("KH002", kh.getMaKhachHang());
+        assertEquals("KH002", kh.getMaKhach());
         assertEquals("Trần Thị B", kh.getTenKhachHang());
         assertEquals("0987654321", kh.getSoDienThoai());
         assertEquals("b@gmail.com", kh.getEmail());

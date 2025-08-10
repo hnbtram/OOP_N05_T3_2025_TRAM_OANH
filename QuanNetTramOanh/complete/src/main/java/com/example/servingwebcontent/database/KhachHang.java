@@ -13,6 +13,10 @@ public class KhachHang {
         this.diemTichLuy = 0;
     }
 
+    public KhachHang(String string, String string2, String string3, String string4) {
+        //TODO Auto-generated constructor stub
+    }
+
     // Phương thức mới sử dụng id
     public String getMaKhach() {
         return "KH" + String.format("%04d", id); // Ví dụ: KH0001
@@ -31,5 +35,35 @@ public class KhachHang {
     // Getter cho id
     public int getId() {
         return id;
+    }
+
+    public Object getSoDienThoai() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getSoDienThoai'");
+    }
+
+    public Object getTenKhachHang() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getTenKhachHang'");
+    }
+
+    public Object getEmail() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
+    }
+
+    public void setMaKhachHang(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setMaKhachHang'");
+    }
+
+    public void setSoDienThoai(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setSoDienThoai'");
+    }
+
+    public void setEmail(String string) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'setEmail'");
     }
 }
