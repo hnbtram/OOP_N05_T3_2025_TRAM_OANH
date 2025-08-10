@@ -19,16 +19,16 @@ public class DichVu {
     }
 
     // Getter & Setter
-    public String getMaDichVu() { return maDichVu; }
-    public String getTenDichVu() { return tenDichVu; }
-    public void setTenDichVu(int tenDichVu) { 
+     public String getTenDichVu() { return tenDichVu; }
+    public void setTenDichVu(String tenDichVu) { 
         this.tenDichVu = tenDichVu; 
         this.ngayCapNhat = new Date();
     }
     public double getGiaDichVu() { return giaDichVu; }
-    public void setGiaDichVu(String giaDichVu) { 
+    public void setGiaDichVu(double giaDichVu) { 
         this.giaDichVu = giaDichVu; 
         this.ngayCapNhat = new Date();
+    
     }
     public String getDonViTinh() { return donViTinh; }
     public void setDonViTinh(String donViTinh) { 
@@ -42,6 +42,9 @@ public class DichVu {
     }
     public Date getNgayTao() { return ngayTao; }
     public Date getNgayCapNhat() { return ngayCapNhat; }
+    public String getMaDichVu() {
+    return this.maDichVu;
+}
 
     @Override
     public String toString() {

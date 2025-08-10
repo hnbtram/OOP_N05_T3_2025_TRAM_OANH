@@ -33,8 +33,8 @@ public class DichVuService {
         Optional<DichVu> dichVuCu = timTheoMa(maDichVu);
         if (dichVuCu.isPresent()) {
             DichVu dv = dichVuCu.get();
-            dv.setTenDichVu(dichVuMoi.getTenDichVu());
-            dv.setGiaDichVu(dichVuMoi.getGiaDichVu());
+            dv.setTenDichVu(dichVuMoi.getTenDichVu());      // Đảm bảo setTenDichVu nhận String
+            dv.setGiaDichVu(dichVuMoi.getGiaDichVu());      // Đảm bảo setGiaDichVu nhận double
             dv.setDonViTinh(dichVuMoi.getDonViTinh());
             dv.setTrangThai(dichVuMoi.isTrangThai());
             return true;

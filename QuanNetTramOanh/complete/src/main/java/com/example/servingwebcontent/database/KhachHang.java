@@ -14,7 +14,11 @@ public class KhachHang {
     }
 
     public KhachHang(String string, String string2, String string3, String string4) {
-        //TODO Auto-generated constructor stub
+        // Constructor for creating a KhachHang object with specific parameters
+        this.id = Integer.parseInt(string); // Assuming string is a valid integer ID
+        this.ten = string2;
+        this.sdt = string3;
+        this.diemTichLuy = Integer.parseInt(string4); // Assuming string4 is a valid integer for diemTichLuy
     }
 
     // Phương thức mới sử dụng id
@@ -38,32 +42,27 @@ public class KhachHang {
     }
 
     public Object getSoDienThoai() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getSoDienThoai'");
+        return sdt;
     }
 
     public Object getTenKhachHang() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getTenKhachHang'");
+        return ten;
     }
-
-    public Object getEmail() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getEmail'");
+    public void setTenKhachHang(String ten) {
+        this.ten = ten;
     }
 
     public void setMaKhachHang(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setMaKhachHang'");
+       
+      
     }
 
     public void setSoDienThoai(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setSoDienThoai'");
+        this.sdt = string;
     }
 
-    public void setEmail(String string) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'setEmail'");
+    public String getMaKhachHang() {
+        return getMaKhach();
     }
+
 }
