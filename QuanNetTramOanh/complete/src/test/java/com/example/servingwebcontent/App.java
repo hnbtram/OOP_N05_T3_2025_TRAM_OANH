@@ -30,8 +30,8 @@ public class App {
         //test.xoaDichVu_KhongTonTai();
         //test.layDichVuDangHoatDong();
         
-        QuanLyMayTinhTest.testQuanLyMayTinh();
+       // QuanLyMayTinhTest.testQuanLyMayTinh();
 
-
-    }
 }
+}
+    
