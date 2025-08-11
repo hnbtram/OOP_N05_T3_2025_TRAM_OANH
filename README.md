@@ -33,7 +33,7 @@
 ## 🛠️ Sơ đồ
 
 ### Sơ đồ class diagram
-
+<img src = "picture/class diagram.png">
 
 ## 🚀 Công nghệ sử dụng
 - **Ngôn ngữ**: Java 17
