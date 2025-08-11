@@ -42,6 +42,15 @@
 #### CRUD_MayTinh
 <img src ="picture/crud_maytinh.png">
 
+#### CRUD_ThanhToan
+<img src ="picture/Crub_ThanhToan.png">
+
+#### CRUD_DichVu
+<img src ="picture/Crub_ThueMay.png">
+
+#### CRUD_ThueMay
+<img src ="picture/Crub_GiaoDich.pnd">
+
 ## 🚀 Công nghệ sử dụng
 - **Ngôn ngữ**: Java 17
 - **Mô hình**: OOP 
