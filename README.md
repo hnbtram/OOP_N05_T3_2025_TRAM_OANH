@@ -25,20 +25,15 @@
 - ⏱️ Tính giờ sử dụng tự động
 
 #### 💰 Hệ thống Thanh toán
-<<<<<<< HEAD
-- 🧮 Tính tiền theo thời gian chơi
-=======
 - 🧮 Tính tiền theo thời gian sử dụng
->>>>>>> e48f9f2b497fd709c44972d314bb3722dbf49e46
 - 📈 Cộng dồn dịch vụ phát sinh
 - 🖨️ Xuất hóa đơn chi tiết
 - 📉 Xem số dư còn lại
 
-## 🛠️ Kiến trúc Hệ thống
+## 🛠️ Sơ đồ
 
-```mermaid
+### Sơ đồ class diagram
 
-```
 
 ## 🚀 Công nghệ sử dụng
 - **Ngôn ngữ**: Java 17
