@@ -49,7 +49,7 @@
 <img src ="picture/Crub_ThueMay.png">
 
 #### CRUD_ThueMay
-<img src ="picture/Crub_GiaoDich.pnd">
+<img src ="picture/Crub_GiaoDich.png">
 
 ## 🚀 Công nghệ sử dụng
 - **Ngôn ngữ**: Java 17
