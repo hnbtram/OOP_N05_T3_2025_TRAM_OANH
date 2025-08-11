@@ -7,7 +7,6 @@ public class App {
     QuanLyThanhToanTest.testQuanLyThanhToan();
 
         
-        
-
-    }
 }
+}
+    
