@@ -43,7 +43,7 @@
 <img src ="picture/crud_maytinh.png">
 
 #### CRUD_ThanhToan
-<img src ="picture/Crub_ThanhToan.png">
+<img src ="picture/Crud_ThanhToan.png">
 
 #### CRUD_DichVu
 <img src ="picture/Crub_ThueMay.png">
