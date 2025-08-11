@@ -33,7 +33,14 @@
 ## 🛠️ Sơ đồ
 
 ### Sơ đồ class diagram
-<img src = "picture/class diagram.png">
+<img src = "picture/class_diagram.png">
+
+### Sơ đồ activiy
+#### CRUD_KhachHang
+<img src = "picture/crud_khachhang.png">
+
+#### CRUD_MayTinh
+<img src ="picture/crud_maytinh.png">
 
 ## 🚀 Công nghệ sử dụng
 - **Ngôn ngữ**: Java 17
