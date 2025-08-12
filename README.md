@@ -36,19 +36,19 @@
 <img src = "picture/class_diagram.png">
 
 ### Sơ đồ activiy
-##### 1.CRUD_KhachHang
+##### 1. CRUD_KhachHang
 <img src = "picture/crud_khachhang.png">
 
-##### 2.CRUD_MayTinh
+##### 2. CRUD_MayTinh
 <img src ="picture/crud_maytinh.png">
 
-##### 3.CRUD_ThanhToan
+##### 3. CRUD_ThanhToan
 <img src ="picture/Crud_ThanhToan.png">
 
-##### 4.CRUD_DichVu
+##### 4. CRUD_DichVu
 <img src ="picture/Crub_ThueMay.png">
 
-##### 5.CRUD_ThueMay
+##### 5. CRUD_ThueMay
 <img src ="picture/Crub_GiaoDich.png">
 
 ## 🚀 Công nghệ sử dụng
