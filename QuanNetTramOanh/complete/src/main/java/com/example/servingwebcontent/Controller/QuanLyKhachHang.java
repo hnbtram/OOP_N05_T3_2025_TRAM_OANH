@@ -1,10 +1,7 @@
 package com.example.servingwebcontent.Controller;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import com.example.servingwebcontent.Model.KhachHang;
-
 public class QuanLyKhachHang {
     private List<KhachHang> danhSachKhachHang;
 
@@ -27,6 +24,18 @@ public class QuanLyKhachHang {
                 .orElse(null);
     }
 
+    public boolean capNhatKhachHang(String maKhachHang, KhachHang khachHangMoi) {
+        for (KhachHang kh : danhSachKhachHang) {
+            if (kh.getMaKhachHang().equals(maKhachHang)) {
+                kh.setTenKhachHang(khachHangMoi.getTenKhachHang());
+                kh.setSoDienThoai(khachHangMoi.getSoDienThoai());
+                // Nếu có thuộc tính khác cần cập nhật, thêm vào đây
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public List<KhachHang> getDanhSachKhachHang() {
         return new ArrayList<>(danhSachKhachHang);
     }
@@ -50,15 +59,5 @@ public class QuanLyKhachHang {
             System.out.println("Không tìm thấy khách hàng với mã: " + maKhachHang);
         }
     }
-    public boolean capNhatKhachHang(String maKhachHang, KhachHang khachHangMoi) {
-        for (KhachHang kh : danhSachKhachHang) {
-            if (kh.getMaKhachHang().equals(maKhachHang)) {
-                kh.setTenKhachHang(khachHangMoi.getTenKhachHang());
-                kh.setSoDienThoai(khachHangMoi.getSoDienThoai());
-                // Nếu có thuộc tính khác cần cập nhật, thêm vào đây
-                return true;
-            }
-        }
-        return false;
-    }
+    
 }

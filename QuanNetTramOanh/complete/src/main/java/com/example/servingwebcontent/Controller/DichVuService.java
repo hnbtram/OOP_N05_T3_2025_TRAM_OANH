@@ -10,25 +10,21 @@ import java.util.Optional;
 public class DichVuService {
     private final List<DichVu> danhSachDichVu = new ArrayList<>();
 
-    // CREATE
     public DichVu themDichVu(DichVu dichVu) {
         danhSachDichVu.add(dichVu);
         return dichVu;
     }
 
-    // READ ALL
     public List<DichVu> layTatCaDichVu() {
         return new ArrayList<>(danhSachDichVu);
     }
 
-    // READ BY ID
     public Optional<DichVu> timTheoMa(String maDichVu) {
         return danhSachDichVu.stream()
                 .filter(dv -> dv.getMaDichVu().equals(maDichVu))
                 .findFirst();
     }
 
-    // UPDATE
     public boolean capNhatDichVu(String maDichVu, DichVu dichVuMoi) {
         Optional<DichVu> dichVuCu = timTheoMa(maDichVu);
         if (dichVuCu.isPresent()) {
@@ -42,7 +38,6 @@ public class DichVuService {
         return false;
     }
 
-    // DELETE (soft delete by changing status)
     public boolean xoaDichVu(String maDichVu) {
         Optional<DichVu> dichVu = timTheoMa(maDichVu);
         if (dichVu.isPresent()) {

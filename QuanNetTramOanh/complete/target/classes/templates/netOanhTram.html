@@ -25,6 +25,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f5f7ff;
             color: var(--dark-color);
+            padding-bottom: 70px;
         }
         
         .header {
@@ -271,6 +272,13 @@
             margin-top: 2rem;
         }
         
+        .reset-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        
         @media print {
             body * {
                 visibility: hidden;
@@ -392,7 +400,7 @@
                 <div class="receipt mt-4" id="receipt">
                     <div class="receipt-header">
                         <h3 class="receipt-title">QUÁN NET TRÂM OANH</h3>
-                        <p>123 Đường ABC, Quận XYZ, TP. HCM</p>
+                        <p>23 Trích Sài, Quận Tây Hồ, Hà Nội</p>
                         <p>Hotline: 0909 123 456</p>
                         <p id="receiptDate"></p>
                     </div>
@@ -901,7 +909,7 @@
                     <div class="receipt">
                         <div class="receipt-header">
                             <h3 class="receipt-title">QUÁN NET TRÂM OANH</h3>
-                            <p>123 Đường ABC, Quận XYZ, TP. HCM</p>
+                            <p>23 Trích Sài, Quận Tây Hồ, Hà Nội</p>
                             <p>Hotline: 0909 123 456</p>
                             <p id="viewTransactionDate"></p>
                         </div>
@@ -967,81 +975,58 @@
         </div>
     </div>
 
+    <!-- Reset Button -->
+    <button class="btn btn-danger reset-btn" onclick="resetAllData()">
+        <i class="fas fa-trash me-2"></i>Reset Data
+    </button>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Dữ liệu mẫu
-        let customers = [
-            { id: 'KH001', name: 'Nguyễn Văn A', phone: '0909123456', email: '', lastVisit: '2023-07-20', totalSpent: 250000 },
-            { id: 'KH002', name: 'Trần Thị B', phone: '0918123456', email: 'tranthiB@gmail.com', lastVisit: '2023-07-18', totalSpent: 180000 },
-            { id: 'KH003', name: 'Lê Văn C', phone: '0987123456', email: '', lastVisit: '2023-07-15', totalSpent: 320000 }
-        ];
-        
-        let computers = [
-            { id: 'MAY001', name: 'Máy 1', price: 15000, status: 'active', customer: '', startTime: '' },
-            { id: 'MAY002', name: 'Máy 2', price: 20000, status: 'active', customer: '', startTime: '' },
-            { id: 'MAY003', name: 'Máy VIP', price: 30000, status: 'active', customer: '', startTime: '' },
-            { id: 'MAY004', name: 'Máy 3', price: 15000, status: 'maintenance', customer: '', startTime: '' },
-            { id: 'MAY005', name: 'Máy 4', price: 20000, status: 'broken', customer: '', startTime: '' }
-        ];
-        
-        let services = [
-            { id: 'DV001', name: 'Nước suối', price: 10000, status: 'active' },
-            { id: 'DV002', name: 'Nước ngọt', price: 15000, status: 'active' },
-            { id: 'DV003', name: 'Bánh snack', price: 20000, status: 'active' },
-            { id: 'DV004', name: 'Mì gói', price: 25000, status: 'active' }
-        ];
-        
-        let transactions = [
-            { id: 'GD001', customerId: 'KH001', customerName: 'Nguyễn Văn A', phone: '0909123456', 
-              computer: 'Máy VIP - 30.000đ/giờ', startTime: '2023-07-20 10:00', endTime: '2023-07-20 12:30',
-              services: ['Nước suối - 10.000đ', 'Bánh snack - 20.000đ'], subtotal: 125000, promo: 0, total: 125000 },
-            { id: 'GD002', customerId: 'KH002', customerName: 'Trần Thị B', phone: '0918123456', 
-              computer: 'Máy 2 - 20.000đ/giờ', startTime: '2023-07-18 14:00', endTime: '2023-07-18 16:00',
-              services: ['Nước ngọt - 15.000đ'], subtotal: 55000, promo: 5000, total: 50000 },
-            { id: 'GD003', customerId: 'KH003', customerName: 'Lê Văn C', phone: '0987123456', 
-              computer: 'Máy 1 - 15.000đ/giờ', startTime: '2023-07-15 09:00', endTime: '2023-07-15 13:00',
-              services: ['Mì gói - 25.000đ', 'Nước ngọt - 15.000đ'], subtotal: 100000, promo: 0, total: 100000 }
-        ];
-        
-        let games = [
-            { name: 'Liên Minh Huyền Thoại', type: 'game', category: 'MOBA' },
-            { name: 'PUBG', type: 'game', category: 'Battle Royale' },
-            { name: 'Valorant', type: 'game', category: 'FPS' },
-            { name: 'FIFA Online 4', type: 'game', category: 'Thể thao' },
-            { name: 'Genshin Impact', type: 'game', category: 'Nhập vai' }
-        ];
-        
-        let software = [
-            { name: 'Microsoft Office', type: 'software', category: 'Văn phòng' },
-            { name: 'Photoshop', type: 'software', category: 'Đồ họa' },
-            { name: 'Visual Studio Code', type: 'software', category: 'Lập trình' },
-            { name: 'Zoom', type: 'software', category: 'Họp trực tuyến' },
-            { name: 'Chrome', type: 'software', category: 'Trình duyệt' }
-        ];
-        
+        // ========== DATA STORAGE ==========
         // Khởi tạo dữ liệu
-        document.addEventListener('DOMContentLoaded', function() {
-            loadCustomers();
-            loadComputers();
-            loadServices();
-            loadTransactions();
-            loadGames();
-            
-            // Tự động điền thời gian kết thúc khi chọn thời gian bắt đầu
-            document.getElementById('startTime').addEventListener('change', function() {
-                const startTime = new Date(this.value);
-                if (!isNaN(startTime.getTime())) {
-                    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // +1 giờ
-                    document.getElementById('endTime').value = endTime.toISOString().slice(0, 16);
-                }
-            });
-            
-            // Lọc lịch sử
-            document.getElementById('historyDateFilter').addEventListener('change', filterTransactions);
-            document.getElementById('historyCustomerFilter').addEventListener('change', filterTransactions);
-        });
+        let customers = [];
+        let computers = [];
+        let services = [];
+        let transactions = [];
+        let games = [];
+        let software = [];
         
-        // ========== CÁC HÀM CHUNG ==========
+        // Hàm lưu dữ liệu vào localStorage
+        function saveDataToLocalStorage() {
+            localStorage.setItem('netTramOanh_customers', JSON.stringify(customers));
+            localStorage.setItem('netTramOanh_computers', JSON.stringify(computers));
+            localStorage.setItem('netTramOanh_services', JSON.stringify(services));
+            localStorage.setItem('netTramOanh_transactions', JSON.stringify(transactions));
+            localStorage.setItem('netTramOanh_games', JSON.stringify(games));
+            localStorage.setItem('netTramOanh_software', JSON.stringify(software));
+        }
+        
+        // Hàm tải dữ liệu từ localStorage
+        function loadDataFromLocalStorage() {
+            const savedCustomers = localStorage.getItem('netTramOanh_customers');
+            const savedComputers = localStorage.getItem('netTramOanh_computers');
+            const savedServices = localStorage.getItem('netTramOanh_services');
+            const savedTransactions = localStorage.getItem('netTramOanh_transactions');
+            const savedGames = localStorage.getItem('netTramOanh_games');
+            const savedSoftware = localStorage.getItem('netTramOanh_software');
+            
+            if (savedCustomers) customers = JSON.parse(savedCustomers);
+            if (savedComputers) computers = JSON.parse(savedComputers);
+            if (savedServices) services = JSON.parse(savedServices);
+            if (savedTransactions) transactions = JSON.parse(savedTransactions);
+            if (savedGames) games = JSON.parse(savedGames);
+            if (savedSoftware) software = JSON.parse(savedSoftware);
+        }
+        
+        // Hàm reset tất cả dữ liệu
+        function resetAllData() {
+            if (confirm('Bạn có chắc chắn muốn xóa TẤT CẢ dữ liệu? Hành động này không thể hoàn tác!')) {
+                localStorage.clear();
+                location.reload(); // Tải lại trang để sử dụng dữ liệu mẫu
+            }
+        }
+        
+        // ========== UTILITY FUNCTIONS ==========
         function formatCurrency(amount) {
             return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
         }
@@ -1063,7 +1048,98 @@
             return prefix + Math.floor(1000 + Math.random() * 9000);
         }
         
-        // ========== TÍNH TOÁN HÓA ĐƠN ==========
+        // ========== INITIALIZATION ==========
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tải dữ liệu từ localStorage (nếu có)
+            loadDataFromLocalStorage();
+            
+            // Nếu không có dữ liệu, sử dụng dữ liệu mẫu
+            if (customers.length === 0) {
+                customers = [
+                    { id: 'KH001', name: 'Nguyễn Văn A', phone: '0909123456', email: '', lastVisit: '2023-07-20', totalSpent: 250000 },
+                    { id: 'KH002', name: 'Trần Thị B', phone: '0918123456', email: 'tranthiB@gmail.com', lastVisit: '2023-07-18', totalSpent: 180000 },
+                    { id: 'KH003', name: 'Lê Văn C', phone: '0987123456', email: '', lastVisit: '2023-07-15', totalSpent: 320000 }
+                ];
+            }
+            
+            if (computers.length === 0) {
+                computers = [
+                    { id: 'MAY001', name: 'Máy 1', price: 15000, status: 'active', customer: '', startTime: '' },
+                    { id: 'MAY002', name: 'Máy 2', price: 20000, status: 'active', customer: '', startTime: '' },
+                    { id: 'MAY003', name: 'Máy VIP', price: 30000, status: 'active', customer: '', startTime: '' },
+                    { id: 'MAY004', name: 'Máy 3', price: 15000, status: 'maintenance', customer: '', startTime: '' },
+                    { id: 'MAY005', name: 'Máy 4', price: 20000, status: 'broken', customer: '', startTime: '' }
+                ];
+            }
+            
+            if (services.length === 0) {
+                services = [
+                    { id: 'DV001', name: 'Nước suối', price: 10000, status: 'active' },
+                    { id: 'DV002', name: 'Nước ngọt', price: 15000, status: 'active' },
+                    { id: 'DV003', name: 'Bánh snack', price: 20000, status: 'active' },
+                    { id: 'DV004', name: 'Mì gói', price: 25000, status: 'active' }
+                ];
+            }
+            
+            if (transactions.length === 0) {
+                transactions = [
+                    { id: 'GD001', customerId: 'KH001', customerName: 'Nguyễn Văn A', phone: '0909123456', 
+                      computer: 'Máy VIP - 30.000đ/giờ', startTime: '2023-07-20 10:00', endTime: '2023-07-20 12:30',
+                      services: ['Nước suối - 10.000đ', 'Bánh snack - 20.000đ'], subtotal: 125000, promo: 0, total: 125000 },
+                    { id: 'GD002', customerId: 'KH002', customerName: 'Trần Thị B', phone: '0918123456', 
+                      computer: 'Máy 2 - 20.000đ/giờ', startTime: '2023-07-18 14:00', endTime: '2023-07-18 16:00',
+                      services: ['Nước ngọt - 15.000đ'], subtotal: 55000, promo: 5000, total: 50000 },
+                    { id: 'GD003', customerId: 'KH003', customerName: 'Lê Văn C', phone: '0987123456', 
+                      computer: 'Máy 1 - 15.000đ/giờ', startTime: '2023-07-15 09:00', endTime: '2023-07-15 13:00',
+                      services: ['Mì gói - 25.000đ', 'Nước ngọt - 15.000đ'], subtotal: 100000, promo: 0, total: 100000 }
+                ];
+            }
+            
+            if (games.length === 0) {
+                games = [
+                    { name: 'Liên Minh Huyền Thoại', type: 'game', category: 'MOBA' },
+                    { name: 'PUBG', type: 'game', category: 'Battle Royale' },
+                    { name: 'Valorant', type: 'game', category: 'FPS' },
+                    { name: 'FIFA Online 4', type: 'game', category: 'Thể thao' },
+                    { name: 'Genshin Impact', type: 'game', category: 'Nhập vai' }
+                ];
+            }
+            
+            if (software.length === 0) {
+                software = [
+                    { name: 'Microsoft Office', type: 'software', category: 'Văn phòng' },
+                    { name: 'Photoshop', type: 'software', category: 'Đồ họa' },
+                    { name: 'Visual Studio Code', type: 'software', category: 'Lập trình' },
+                    { name: 'Zoom', type: 'software', category: 'Họp trực tuyến' },
+                    { name: 'Chrome', type: 'software', category: 'Trình duyệt' }
+                ];
+            }
+            
+            // Lưu dữ liệu mẫu vào localStorage (nếu chưa có)
+            saveDataToLocalStorage();
+            
+            // Load dữ liệu lên giao diện
+            loadCustomers();
+            loadComputers();
+            loadServices();
+            loadTransactions();
+            loadGames();
+            
+            // Tự động điền thời gian kết thúc khi chọn thời gian bắt đầu
+            document.getElementById('startTime').addEventListener('change', function() {
+                const startTime = new Date(this.value);
+                if (!isNaN(startTime.getTime())) {
+                    const endTime = new Date(startTime.getTime() + 60 * 60 * 1000); // +1 giờ
+                    document.getElementById('endTime').value = endTime.toISOString().slice(0, 16);
+                }
+            });
+            
+            // Lọc lịch sử
+            document.getElementById('historyDateFilter').addEventListener('change', filterTransactions);
+            document.getElementById('historyCustomerFilter').addEventListener('change', filterTransactions);
+        });
+        
+        // ========== BOOKING & BILLING ==========
         function calculateBill() {
             // Lấy thông tin khách hàng
             const fullName = document.getElementById('fullName').value;
@@ -1118,11 +1194,11 @@
                 promoDiscount = 50000;
             }
             
-            // Tính tổng tiền
+            // Tính tổng tiền và tiền còn lại
             const deposit = parseInt(document.getElementById('deposit').value) || 0;
             const subtotal = computerCost + servicesCost;
-            const total = Math.max(0, subtotal - promoDiscount);
-            const remaining = Math.max(0, total - deposit);
+            const totalAfterPromo = Math.max(0, subtotal - promoDiscount);
+            const remaining = totalAfterPromo - deposit;
             
             // Hiển thị hóa đơn
             const customerId = generateId('KH');
@@ -1135,7 +1211,15 @@
             document.getElementById('receiptSubtotal').textContent = formatCurrency(subtotal);
             document.getElementById('receiptPromo').textContent = formatCurrency(promoDiscount);
             document.getElementById('receiptDeposit').textContent = formatCurrency(deposit);
-            document.getElementById('receiptTotal').textContent = formatCurrency(remaining);
+            
+            // Hiển thị số tiền còn lại hoặc thừa
+            if (remaining > 0) {
+                document.getElementById('receiptTotal').textContent = `Còn phải trả: ${formatCurrency(remaining)}`;
+            } else if (remaining < 0) {
+                document.getElementById('receiptTotal').textContent = ` ${formatCurrency(Math.abs(remaining))}`;
+            } else {
+                document.getElementById('receiptTotal').textContent = `Đã thanh toán đủ`;
+            }
             
             // Hiển thị dịch vụ
             const receiptServices = document.getElementById('receiptServices');
@@ -1165,7 +1249,7 @@
             document.getElementById('receipt').style.display = 'block';
             
             // Lưu giao dịch
-            saveTransaction(customerId, fullName, phone, computer, startTime, endTime, selectedServices, subtotal, promoDiscount, total);
+            saveTransaction(customerId, fullName, phone, computer, startTime, endTime, selectedServices, subtotal, promoDiscount, totalAfterPromo);
             
             // Cuộn xuống hóa đơn
             document.getElementById('receipt').scrollIntoView({ behavior: 'smooth' });
@@ -1223,13 +1307,16 @@
                 computerObj.startTime = startTime;
             }
             
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
+            
             // Reload data
             loadCustomers();
             loadComputers();
             loadTransactions();
         }
         
-        // ========== QUẢN LÝ KHÁCH HÀNG ==========
+        // ========== CUSTOMER MANAGEMENT ==========
         function loadCustomers() {
             const customerTable = document.getElementById('customerTable');
             customerTable.innerHTML = '';
@@ -1292,6 +1379,9 @@
                 totalSpent: 0
             });
             
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
+            
             // Đóng modal và reload
             bootstrap.Modal.getInstance(document.getElementById('addCustomerModal')).hide();
             document.getElementById('newCustomerForm').reset();
@@ -1331,6 +1421,9 @@
                 customer.email = email;
             }
             
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
+            
             // Đóng modal và reload
             bootstrap.Modal.getInstance(document.getElementById('editCustomerModal')).hide();
             loadCustomers();
@@ -1339,11 +1432,15 @@
         function deleteCustomer(customerId) {
             if (confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) {
                 customers = customers.filter(c => c.id !== customerId);
+                
+                // Lưu dữ liệu vào localStorage
+                saveDataToLocalStorage();
+                
                 loadCustomers();
             }
         }
         
-        // ========== QUẢN LÝ MÁY TÍNH ==========
+        // ========== COMPUTER MANAGEMENT ==========
         function loadComputers() {
             const computerTable = document.getElementById('computerTable');
             computerTable.innerHTML = '';
@@ -1403,6 +1500,9 @@
                 startTime: ''
             });
             
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
+            
             // Đóng modal và reload
             bootstrap.Modal.getInstance(document.getElementById('addComputerModal')).hide();
             document.getElementById('newComputerForm').reset();
@@ -1442,6 +1542,9 @@
                 computer.status = status;
             }
             
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
+            
             // Đóng modal và reload
             bootstrap.Modal.getInstance(document.getElementById('editComputerModal')).hide();
             loadComputers();
@@ -1450,6 +1553,10 @@
         function deleteComputer(computerId) {
             if (confirm('Bạn có chắc chắn muốn xóa máy tính này?')) {
                 computers = computers.filter(c => c.id !== computerId);
+                
+                // Lưu dữ liệu vào localStorage
+                saveDataToLocalStorage();
+                
                 loadComputers();
             }
         }
@@ -1457,6 +1564,9 @@
         function updateComputerStatuses() {
             // Đây là hàm mẫu, trong thực tế có thể cập nhật trạng thái từ server
             alert('Đã cập nhật trạng thái tất cả máy tính!');
+            
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
         }
         
         function updateComputerDropdown() {
@@ -1471,7 +1581,7 @@
             });
         }
         
-        // ========== QUẢN LÝ DỊCH VỤ ==========
+        // ========== SERVICE MANAGEMENT ==========
         function loadServices() {
             const serviceTable = document.getElementById('serviceTable');
             serviceTable.innerHTML = '';
@@ -1524,6 +1634,9 @@
                 status: status
             });
             
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
+            
             // Đóng modal và reload
             bootstrap.Modal.getInstance(document.getElementById('addServiceModal')).hide();
             document.getElementById('newServiceForm').reset();
@@ -1563,6 +1676,9 @@
                 service.status = status;
             }
             
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
+            
             // Đóng modal và reload
             bootstrap.Modal.getInstance(document.getElementById('editServiceModal')).hide();
             loadServices();
@@ -1571,6 +1687,10 @@
         function deleteService(serviceId) {
             if (confirm('Bạn có chắc chắn muốn xóa dịch vụ này?')) {
                 services = services.filter(s => s.id !== serviceId);
+                
+                // Lưu dữ liệu vào localStorage
+                saveDataToLocalStorage();
+                
                 loadServices();
             }
         }
@@ -1587,7 +1707,7 @@
             });
         }
         
-        // ========== LỊCH SỬ GIAO DỊCH ==========
+        // ========== TRANSACTION HISTORY ==========
         function loadTransactions() {
             const historyTable = document.getElementById('historyTable');
             historyTable.innerHTML = '';
@@ -1688,7 +1808,7 @@
             modal.show();
         }
         
-        // ========== QUẢN LÝ GAME & PHẦN MỀM ==========
+        // ========== GAME & SOFTWARE MANAGEMENT ==========
         function loadGames() {
             const gameList = document.getElementById('gameList');
             const softwareList = document.getElementById('softwareList');
@@ -1733,6 +1853,9 @@
             } else {
                 software.push({ name, type, category });
             }
+            
+            // Lưu dữ liệu vào localStorage
+            saveDataToLocalStorage();
             
             // Đóng modal và reload
             bootstrap.Modal.getInstance(document.getElementById('addGameModal')).hide();
