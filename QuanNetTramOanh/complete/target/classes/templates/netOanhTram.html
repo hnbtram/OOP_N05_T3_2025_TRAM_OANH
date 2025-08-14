@@ -154,6 +154,7 @@
         .computer-card.status-active .card-header { background-color: #27ae60; color: white; }
         .computer-card.status-maintenance .card-header { background-color: #f1c40f; color: var(--text-dark); }
         .computer-card.status-broken .card-header { background-color: #e74c3c; color: white; }
+        .computer-card.type-vip { border: 2px solid #e67e22; } /* VIP styling */
 
         .status-badge.bg-success { background-color: #2ecc71 !important; }
         .status-badge.bg-secondary { background-color: #7f8c8d !important; }
@@ -246,6 +247,50 @@
             align-items: center;
             margin-bottom: 15px;
         }
+        
+        /* Cải thiện giao diện cho trang chủ */
+        .dashboard-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        /* Modal hóa đơn */
+        .invoice-details strong {
+            font-weight: 600;
+        }
+
+        /* Thống kê */
+        .chart-bar {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            position: relative;
+        }
+        .chart-bar-value {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+        }
+        .bar {
+            background-color: var(--primary-color);
+            width: 50px;
+            transition: height 0.5s ease-in-out;
+            border-radius: 5px 5px 0 0;
+            position: relative;
+        }
+        .bar-label {
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 <body>
@@ -258,7 +303,7 @@
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <a class="nav-link active" id="booking-tab" data-bs-toggle="tab" data-bs-target="#booking" type="button" role="tab">
-                <i class="fas fa-desktop me-2"></i>Dashboard
+                <i class="fas fa-desktop me-2"></i>Trang chủ
             </a>
         </li>
         <li class="nav-item" role="presentation">
@@ -308,6 +353,13 @@
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Số điện thoại</label>
                                 <input type="tel" class="form-control" id="phone" placeholder="Nhập SĐT khách hàng" pattern="^(0?)(3[2-9]|5[6|8|9]|7[0|6-9]|8[0-6|8|9]|9[0-4|6-9])[0-9]{7}$" required>
+                                <div class="invalid-feedback">Số điện thoại không hợp lệ (ví dụ: 0912345678).</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="bookingComputerId" class="form-label">Chọn máy</label>
+                                <select class="form-select" id="bookingComputerId" required>
+                                    <option value="">-- Chọn máy tính --</option>
+                                    </select>
                             </div>
                         </form>
                         
@@ -319,21 +371,27 @@
         
                         <div class="d-grid gap-2">
                             <button class="btn btn-primary" type="button" onclick="startSession()">
-                                Bắt đầu phiên mới
+                                <i class="fas fa-play-circle me-2"></i>Bắt đầu phiên mới
                             </button>
                             <button class="btn btn-secondary" type="button" onclick="resetBookingForm()">
-                                Đặt lại
+                                <i class="fas fa-redo me-2"></i>Đặt lại
                             </button>
                         </div>
                     </div>
                 </div>
         
                 <div class="col-md-8">
-                    <h4 class="mb-3">
-                        <i class="fas fa-desktop me-2 text-primary"></i>Quản lý máy tính
-                        <small class="text-muted ms-2">(Chọn máy để bắt đầu phiên)</small>
-                    </h4>
-                    <div id="computersDashboard" class="row">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="mb-0">
+                            <i class="fas fa-desktop me-2 text-primary"></i>Quản lý máy tính
+                        </h4>
+                        <select id="sortComputers" class="form-select w-auto" onchange="renderBookingDashboard()">
+                            <option value="default">Sắp xếp theo mặc định</option>
+                            <option value="price_asc">Giá tăng dần</option>
+                            <option value="price_desc">Giá giảm dần</option>
+                        </select>
+                    </div>
+                    <div id="computersDashboard" class="row g-3">
                         </div>
                 </div>
             </div>
@@ -352,7 +410,7 @@
             
             <div id="customerList" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                 </div>
-            </div>
+        </div>
         
         <div class="tab-pane fade" id="computer" role="tabpanel">
             <div class="d-flex justify-content-between align-items-center mb-3">
@@ -375,6 +433,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Tên máy</th>
+                        <th>Loại</th>
                         <th>Giá/giờ</th>
                         <th>Trạng thái</th>
                         <th>Khách hàng</th>
@@ -480,6 +539,14 @@
                         </div>
                 </div>
             </div>
+            
+            <div class="card mt-4">
+                <div class="card-body">
+                    <h5 class="card-title">Doanh thu theo loại máy</h5>
+                    <div id="revenueByTypeChart" class="d-flex justify-content-around align-items-end mt-4" style="height: 200px;">
+                        </div>
+                </div>
+            </div>
         </div>
         
         <div class="tab-pane fade" id="games" role="tabpanel">
@@ -501,12 +568,12 @@
                 <div class="col-md-6">
                     <h5 class="mt-3">Games</h5>
                     <ul class="list-group" id="gameList">
-                    </ul>
+                        </ul>
                 </div>
                 <div class="col-md-6">
                     <h5 class="mt-3">Phần mềm</h5>
                     <ul class="list-group" id="softwareList">
-                    </ul>
+                        </ul>
                 </div>
             </div>
         </div>
@@ -554,10 +621,7 @@
             </div>
             <div class="modal-body">
                 <form id="editCustomerForm" onsubmit="updateCustomer(event)">
-                    <div class="mb-3">
-                        <label for="editCustomerId" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="editCustomerId" readonly>
-                    </div>
+                    <input type="hidden" id="editCustomerId">
                     <div class="mb-3">
                         <label for="editCustomerName" class="form-label">Tên khách hàng</label>
                         <input type="text" class="form-control" id="editCustomerName" required>
@@ -598,6 +662,13 @@
                         <input type="number" class="form-control" id="newComputerPrice" min="0" required>
                     </div>
                     <div class="mb-3">
+                        <label for="newComputerType" class="form-label">Loại máy</label>
+                        <select class="form-select" id="newComputerType" required>
+                            <option value="standard">Thường</option>
+                            <option value="vip">VIP</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
                         <label for="newComputerStatus" class="form-label">Trạng thái</label>
                         <select class="form-select" id="newComputerStatus" required>
                             <option value="free">Trống</option>
@@ -625,10 +696,7 @@
             </div>
             <div class="modal-body">
                 <form id="editComputerForm" onsubmit="updateComputer(event)">
-                    <div class="mb-3">
-                        <label for="editComputerId" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="editComputerId" readonly>
-                    </div>
+                    <input type="hidden" id="editComputerId">
                     <div class="mb-3">
                         <label for="editComputerName" class="form-label">Tên máy</label>
                         <input type="text" class="form-control" id="editComputerName" required>
@@ -636,6 +704,13 @@
                     <div class="mb-3">
                         <label for="editComputerPrice" class="form-label">Giá/giờ</label>
                         <input type="number" class="form-control" id="editComputerPrice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="editComputerType" class="form-label">Loại máy</label>
+                        <select class="form-select" id="editComputerType" required>
+                            <option value="standard">Thường</option>
+                            <option value="vip">VIP</option>
+                        </select>
                     </div>
                     <div class="mb-3">
                         <label for="editComputerStatus" class="form-label">Trạng thái</label>
@@ -699,10 +774,7 @@
             </div>
             <div class="modal-body">
                 <form id="editServiceForm" onsubmit="updateService(event)">
-                    <div class="mb-3">
-                        <label for="editServiceId" class="form-label">ID</label>
-                        <input type="text" class="form-control" id="editServiceId" readonly>
-                    </div>
+                    <input type="hidden" id="editServiceId">
                     <div class="mb-3">
                         <label for="editServiceName" class="form-label">Tên dịch vụ</label>
                         <input type="text" class="form-control" id="editServiceName" required>
@@ -728,1055 +800,612 @@
     </div>
 </div>
 
-<div class="modal fade" id="viewTransactionModal" tabindex="-1" aria-labelledby="viewTransactionModalLabel" aria-hidden="true">
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="viewTransactionModalLabel">Chi tiết giao dịch</h5>
+                <h5 class="modal-title" id="paymentModalLabel">Thanh toán & Hóa đơn</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body" id="receiptModalBody">
-                <div class="receipt-header text-center mb-4">
-                    <h3>HÓA ĐƠN THANH TOÁN</h3>
-                    <p>Mã giao dịch: <strong id="viewTransactionId"></strong></p>
+            <div class="modal-body" id="paymentModalBody">
                 </div>
-                <div class="receipt-info">
-                    <p>Khách hàng: <span id="viewTransactionCustomer"></span></p>
-                    <p>Số điện thoại: <span id="viewTransactionPhone"></span></p>
-                    <p>Ngày: <span id="viewTransactionDate"></span></p>
-                </div>
-                <hr>
-                <h6>Chi tiết sử dụng máy</h6>
-                <p>Máy tính: <span id="viewTransactionComputer"></span></p>
-                <p>Thời gian: <span id="viewTransactionTime"></span></p>
-                <p>Tổng thời gian: <span id="viewTransactionDuration"></span></p>
-                <hr>
-                <h6>Dịch vụ sử dụng</h6>
-                <div id="viewTransactionServices"></div>
-                <hr>
-                <div class="text-end">
-                    <p>Tổng phụ: <span id="viewTransactionSubtotal"></span></p>
-                    <p>Giảm giá: <span id="viewTransactionPromo"></span></p>
-                    <h5 class="mt-3">Tổng cộng: <strong id="viewTransactionTotal"></strong></h5>
-                    <p>Hình thức TT: <span id="viewTransactionPaymentMethod"></span></p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                <button type="button" class="btn btn-primary" id="printTransactionBtn">
-                    <i class="fas fa-print me-2"></i>In hóa đơn
-                </button>
-            </div>
         </div>
     </div>
 </div>
-
-<div class="modal fade" id="addGameModal" tabindex="-1" aria-labelledby="addGameModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addGameModalLabel">Thêm Game/Phần mềm mới</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="newGameForm" onsubmit="addGame(event)">
-                    <div class="mb-3">
-                        <label for="newGameName" class="form-label">Tên</label>
-                        <input type="text" class="form-control" id="newGameName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="newGameType" class="form-label">Loại</label>
-                        <select class="form-select" id="newGameType" required>
-                            <option value="game">Game</option>
-                            <option value="software">Phần mềm</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <label for="newGameCategory" class="form-label">Thể loại</label>
-                        <input type="text" class="form-control" id="newGameCategory">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                        <button type="submit" class="btn btn-primary">Lưu</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="checkoutModal" tabindex="-1" aria-labelledby="checkoutModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="checkoutModalLabel">Thanh toán</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <h6 class="text-primary">Máy tính: <span id="checkoutComputerName"></span></h6>
-                <p>Khách hàng: <span id="checkoutCustomerName"></span></p>
-                <hr class="text-muted">
-                <h6>Chi tiết</h6>
-                <p>Thời gian bắt đầu: <span id="checkoutStartTime"></span></p>
-                <p>Thời gian kết thúc: <span id="checkoutEndTime"></span></p>
-                <p>Tổng thời gian: <span id="checkoutDuration"></span></p>
-                <p>Chi phí máy: <span id="checkoutComputerCost"></span></p>
-                <p>Chi phí dịch vụ: <span id="checkoutServicesCost"></span></p>
-                <hr class="text-muted">
-                <h5 class="text-end">Tổng cộng: <strong id="checkoutTotal"></strong></h5>
-                <hr class="text-muted">
-                <h6>Hình thức thanh toán</h6>
-                <div class="d-flex justify-content-around payment-methods" role="group">
-                    <button type="button" class="btn w-50 me-2" id="cashBtn" onclick="selectPaymentMethod('Tiền mặt')">
-                        <i class="fas fa-money-bill-wave me-2"></i>Tiền mặt
-                    </button>
-                    <button type="button" class="btn w-50" id="transferBtn" onclick="selectPaymentMethod('Chuyển khoản')">
-                        <i class="fas fa-qrcode me-2"></i>Chuyển khoản
-                    </button>
-                </div>
-                
-                <div id="cashPaymentDetails" class="mt-3" style="display: none;">
-                    <div class="mb-3">
-                        <label for="cashGiven" class="form-label">Số tiền khách đưa</label>
-                        <input type="number" class="form-control" id="cashGiven" min="0" oninput="calculateChange()">
-                    </div>
-                    <div class="text-end">
-                        <h5 class="text-success">Tiền thừa: <strong id="cashChange">0đ</strong></h5>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                <button type="button" class="btn btn-primary" onclick="endSessionAndSave()">Thanh toán</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Dữ liệu mẫu ban đầu, sẽ chỉ được sử dụng nếu chưa có dữ liệu nào được lưu trữ
-    const initialCustomers = [
-        { id: 'KH001', name: 'Nguyễn Văn A', phone: '0909123456', email: '', lastVisit: '2023-07-20', totalSpent: 0 },
-        { id: 'KH002', name: 'Trần Thị B', phone: '0918123456', email: 'tranthiB@gmail.com', lastVisit: '2023-07-18', totalSpent: 0 },
-        { id: 'KH003', name: 'Lê Văn C', phone: '0987123456', email: '', lastVisit: '2023-07-15', totalSpent: 0 }
-    ];
-
-    let customers = [];
-    
-    // Hàm tải dữ liệu khách hàng từ localStorage
-    function loadCustomersFromLocalStorage() {
-        const storedCustomers = localStorage.getItem('customers');
-        if (storedCustomers) {
-            customers = JSON.parse(storedCustomers);
-        } else {
-            customers = initialCustomers;
-        }
-    }
-
-    // Hàm lưu dữ liệu khách hàng vào localStorage
-    function saveCustomersToLocalStorage() {
-        localStorage.setItem('customers', JSON.stringify(customers));
-    }
-
-
-    // Dữ liệu mẫu (Đã cập nhật để liên kết máy tính với khách hàng và thời gian)
+    // --- Mock Data (thay thế bằng API call thực tế) ---
     let computers = [
-        { id: 'MAY001', name: 'Máy 1', price: 15000, status: 'active', customer: 'Nguyễn Văn A', startTime: new Date('2025-08-14T10:00:00'), servicesUsed: [{id: 'DV001', quantity: 1}]},
-        { id: 'MAY002', name: 'Máy 2', price: 20000, status: 'active', customer: 'Trần Thị B', startTime: new Date('2025-08-14T15:00:00'), servicesUsed: [{id: 'DV002', quantity: 1}]},
-        { id: 'MAY003', name: 'Máy VIP', price: 30000, status: 'free', customer: '', startTime: null, servicesUsed: []},
-        { id: 'MAY004', name: 'Máy 3', price: 15000, status: 'maintenance', customer: '', startTime: null, servicesUsed: []},
-        { id: 'MAY005', name: 'Máy 4', price: 20000, status: 'broken', customer: '', startTime: null, servicesUsed: []}
+        { id: 1, name: 'A01', type: 'standard', price: 10000, status: 'free', customerId: null, startTime: null },
+        { id: 2, name: 'A02', type: 'standard', price: 10000, status: 'active', customerId: 101, startTime: new Date().getTime() - 3600000 },
+        { id: 3, name: 'VIP01', type: 'vip', price: 15000, status: 'maintenance', customerId: null, startTime: null },
+        { id: 4, name: 'A03', type: 'standard', price: 10000, status: 'free', customerId: null, startTime: null },
+        { id: 5, name: 'VIP02', type: 'vip', price: 15000, status: 'free', customerId: null, startTime: null },
+    ];
+    
+    let customers = [
+        { id: 101, name: 'Nguyễn Văn A', phone: '0987654321', email: 'a@example.com' },
+        { id: 102, name: 'Trần Thị B', phone: '0912345678', email: 'b@example.com' }
     ];
 
     let services = [
-        { id: 'DV001', name: 'Nước suối', price: 10000, status: 'active' },
-        { id: 'DV002', name: 'Nước ngọt', price: 15000, status: 'active' },
-        { id: 'DV003', name: 'Bánh snack', price: 20000, status: 'active' },
-        { id: 'DV004', name: 'Mì gói', price: 25000, status: 'inactive' }
+        { id: 1, name: 'Mì tôm trứng', price: 15000, status: 'active' },
+        { id: 2, name: 'Nước ngọt Pepsi', price: 10000, status: 'active' },
+        { id: 3, name: 'Bánh mì nướng', price: 12000, status: 'inactive' }
     ];
-
-    let transactions = [
-        { id: 'GD001', customerId: 'KH001', customerName: 'Nguyễn Văn A', phone: '0909123456', computer: 'Máy VIP - 30.000đ/giờ', startTime: new Date('2025-08-14T10:00:00'), endTime: new Date('2025-08-14T12:30:00'), services: [{name: 'Nước suối', price: 10000, quantity: 1, total: 10000}, {name: 'Bánh snack', price: 20000, quantity: 1, total: 20000}], subtotal: 125000, promo: 0, total: 125000, paymentMethod: 'Tiền mặt' },
-        { id: 'GD002', customerId: 'KH002', customerName: 'Trần Thị B', phone: '0918123456', computer: 'Máy 2 - 20.000đ/giờ', startTime: new Date('2025-08-14T15:00:00'), endTime: new Date('2025-08-14T16:30:00'), services: [{name: 'Nước ngọt', price: 15000, quantity: 1, total: 15000}], subtotal: 45000, promo: 0, total: 45000, paymentMethod: 'Chuyển khoản' },
-        { id: 'GD003', customerId: 'KH001', customerName: 'Nguyễn Văn A', phone: '0909123456', computer: 'Máy 1 - 15.000đ/giờ', startTime: new Date('2025-07-14T08:00:00'), endTime: new Date('2025-07-14T09:00:00'), services: [], subtotal: 15000, promo: 0, total: 15000, paymentMethod: 'Tiền mặt' },
-        { id: 'GD004', customerId: 'KH002', customerName: 'Trần Thị B', phone: '0918123456', computer: 'Máy 2 - 20.000đ/giờ', startTime: new Date('2025-06-14T18:00:00'), endTime: new Date('2025-06-14T19:00:00'), services: [], subtotal: 20000, promo: 0, total: 20000, paymentMethod: 'Tiền mặt' }
-    ];
-
-    let games = [
-        { id: 'GAME001', name: 'Liên Minh Huyền Thoại', category: 'MOBA', type: 'game' },
-        { id: 'GAME002', name: 'Valorant', category: 'FPS', type: 'game' },
-        { id: 'GAME003', name: 'Word', category: 'Văn phòng', type: 'software' }
-    ];
-
-    let editingCustomerId = '';
-    let editingComputerId = '';
-    let editingServiceId = '';
-    let currentComputerId = ''; 
-    let selectedPaymentMethod = 'Tiền mặt'; // Mặc định là Tiền mặt
-    let currentTotal = 0;
-
-    // Hàm định dạng tiền tệ
-    const formatCurrency = (value) => {
-        return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(value);
-    };
-
-    // Hàm tính thời gian đã sử dụng
-    const formatDuration = (start, end) => {
-        if (!start || !end) return '---';
-        const durationInMinutes = (end - start) / (1000 * 60);
-        const hours = Math.floor(durationInMinutes / 60);
-        const minutes = Math.round(durationInMinutes % 60);
-        return `${hours} giờ ${minutes} phút`;
-    };
-
-    // --- RENDER FUNCTIONS ---
     
-    function calculateAllCustomerTotalSpent() {
-        customers.forEach(customer => {
-            let total = 0;
-            transactions.forEach(transaction => {
-                if (transaction.customerId === customer.id) {
-                    total += transaction.total;
-                }
-            });
-            customer.totalSpent = total;
-        });
-    }
-
-    // Render Booking Dashboard - Updated
-    function renderBookingDashboard() {
-        const dashboard = document.getElementById('computersDashboard');
-        dashboard.innerHTML = '';
-        
-        computers.forEach(computer => {
-            let statusIconClass = '';
-            let actionButton = '';
-            let cardClass = '';
-            let statusText = '';
-
-            switch(computer.status) {
-                case 'active':
-                    statusIconClass = 'fas fa-hourglass-half text-white';
-                    actionButton = `<button class="btn btn-danger btn-sm w-100" onclick="showCheckoutModal('${computer.id}')"><i class="fas fa-stop me-2"></i>Kết thúc phiên</button>`;
-                    cardClass = 'status-active';
-                    statusText = 'Đang hoạt động';
-                    break;
-                case 'maintenance':
-                    statusIconClass = 'fas fa-tools text-dark';
-                    actionButton = `<button class="btn btn-secondary btn-sm w-100" disabled><i class="fas fa-tools me-2"></i>Đang bảo trì</button>`;
-                    cardClass = 'status-maintenance';
-                    statusText = 'Bảo trì';
-                    break;
-                case 'broken':
-                    statusIconClass = 'fas fa-exclamation-triangle text-white';
-                    actionButton = `<button class="btn btn-secondary btn-sm w-100" disabled><i class="fas fa-times me-2"></i>Hỏng</button>`;
-                    cardClass = 'status-broken';
-                    statusText = 'Hỏng';
-                    break;
-                case 'free':
-                default:
-                    statusIconClass = 'fas fa-power-off text-muted';
-                    actionButton = `<button class="btn btn-primary btn-sm w-100" onclick="selectComputerForSession('${computer.id}')"><i class="fas fa-play me-2"></i>Bắt đầu phiên</button>`;
-                    cardClass = 'status-free';
-                    statusText = 'Trống';
-                    break;
+    let history = [
+        {
+            id: 1,
+            date: '2025-08-14',
+            customerName: 'Nguyễn Văn A',
+            computerName: 'A02',
+            totalAmount: 10000,
+            paymentMethod: 'Tiền mặt',
+            details: {
+                computerCost: 10000,
+                services: []
             }
-
-            const card = document.createElement('div');
-            card.className = 'col-lg-4 col-md-6 col-sm-12 mb-4';
-            card.innerHTML = `
-                <div class="card h-100 computer-card shadow-sm ${cardClass}">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 ${computer.status === 'free' ? '' : 'text-white'}">${computer.name}</h5>
-                        <span class="badge status-badge bg-primary">${formatCurrency(computer.price)}/giờ</span>
-                    </div>
-                    <div class="card-body d-flex flex-column">
-                        <div class="text-center mb-3">
-                            <i class="${statusIconClass}" style="font-size: 3rem;"></i>
-                        </div>
-                        <p class="card-text">Trạng thái: <strong>${statusText}</strong></p>
-                        ${computer.customer ? `<p class="card-text">Khách: <strong>${computer.customer}</strong></p>` : ''}
-                        ${computer.startTime ? `<p class="card-text">Bắt đầu: ${computer.startTime.toLocaleTimeString('vi-VN')}</p>` : ''}
-                        <div class="mt-auto pt-2">${actionButton}</div>
-                    </div>
-                </div>
-            `;
-            dashboard.appendChild(card);
-        });
-        renderServiceQuantities();
-    }
-
-    function selectComputerForSession(computerId) {
-        // Highlight the selected computer
-        document.querySelectorAll('.computer-card').forEach(card => card.classList.remove('border', 'border-primary', 'border-3'));
-        const selectedComputerCard = document.querySelector(`.computer-card[onclick*="${computerId}"]`).closest('.computer-card');
-        if (selectedComputerCard) {
-            selectedComputerCard.classList.add('border', 'border-primary', 'border-3');
-        }
-
-        // Set the computer ID for the form and open the form area
-        currentComputerId = computerId;
-        
-        // This is a simplified approach, in a real app, you'd show a form or sidebar
-        alert(`Đã chọn máy ${computers.find(c => c.id === computerId).name}. Vui lòng điền thông tin khách hàng ở sidebar bên trái và nhấn 'Bắt đầu phiên mới'.`);
-    }
-    
-    function startSession() {
-        const form = document.getElementById('bookingForm');
-        if (!form.checkValidity()) {
-            alert('Vui lòng điền đầy đủ và chính xác thông tin khách hàng.');
-            form.reportValidity();
-            return;
-        }
-
-        if (!currentComputerId) {
-            alert('Vui lòng chọn một máy trống để bắt đầu phiên.');
-            return;
-        }
-
-        const computer = computers.find(c => c.id === currentComputerId);
-        if (computer && computer.status === 'free') {
-            const fullName = document.getElementById('fullName').value || 'Khách lẻ';
-            
-            computer.status = 'active';
-            computer.customer = fullName;
-            computer.startTime = new Date();
-            
-            computer.servicesUsed = [];
-            document.querySelectorAll('#serviceQuantities input[type="number"]').forEach(input => {
-                const quantity = parseInt(input.value) || 0;
-                if (quantity > 0) {
-                    const serviceId = input.id.replace('service_', '');
-                    computer.servicesUsed.push({ id: serviceId, quantity: quantity });
-                }
-            });
-
-            const customer = customers.find(c => c.name === fullName);
-            if (customer) {
-                customer.lastVisit = new Date().toISOString().slice(0, 10);
-                saveCustomersToLocalStorage();
+        },
+        {
+            id: 2,
+            date: '2025-08-13',
+            customerName: 'Trần Thị B',
+            computerName: 'A01',
+            totalAmount: 25000,
+            paymentMethod: 'Chuyển khoản',
+            details: {
+                computerCost: 15000,
+                services: [{ name: 'Mì tôm trứng', quantity: 1, price: 15000 }]
             }
-
-            renderBookingDashboard();
-            alert(`Đã bắt đầu phiên mới cho máy ${computer.name}.`);
-            resetBookingForm();
-            currentComputerId = null; // Reset selected computer
-        } else {
-            alert('Máy này không thể bắt đầu phiên.');
         }
-    }
+    ];
 
-    function showCheckoutModal(computerId) {
-        const computer = computers.find(c => c.id === computerId);
-        if (computer) {
-            currentComputerId = computer.id;
-            
-            const endTime = new Date();
-            const durationInMinutes = (endTime - computer.startTime) / (1000 * 60);
-            const computerCost = (durationInMinutes / 60) * computer.price;
-            
-            const selectedServices = [];
-            let servicesCost = 0;
-            computer.servicesUsed.forEach(sUsed => {
-                const service = services.find(s => s.id === sUsed.id);
-                if (service) {
-                    const serviceTotal = service.price * sUsed.quantity;
-                    servicesCost += serviceTotal;
-                    selectedServices.push({ name: service.name, price: service.price, quantity: sUsed.quantity, total: serviceTotal });
-                }
-            });
-
-            const subtotal = computerCost + servicesCost;
-            const total = subtotal;
-            currentTotal = total; // Lưu tổng tiền vào biến toàn cục
-
-            document.getElementById('checkoutComputerName').textContent = computer.name;
-            document.getElementById('checkoutCustomerName').textContent = computer.customer;
-            document.getElementById('checkoutStartTime').textContent = computer.startTime.toLocaleTimeString('vi-VN');
-            document.getElementById('checkoutEndTime').textContent = endTime.toLocaleTimeString('vi-VN');
-            document.getElementById('checkoutDuration').textContent = formatDuration(computer.startTime, endTime);
-            document.getElementById('checkoutComputerCost').textContent = formatCurrency(computerCost);
-            document.getElementById('checkoutServicesCost').textContent = formatCurrency(servicesCost);
-            document.getElementById('checkoutTotal').textContent = formatCurrency(total);
-
-            // Reset payment method selection and show cash payment details
-            selectPaymentMethod('Tiền mặt');
-
-            const modal = new bootstrap.Modal(document.getElementById('checkoutModal'));
-            modal.show();
-        }
-    }
-    
-    function endSessionAndSave() {
-        const computer = computers.find(c => c.id === currentComputerId);
-        if (computer) {
-            const endTime = new Date();
-            const durationInMinutes = (endTime - computer.startTime) / (1000 * 60);
-            const computerCost = (durationInMinutes / 60) * computer.price;
-            
-            const usedServicesData = [];
-            let servicesCost = 0;
-            computer.servicesUsed.forEach(sUsed => {
-                const service = services.find(s => s.id === sUsed.id);
-                if (service) {
-                    const serviceTotal = service.price * sUsed.quantity;
-                    servicesCost += serviceTotal;
-                    usedServicesData.push({ name: service.name, price: service.price, quantity: sUsed.quantity, total: serviceTotal });
-                }
-            });
-
-            const subtotal = computerCost + servicesCost;
-            const total = subtotal;
-            
-            const customerId = customers.find(c => c.name === computer.customer)?.id || 'KH000';
-            const phone = customers.find(c => c.name === computer.customer)?.phone || '---';
-
-            const newTransaction = {
-                id: 'GD' + String(transactions.length + 1).padStart(3, '0'),
-                customerId: customerId,
-                customerName: computer.customer,
-                phone: phone,
-                computer: `${computer.name} - ${formatCurrency(computer.price)}/giờ`,
-                startTime: computer.startTime,
-                endTime: endTime,
-                services: usedServicesData,
-                subtotal: subtotal,
-                promo: 0,
-                total: total,
-                paymentMethod: selectedPaymentMethod // Lưu hình thức thanh toán
-            };
-            transactions.push(newTransaction);
-            
-            computer.status = 'free';
-            computer.customer = '';
-            computer.startTime = null;
-            computer.servicesUsed = [];
-            
-            const modal = bootstrap.Modal.getInstance(document.getElementById('checkoutModal'));
-            modal.hide();
-            renderBookingDashboard();
-            renderHistory();
-        }
-    }
-
-    function selectPaymentMethod(method) {
-        selectedPaymentMethod = method;
-        document.getElementById('cashBtn').classList.remove('active');
-        document.getElementById('transferBtn').classList.remove('active');
-        const cashPaymentDetails = document.getElementById('cashPaymentDetails');
-        
-        if (method === 'Tiền mặt') {
-            document.getElementById('cashBtn').classList.add('active');
-            cashPaymentDetails.style.display = 'block';
-            calculateChange();
-        } else {
-            document.getElementById('transferBtn').classList.add('active');
-            cashPaymentDetails.style.display = 'none';
-        }
-    }
-
-    function calculateChange() {
-        const cashGiven = parseFloat(document.getElementById('cashGiven').value) || 0;
-        const total = currentTotal;
-        const change = cashGiven - total;
-        document.getElementById('cashChange').textContent = formatCurrency(change > 0 ? change : 0);
-    }
-
-
-    function resetBookingForm() {
-        document.getElementById('fullName').value = '';
-        document.getElementById('phone').value = '';
-        document.querySelectorAll('#serviceQuantities input[type="number"]').forEach(input => input.value = 0);
-    }
-
-    function renderServiceQuantities() {
-        const serviceQuantitiesDiv = document.getElementById('serviceQuantities');
-        serviceQuantitiesDiv.innerHTML = '';
-        services.filter(s => s.status === 'active').forEach(service => {
-            const quantityDiv = document.createElement('div');
-            quantityDiv.className = 'd-flex align-items-center mb-2';
-            quantityDiv.innerHTML = `
-                <label class="form-label me-3 mb-0" for="service_${service.id}">${service.name}</label>
-                <input type="number" class="form-control form-control-sm ms-auto w-25" id="service_${service.id}" min="0" value="0">
-            `;
-            serviceQuantitiesDiv.appendChild(quantityDiv);
-        });
-    }
-
-    // --- RENDER MỚI: Dạng card cho tab Khách hàng ---
-    function renderCustomers() {
-        calculateAllCustomerTotalSpent();
-        const customerListDiv = document.getElementById('customerList');
-        customerListDiv.innerHTML = '';
-        const searchTerm = document.getElementById('customerSearchInput').value.toLowerCase();
-        
-        const filteredCustomers = customers.filter(customer =>
-            customer.name.toLowerCase().includes(searchTerm) ||
-            customer.phone.toLowerCase().includes(searchTerm)
-        );
-
-        if (filteredCustomers.length === 0) {
-            customerListDiv.innerHTML = '<p class="text-center text-muted">Không tìm thấy khách hàng nào.</p>';
-        }
-
-        filteredCustomers.forEach(customer => {
-            const cardCol = document.createElement('div');
-            cardCol.className = 'col';
-            cardCol.innerHTML = `
-                <div class="customer-card-item">
-                    <div class="customer-card-header">
-                        <h5 class="mb-0 text-primary">${customer.name}</h5>
-                        <small class="text-muted">ID: ${customer.id}</small>
-                    </div>
-                    <div class="customer-info-row">
-                        <i class="fas fa-phone-alt"></i>
-                        <span>${customer.phone}</span>
-                    </div>
-                    <div class="customer-info-row">
-                        <i class="fas fa-envelope"></i>
-                        <span>${customer.email || '---'}</span>
-                    </div>
-                    <div class="customer-card-footer">
-                        <div class="d-flex flex-column align-items-center me-3">
-                            <small class="text-muted">Tổng chi tiêu</small>
-                            <h6 class="mb-0 text-success">${formatCurrency(customer.totalSpent)}</h6>
-                        </div>
-                        <div class="d-flex">
-                            <button class="btn btn-sm btn-warning me-2" onclick="editCustomer('${customer.id}')">
-                                <i class="fas fa-edit"></i>
-                            </button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteCustomer('${customer.id}')">
-                                <i class="fas fa-trash-alt"></i>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            customerListDiv.appendChild(cardCol);
-        });
-    }
-
-    function filterCustomers() {
-        renderCustomers();
-    }
-
-    // --- Cập nhật render chức năng mới cho Máy tính ---
-    function renderComputers() {
-        const tableBody = document.getElementById('computerTable');
-        tableBody.innerHTML = '';
-        const filterValue = document.getElementById('computerStatusFilter').value;
-
-        const filteredComputers = computers.filter(computer =>
-            filterValue === 'all' || computer.status === filterValue
-        );
-        
-        filteredComputers.forEach(computer => {
-            const statusClass = `status-${computer.status}`;
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${computer.id}</td>
-                <td>${computer.name}</td>
-                <td>${formatCurrency(computer.price)}/giờ</td>
-                <td><span class="badge ${getStatusBadgeClass(computer.status)}">${getStatusText(computer.status)}</span></td>
-                <td>${computer.customer || '---'}</td>
-                <td>${computer.startTime ? computer.startTime.toLocaleTimeString('vi-VN') : '---'}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm me-2" onclick="editComputer('${computer.id}')">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteComputer('${computer.id}')">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-
-    function filterComputers() {
-        renderComputers();
-    }
-
-    function getStatusText(status) {
-        switch(status) {
+    // --- Các hàm tiện ích ---
+    const getStatusText = (status) => {
+        switch (status) {
+            case 'free': return 'Trống';
             case 'active': return 'Đang hoạt động';
             case 'maintenance': return 'Bảo trì';
             case 'broken': return 'Hỏng';
-            default: return 'Trống';
+            default: return '';
         }
-    }
-    
-    function getStatusBadgeClass(status) {
-        switch(status) {
-            case 'active': return 'bg-success';
-            case 'maintenance': return 'bg-warning';
+    };
+    const getStatusClass = (status) => {
+        switch (status) {
+            case 'free': return 'bg-success';
+            case 'active': return 'bg-warning';
+            case 'maintenance': return 'bg-secondary';
             case 'broken': return 'bg-danger';
-            default: return 'bg-secondary';
+            default: return 'bg-info';
         }
-    }
+    };
+    const formatCurrency = (number) => new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(number);
+    const getCustomerName = (id) => {
+        const customer = customers.find(c => c.id === id);
+        return customer ? customer.name : 'Khách vãng lai';
+    };
+    const getServiceById = (id) => services.find(s => s.id == id);
+    const getComputerById = (id) => computers.find(c => c.id == id);
+    const getComputerType = (type) => type === 'vip' ? 'VIP' : 'Thường';
 
-    // --- Cập nhật render chức năng mới cho Dịch vụ ---
-    function renderServices() {
-        const tableBody = document.getElementById('serviceTable');
-        tableBody.innerHTML = '';
-        const searchTerm = document.getElementById('serviceSearchInput').value.toLowerCase();
+    // --- Tab Trang chủ (Booking) ---
+    function renderBookingDashboard() {
+        const dashboard = document.getElementById('computersDashboard');
+        dashboard.innerHTML = '';
+        const sortOption = document.getElementById('sortComputers').value;
 
-        const filteredServices = services.filter(service =>
-            service.name.toLowerCase().includes(searchTerm)
-        );
+        let sortedComputers = [...computers];
+        if (sortOption === 'price_asc') {
+            sortedComputers.sort((a, b) => a.price - b.price);
+        } else if (sortOption === 'price_desc') {
+            sortedComputers.sort((a, b) => b.price - a.price);
+        }
 
-        filteredServices.forEach(service => {
-            const statusClass = service.status === 'active' ? 'bg-success' : 'bg-danger';
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${service.name}</td>
-                <td>${formatCurrency(service.price)}</td>
-                <td><span class="badge ${statusClass}">${service.status === 'active' ? 'Hoạt động' : 'Ngừng bán'}</span></td>
-                <td>
-                    <button class="btn btn-warning btn-sm me-2" onclick="editService('${service.id}')">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteService('${service.id}')">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </td>
+        sortedComputers.forEach(comp => {
+            const statusText = getStatusText(comp.status);
+            const statusClass = getStatusClass(comp.status);
+            const computerTypeClass = comp.type === 'vip' ? 'type-vip' : '';
+            const customerInfo = comp.customerId ? `<p class="card-text mb-1"><i class="fas fa-user-circle me-1"></i> ${getCustomerName(comp.customerId)}</p>` : '';
+            const timer = comp.startTime ? `<p class="card-text"><i class="fas fa-clock me-1"></i> <span id="timer-${comp.id}">00:00:00</span></p>` : '';
+            const actionButton = comp.status === 'active' ? 
+                `<button class="btn btn-danger btn-sm" onclick="endSession(${comp.id})"><i class="fas fa-power-off"></i> Kết thúc</button>` :
+                `<button class="btn btn-primary btn-sm" onclick="selectComputerForBooking(${comp.id})" ${comp.status !== 'free' ? 'disabled' : ''}><i class="fas fa-play"></i> Bắt đầu</button>`;
+
+            dashboard.innerHTML += `
+                <div class="col-sm-6 col-md-4 col-lg-3">
+                    <div class="card computer-card status-${comp.status} ${computerTypeClass}" data-id="${comp.id}">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span>Máy ${comp.name}</span>
+                            <span class="badge ${statusClass}">${statusText}</span>
+                        </div>
+                        <div class="card-body">
+                            ${customerInfo}
+                            ${timer}
+                            <div class="d-flex justify-content-between align-items-center mt-2">
+                                <span class="fw-bold text-primary">${formatCurrency(comp.price)} / giờ</span>
+                                ${actionButton}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `;
-            tableBody.appendChild(row);
         });
-    }
-
-    function filterServices() {
-        renderServices();
-    }
-
-    // --- Cập nhật render chức năng mới cho Lịch sử ---
-    function renderHistory() {
-        const tableBody = document.getElementById('historyTable');
-        tableBody.innerHTML = '';
-        const searchTerm = document.getElementById('historySearchInput').value.toLowerCase();
-        const dateFilter = document.getElementById('historyDateFilter').value;
-
-        const filteredTransactions = transactions.filter(transaction => {
-            const matchesSearch = transaction.customerName.toLowerCase().includes(searchTerm) || transaction.id.toLowerCase().includes(searchTerm);
-            const matchesDate = !dateFilter || transaction.startTime.toISOString().slice(0, 10) === dateFilter;
-            return matchesSearch && matchesDate;
-        });
-
-        filteredTransactions.forEach(transaction => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${transaction.id}</td>
-                <td>${transaction.startTime.toLocaleDateString('vi-VN')}</td>
-                <td>${transaction.customerName}</td>
-                <td>${transaction.computer.split('-')[0].trim()}</td>
-                <td>${formatCurrency(transaction.total)}</td>
-                <td>${transaction.paymentMethod}</td>
-                <td>
-                    <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#viewTransactionModal" onclick="viewTransaction('${transaction.id}')">
-                        <i class="fas fa-eye"></i>
-                    </button>
-                </td>
-            `;
-            tableBody.appendChild(row);
-        });
-    }
-
-    function filterHistory() {
-        renderHistory();
-    }
-
-    // --- Cập nhật render chức năng mới cho Games ---
-    function renderGames() {
-        const gameList = document.getElementById('gameList');
-        const softwareList = document.getElementById('softwareList');
-        gameList.innerHTML = '';
-        softwareList.innerHTML = '';
-        const filterValue = document.getElementById('gameSoftwareFilter').value;
-
-        const filteredGames = games.filter(item =>
-            filterValue === 'all' || item.type === filterValue
-        );
-
-        filteredGames.forEach(item => {
-            const li = document.createElement('li');
-            li.className = 'list-group-item d-flex justify-content-between align-items-center bg-light';
-            li.innerHTML = `
-                <span><i class="fas fa-${item.type === 'game' ? 'gamepad' : 'laptop'} me-2"></i>${item.name}</span>
-                <span class="d-flex align-items-center">
-                    <span class="badge bg-primary me-2">${item.category || '---'}</span>
-                    <button class="btn btn-danger btn-sm" onclick="deleteGame('${item.id}')">
-                        <i class="fas fa-trash-alt"></i>
-                    </button>
-                </span>
-            `;
-            if (item.type === 'game') {
-                gameList.appendChild(li);
-            } else {
-                softwareList.appendChild(li);
-            }
-        });
-    }
-
-    function filterGames() {
-        renderGames();
+        updateTimers();
+        renderBookingComputerOptions();
     }
     
-    // --- Cập nhật render chức năng mới cho Thống kê ---
-    function renderStatistics() {
-        const totalRevenue = transactions.reduce((sum, t) => sum + t.total, 0);
-        const totalCustomers = customers.length;
-        const activeComputers = computers.filter(c => c.status === 'active').length;
-        const totalComputers = computers.length;
+    function renderBookingComputerOptions() {
+        const select = document.getElementById('bookingComputerId');
+        select.innerHTML = '<option value="">-- Chọn máy tính --</option>';
+        const sortedComputers = [...computers].sort((a, b) => {
+            if (a.type === 'vip' && b.type === 'standard') return -1;
+            if (a.type === 'standard' && b.type === 'vip') return 1;
+            return a.price - b.price;
+        });
 
-        const serviceCounts = {};
-        transactions.forEach(t => {
-            if (t.services) {
-                t.services.forEach(s => {
-                    serviceCounts[s.name] = (serviceCounts[s.name] || 0) + s.quantity;
-                });
+        sortedComputers.forEach(comp => {
+            if (comp.status === 'free') {
+                select.innerHTML += `<option value="${comp.id}">${comp.name} (${getComputerType(comp.type)}) - ${formatCurrency(comp.price)}/giờ</option>`;
             }
         });
-        const mostPopularService = Object.keys(serviceCounts).reduce((a, b) => (serviceCounts[a] > serviceCounts[b] ? a : b), 'Chưa có');
-
-        document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
-        document.getElementById('totalCustomers').textContent = totalCustomers;
-        document.getElementById('activeComputers').textContent = `${activeComputers}/${totalComputers}`;
-        document.getElementById('mostPopularService').textContent = mostPopularService;
-
-        renderMonthlyRevenueChart();
     }
 
-    function renderMonthlyRevenueChart() {
-        const chartDiv = document.getElementById('monthlyRevenueChart');
-        chartDiv.innerHTML = '';
-
-        const monthlyRevenue = {};
-        transactions.forEach(t => {
-            const month = t.startTime.getMonth();
-            const year = t.startTime.getFullYear();
-            const key = `${month}-${year}`;
-            monthlyRevenue[key] = (monthlyRevenue[key] || 0) + t.total;
+    function updateTimers() {
+        computers.forEach(comp => {
+            if (comp.status === 'active') {
+                const timerElement = document.getElementById(`timer-${comp.id}`);
+                if (timerElement) {
+                    const interval = setInterval(() => {
+                        const elapsed = Math.floor((new Date().getTime() - comp.startTime) / 1000);
+                        const hours = Math.floor(elapsed / 3600);
+                        const minutes = Math.floor((elapsed % 3600) / 60);
+                        const seconds = elapsed % 60;
+                        timerElement.textContent = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+                    }, 1000);
+                    comp.timerInterval = interval;
+                }
+            } else if (comp.timerInterval) {
+                clearInterval(comp.timerInterval);
+            }
         });
+    }
 
-        const now = new Date();
-        const revenueData = [];
-        for (let i = 0; i < 6; i++) {
-            const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
-            const key = `${date.getMonth()}-${date.getFullYear()}`;
-            revenueData.unshift({
-                month: date.getMonth() + 1,
-                year: date.getFullYear(),
-                revenue: monthlyRevenue[key] || 0
-            });
+    function selectComputerForBooking(id) {
+        document.getElementById('bookingComputerId').value = id;
+    }
+
+    function startSession() {
+        const computerId = document.getElementById('bookingComputerId').value;
+        const fullName = document.getElementById('fullName').value;
+        const phone = document.getElementById('phone').value;
+
+        if (!computerId || !fullName || !phone) {
+            alert('Vui lòng điền đầy đủ thông tin khách hàng và chọn máy!');
+            return;
         }
-        
-        const maxRevenue = Math.max(...revenueData.map(d => d.revenue));
 
-        revenueData.forEach(data => {
-            const barHeight = maxRevenue > 0 ? (data.revenue / maxRevenue) * 100 : 0;
-            const bar = document.createElement('div');
-            bar.className = 'd-flex flex-column align-items-center me-3';
-            bar.style.width = '10%';
-            bar.innerHTML = `
-                <div class="bg-primary" style="height: ${barHeight}%; width: 50%; border-radius: 5px;"></div>
-                <small class="mt-2 text-center text-muted">${data.month}/${data.year}</small>
-                <small class="text-center text-muted">${formatCurrency(data.revenue)}</small>
+        const computer = getComputerById(computerId);
+        if (computer.status !== 'free') {
+            alert('Máy này hiện không trống.');
+            return;
+        }
+
+        const newCustomer = { id: Date.now(), name: fullName, phone: phone };
+        customers.push(newCustomer);
+
+        computer.status = 'active';
+        computer.customerId = newCustomer.id;
+        computer.startTime = new Date().getTime();
+
+        renderBookingDashboard();
+        resetBookingForm();
+    }
+
+    function endSession(computerId) {
+        const computer = getComputerById(computerId);
+        if (!computer || computer.status !== 'active') return;
+
+        // Tính toán hóa đơn
+        const endTime = new Date().getTime();
+        const duration = (endTime - computer.startTime) / 1000; // Thời gian sử dụng (giây)
+        const hoursUsed = Math.ceil(duration / 3600); // Làm tròn lên giờ
+        const computerCost = hoursUsed * computer.price;
+
+        const sessionData = {
+            computer: computer,
+            customer: customers.find(c => c.id === computer.customerId),
+            duration: duration,
+            computerCost: computerCost,
+            serviceCost: 0, // Cần thêm logic tính phí dịch vụ
+            totalCost: computerCost
+        };
+
+        showPaymentModal(sessionData);
+
+        // Cập nhật trạng thái máy
+        computer.status = 'free';
+        computer.customerId = null;
+        computer.startTime = null;
+
+        renderBookingDashboard();
+        renderComputerTable(); // Cập nhật bảng máy tính
+    }
+    
+    function resetBookingForm() {
+        document.getElementById('bookingForm').reset();
+    }
+
+    // --- Modal Thanh toán (Hóa đơn) ---
+    function showPaymentModal(sessionData) {
+        const modalBody = document.getElementById('paymentModalBody');
+        const computerCost = formatCurrency(sessionData.computerCost);
+        const totalCost = formatCurrency(sessionData.totalCost);
+
+        modalBody.innerHTML = `
+            <h5>Hóa đơn thanh toán</h5>
+            <hr>
+            <p><strong>Khách hàng:</strong> ${sessionData.customer.name}</p>
+            <p><strong>Máy tính:</strong> ${sessionData.computer.name} (${getComputerType(sessionData.computer.type)})</p>
+            <p><strong>Thời gian sử dụng:</strong> ${Math.ceil(sessionData.duration / 3600)} giờ</p>
+            <hr>
+            <p><strong>Tiền giờ:</strong> ${computerCost}</p>
+            <p><strong>Dịch vụ:</strong> ${formatCurrency(sessionData.serviceCost)}</p>
+            <hr>
+            <h4 class="text-end">Tổng cộng: <span class="text-primary">${totalCost}</span></h4>
+            <div class="mb-3">
+                <label for="paidAmount" class="form-label">Tiền khách đưa:</label>
+                <input type="number" class="form-control" id="paidAmount" oninput="calculateChange()" value="${sessionData.totalCost}">
+            </div>
+            <h5 class="text-end">Tiền thừa: <span id="changeAmount" class="text-success">${formatCurrency(0)}</span></h5>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-success me-2" onclick="processPayment()">Thanh toán</button>
+                <button class="btn btn-secondary" onclick="closePaymentModal()">In và kết thúc</button>
+            </div>
+        `;
+        const paymentModal = new bootstrap.Modal(document.getElementById('paymentModal'));
+        paymentModal.show();
+    }
+
+    function calculateChange() {
+        const totalCost = parseFloat(document.getElementById('paymentModalBody').querySelector('h4 span').textContent.replace(/[^0-9]/g, ''));
+        const paidAmount = parseFloat(document.getElementById('paidAmount').value) || 0;
+        const change = paidAmount - totalCost;
+        document.getElementById('changeAmount').textContent = formatCurrency(change > 0 ? change : 0);
+    }
+
+    function processPayment() {
+        // Lưu giao dịch vào lịch sử (tạo đối tượng history mới)
+        alert('Thanh toán thành công!');
+        // Đóng modal
+        const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+        paymentModal.hide();
+    }
+    
+    function closePaymentModal() {
+         const paymentModal = bootstrap.Modal.getInstance(document.getElementById('paymentModal'));
+        paymentModal.hide();
+    }
+
+    // --- Tab Khách hàng ---
+    function renderCustomerList() {
+        const customerList = document.getElementById('customerList');
+        customerList.innerHTML = '';
+        customers.forEach(cust => {
+            customerList.innerHTML += `
+                <div class="col">
+                    <div class="customer-card-item">
+                        <div class="customer-card-header">
+                            <h5 class="mb-0">${cust.name}</h5>
+                            <span class="badge bg-primary">ID: ${cust.id}</span>
+                        </div>
+                        <div class="customer-info-row">
+                            <i class="fas fa-phone me-2"></i><span>${cust.phone}</span>
+                        </div>
+                        <div class="customer-info-row">
+                            <i class="fas fa-envelope me-2"></i><span>${cust.email || 'N/A'}</span>
+                        </div>
+                        <div class="customer-card-footer">
+                            <button class="btn btn-warning btn-sm" onclick="showEditCustomerModal(${cust.id})">Sửa</button>
+                            <button class="btn btn-danger btn-sm" onclick="deleteCustomer(${cust.id})">Xóa</button>
+                        </div>
+                    </div>
+                </div>
             `;
-            chartDiv.appendChild(bar);
         });
     }
 
-    // Customer functions
     function addCustomer(event) {
         event.preventDefault();
-        const newCustomerName = document.getElementById('newCustomerName').value;
-        const newCustomerPhone = document.getElementById('newCustomerPhone').value;
-        const newCustomerEmail = document.getElementById('newCustomerEmail').value;
-        const newId = 'KH' + String(customers.length + 1).padStart(3, '0');
-        customers.push({
-            id: newId,
-            name: newCustomerName,
-            phone: newCustomerPhone,
-            email: newCustomerEmail,
-            lastVisit: '',
-            totalSpent: 0
-        });
-        saveCustomersToLocalStorage();
-        renderCustomers();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('addCustomerModal'));
-        modal.hide();
+        const name = document.getElementById('newCustomerName').value;
+        const phone = document.getElementById('newCustomerPhone').value;
+        const email = document.getElementById('newCustomerEmail').value;
+        customers.push({ id: Date.now(), name, phone, email });
+        renderCustomerList();
+        bootstrap.Modal.getInstance(document.getElementById('addCustomerModal')).hide();
         document.getElementById('newCustomerForm').reset();
     }
 
-    function editCustomer(id) {
-        editingCustomerId = id;
+    function showEditCustomerModal(id) {
         const customer = customers.find(c => c.id === id);
-        if (customer) {
-            document.getElementById('editCustomerId').value = customer.id;
-            document.getElementById('editCustomerName').value = customer.name;
-            document.getElementById('editCustomerPhone').value = customer.phone;
-            document.getElementById('editCustomerEmail').value = customer.email;
-            const modal = new bootstrap.Modal(document.getElementById('editCustomerModal'));
-            modal.show();
-        }
+        if (!customer) return;
+        document.getElementById('editCustomerId').value = customer.id;
+        document.getElementById('editCustomerName').value = customer.name;
+        document.getElementById('editCustomerPhone').value = customer.phone;
+        document.getElementById('editCustomerEmail').value = customer.email;
+        new bootstrap.Modal(document.getElementById('editCustomerModal')).show();
     }
 
     function updateCustomer(event) {
         event.preventDefault();
-        const customer = customers.find(c => c.id === editingCustomerId);
-        if (customer) {
-            customer.name = document.getElementById('editCustomerName').value;
-            customer.phone = document.getElementById('editCustomerPhone').value;
-            customer.email = document.getElementById('editCustomerEmail').value;
-            saveCustomersToLocalStorage();
-            renderCustomers();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editCustomerModal'));
-            modal.hide();
+        const id = parseInt(document.getElementById('editCustomerId').value);
+        const name = document.getElementById('editCustomerName').value;
+        const phone = document.getElementById('editCustomerPhone').value;
+        const email = document.getElementById('editCustomerEmail').value;
+        const customerIndex = customers.findIndex(c => c.id === id);
+        if (customerIndex !== -1) {
+            customers[customerIndex] = { id, name, phone, email };
         }
+        renderCustomerList();
+        bootstrap.Modal.getInstance(document.getElementById('editCustomerModal')).hide();
     }
 
     function deleteCustomer(id) {
-        if (confirm('Bạn có chắc chắn muốn xóa khách hàng này không?')) {
+        if (confirm('Bạn có chắc chắn muốn xóa khách hàng này?')) {
             customers = customers.filter(c => c.id !== id);
-            saveCustomersToLocalStorage();
-            renderCustomers();
+            renderCustomerList();
         }
     }
-    
-    // Computer functions
+
+    // --- Tab Máy tính ---
+    function renderComputerTable() {
+        const tableBody = document.getElementById('computerTable');
+        tableBody.innerHTML = '';
+        computers.forEach(comp => {
+            const statusText = getStatusText(comp.status);
+            const statusClass = getStatusClass(comp.status);
+            const customerName = comp.customerId ? getCustomerName(comp.customerId) : 'N/A';
+            const startTime = comp.startTime ? new Date(comp.startTime).toLocaleString('vi-VN') : 'N/A';
+            const computerType = getComputerType(comp.type);
+
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${comp.id}</td>
+                    <td>${comp.name}</td>
+                    <td>${computerType}</td>
+                    <td>${formatCurrency(comp.price)}</td>
+                    <td><span class="badge ${statusClass}">${statusText}</span></td>
+                    <td>${customerName}</td>
+                    <td>${startTime}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="showEditComputerModal(${comp.id})">Sửa</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteComputer(${comp.id})">Xóa</button>
+                    </td>
+                </tr>
+            `;
+        });
+    }
+
     function addComputer(event) {
         event.preventDefault();
-        const newComputerName = document.getElementById('newComputerName').value;
-        const newComputerPrice = parseFloat(document.getElementById('newComputerPrice').value);
-        const newComputerStatus = document.getElementById('newComputerStatus').value;
-        const newId = 'MAY' + String(computers.length + 1).padStart(3, '0');
-        computers.push({
-            id: newId,
-            name: newComputerName,
-            price: newComputerPrice,
-            status: newComputerStatus,
-            customer: '',
-            startTime: null,
-            servicesUsed: []
-        });
-        renderComputers();
+        const name = document.getElementById('newComputerName').value;
+        const price = parseFloat(document.getElementById('newComputerPrice').value);
+        const status = document.getElementById('newComputerStatus').value;
+        const type = document.getElementById('newComputerType').value;
+        computers.push({ id: Date.now(), name, type, price, status, customerId: null, startTime: null });
+        renderComputerTable();
         renderBookingDashboard();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('addComputerModal'));
-        modal.hide();
+        bootstrap.Modal.getInstance(document.getElementById('addComputerModal')).hide();
         document.getElementById('newComputerForm').reset();
     }
 
-    function editComputer(id) {
-        editingComputerId = id;
-        const computer = computers.find(c => c.id === id);
-        if (computer) {
-            document.getElementById('editComputerId').value = computer.id;
-            document.getElementById('editComputerName').value = computer.name;
-            document.getElementById('editComputerPrice').value = computer.price;
-            document.getElementById('editComputerStatus').value = computer.status;
-            const modal = new bootstrap.Modal(document.getElementById('editComputerModal'));
-            modal.show();
-        }
+    function showEditComputerModal(id) {
+        const comp = computers.find(c => c.id === id);
+        if (!comp) return;
+        document.getElementById('editComputerId').value = comp.id;
+        document.getElementById('editComputerName').value = comp.name;
+        document.getElementById('editComputerPrice').value = comp.price;
+        document.getElementById('editComputerType').value = comp.type;
+        document.getElementById('editComputerStatus').value = comp.status;
+        new bootstrap.Modal(document.getElementById('editComputerModal')).show();
     }
 
     function updateComputer(event) {
         event.preventDefault();
-        const computer = computers.find(c => c.id === editingComputerId);
-        if (computer) {
-            computer.name = document.getElementById('editComputerName').value;
-            computer.price = parseFloat(document.getElementById('editComputerPrice').value);
-            computer.status = document.getElementById('editComputerStatus').value;
-            renderComputers();
-            renderBookingDashboard();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editComputerModal'));
-            modal.hide();
+        const id = parseInt(document.getElementById('editComputerId').value);
+        const name = document.getElementById('editComputerName').value;
+        const price = parseFloat(document.getElementById('editComputerPrice').value);
+        const status = document.getElementById('editComputerStatus').value;
+        const type = document.getElementById('editComputerType').value;
+        const computerIndex = computers.findIndex(c => c.id === id);
+        if (computerIndex !== -1) {
+            computers[computerIndex] = { ...computers[computerIndex], name, price, status, type };
         }
+        renderComputerTable();
+        renderBookingDashboard();
+        bootstrap.Modal.getInstance(document.getElementById('editComputerModal')).hide();
     }
 
     function deleteComputer(id) {
-        if (confirm('Bạn có chắc chắn muốn xóa máy tính này không?')) {
+        if (confirm('Bạn có chắc chắn muốn xóa máy tính này?')) {
             computers = computers.filter(c => c.id !== id);
-            renderComputers();
+            renderComputerTable();
             renderBookingDashboard();
         }
     }
 
-    // Service functions
+    // --- Tab Dịch vụ ---
+    function renderServiceList() {
+        const tableBody = document.getElementById('serviceTable');
+        tableBody.innerHTML = '';
+        services.forEach(service => {
+            const statusText = service.status === 'active' ? 'Hoạt động' : 'Ngừng bán';
+            const statusClass = service.status === 'active' ? 'bg-success' : 'bg-danger';
+
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${service.name}</td>
+                    <td>${formatCurrency(service.price)}</td>
+                    <td><span class="badge ${statusClass}">${statusText}</span></td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="showEditServiceModal(${service.id})">Sửa</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteService(${service.id})">Xóa</button>
+                    </td>
+                </tr>
+            `;
+        });
+        renderBookingServices();
+    }
+
+    function renderBookingServices() {
+        const serviceQuantitiesDiv = document.getElementById('serviceQuantities');
+        serviceQuantitiesDiv.innerHTML = '';
+        services.filter(s => s.status === 'active').forEach(service => {
+            serviceQuantitiesDiv.innerHTML += `
+                <div class="d-flex align-items-center mb-2">
+                    <input type="number" class="form-control me-2" value="0" min="0" data-service-id="${service.id}">
+                    <span>${service.name} (${formatCurrency(service.price)})</span>
+                </div>
+            `;
+        });
+    }
+
     function addService(event) {
         event.preventDefault();
-        const newServiceName = document.getElementById('newServiceName').value;
-        const newServicePrice = parseFloat(document.getElementById('newServicePrice').value);
-        const newServiceStatus = document.getElementById('newServiceStatus').value;
-        const newId = 'DV' + String(services.length + 1).padStart(3, '0');
-        services.push({
-            id: newId,
-            name: newServiceName,
-            price: newServicePrice,
-            status: newServiceStatus
-        });
-        renderServices();
-        renderBookingDashboard();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('addServiceModal'));
-        modal.hide();
+        const name = document.getElementById('newServiceName').value;
+        const price = parseFloat(document.getElementById('newServicePrice').value);
+        const status = document.getElementById('newServiceStatus').value;
+        services.push({ id: Date.now(), name, price, status });
+        renderServiceList();
+        bootstrap.Modal.getInstance(document.getElementById('addServiceModal')).hide();
         document.getElementById('newServiceForm').reset();
     }
 
-    function editService(id) {
-        editingServiceId = id;
+    function showEditServiceModal(id) {
         const service = services.find(s => s.id === id);
-        if (service) {
-            document.getElementById('editServiceId').value = service.id;
-            document.getElementById('editServiceName').value = service.name;
-            document.getElementById('editServicePrice').value = service.price;
-            document.getElementById('editServiceStatus').value = service.status;
-            const modal = new bootstrap.Modal(document.getElementById('editServiceModal'));
-            modal.show();
-        }
+        if (!service) return;
+        document.getElementById('editServiceId').value = service.id;
+        document.getElementById('editServiceName').value = service.name;
+        document.getElementById('editServicePrice').value = service.price;
+        document.getElementById('editServiceStatus').value = service.status;
+        new bootstrap.Modal(document.getElementById('editServiceModal')).show();
     }
-
+    
     function updateService(event) {
         event.preventDefault();
-        const service = services.find(s => s.id === editingServiceId);
-        if (service) {
-            service.name = document.getElementById('editServiceName').value;
-            service.price = parseFloat(document.getElementById('editServicePrice').value);
-            service.status = document.getElementById('editServiceStatus').value;
-            renderServices();
-            renderBookingDashboard();
-            const modal = bootstrap.Modal.getInstance(document.getElementById('editServiceModal'));
-            modal.hide();
+        const id = parseInt(document.getElementById('editServiceId').value);
+        const name = document.getElementById('editServiceName').value;
+        const price = parseFloat(document.getElementById('editServicePrice').value);
+        const status = document.getElementById('editServiceStatus').value;
+        const serviceIndex = services.findIndex(s => s.id === id);
+        if (serviceIndex !== -1) {
+            services[serviceIndex] = { id, name, price, status };
         }
+        renderServiceList();
+        bootstrap.Modal.getInstance(document.getElementById('editServiceModal')).hide();
     }
     
     function deleteService(id) {
-        if (confirm('Bạn có chắc chắn muốn xóa dịch vụ này không?')) {
+        if (confirm('Bạn có chắc chắn muốn xóa dịch vụ này?')) {
             services = services.filter(s => s.id !== id);
-            renderServices();
-            renderBookingDashboard();
-        }
-    }
-
-    // History functions
-    function viewTransaction(id) {
-        const transaction = transactions.find(t => t.id === id);
-        if (transaction) {
-            document.getElementById('viewTransactionId').textContent = transaction.id;
-            document.getElementById('viewTransactionCustomer').textContent = transaction.customerName;
-            document.getElementById('viewTransactionPhone').textContent = transaction.phone;
-            document.getElementById('viewTransactionComputer').textContent = transaction.computer;
-            document.getElementById('viewTransactionDate').textContent = transaction.startTime.toLocaleDateString('vi-VN');
-            document.getElementById('viewTransactionTime').textContent = `${transaction.startTime.toLocaleTimeString('vi-VN')} - ${transaction.endTime.toLocaleTimeString('vi-VN')}`;
-            document.getElementById('viewTransactionDuration').textContent = formatDuration(transaction.startTime, transaction.endTime);
-
-            const viewServicesDiv = document.getElementById('viewTransactionServices');
-            viewServicesDiv.innerHTML = '';
-            if (transaction.services && transaction.services.length > 0) {
-                transaction.services.forEach(s => {
-                    const serviceItem = document.createElement('div');
-                    serviceItem.className = 'd-flex justify-content-between';
-                    serviceItem.innerHTML = `<span>${s.name} x${s.quantity}</span><span>${formatCurrency(s.total)}</span>`;
-                    viewServicesDiv.appendChild(serviceItem);
-                });
-            } else {
-                viewServicesDiv.innerHTML = 'Không có dịch vụ';
-            }
-            
-            document.getElementById('viewTransactionSubtotal').textContent = formatCurrency(transaction.subtotal);
-            document.getElementById('viewTransactionPromo').textContent = formatCurrency(transaction.promo);
-            document.getElementById('viewTransactionTotal').textContent = formatCurrency(transaction.total);
-            document.getElementById('viewTransactionPaymentMethod').textContent = transaction.paymentMethod;
-            
-            document.getElementById('printTransactionBtn').onclick = () => {
-                const receiptContent = document.getElementById('receiptModalBody').innerHTML;
-                const printWindow = window.open('', '', 'height=600,width=800');
-                printWindow.document.write('<html><head><title>Hóa đơn</title>');
-                printWindow.document.write('<style>@media print { body { visibility: visible; } .no-print { display: none; } }</style>');
-                printWindow.document.write('</head><body>');
-                printWindow.document.write(receiptContent);
-                printWindow.document.write('</body></html>');
-                printWindow.document.close();
-                printWindow.focus();
-                printWindow.print();
-            };
+            renderServiceList();
         }
     }
     
-    // Game functions
-    function addGame(event) {
-        event.preventDefault();
-        const newGameName = document.getElementById('newGameName').value;
-        const newGameType = document.getElementById('newGameType').value;
-        const newGameCategory = document.getElementById('newGameCategory').value;
-        const newId = (newGameType === 'game' ? 'GAME' : 'SOFT') + String(games.length + 1).padStart(3, '0');
-        games.push({
-            id: newId,
-            name: newGameName,
-            category: newGameCategory,
-            type: newGameType
+    // --- Tab Lịch sử ---
+    function renderHistory() {
+        const tableBody = document.getElementById('historyTable');
+        tableBody.innerHTML = '';
+        history.forEach(item => {
+            tableBody.innerHTML += `
+                <tr>
+                    <td>${item.id}</td>
+                    <td>${item.date}</td>
+                    <td>${item.customerName}</td>
+                    <td>${item.computerName}</td>
+                    <td>${formatCurrency(item.totalAmount)}</td>
+                    <td>${item.paymentMethod}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm text-white" onclick="showHistoryDetails(${item.id})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
         });
-        renderGames();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('addGameModal'));
-        modal.hide();
-        document.getElementById('newGameForm').reset();
-    }
-    
-    function deleteGame(id) {
-        if (confirm('Bạn có chắc chắn muốn xóa game/phần mềm này không?')) {
-            games = games.filter(g => g.id !== id);
-            renderGames();
-        }
-    }
-    
-    // Thêm hàm để cập nhật lại tất cả các tab khi chuyển tab
-    function updateAllTabs() {
-        renderBookingDashboard();
-        renderCustomers();
-        renderComputers();
-        renderServices();
-        renderHistory();
-        renderGames();
-        renderStatistics();
     }
 
-    // Initialize data on page load
-    document.addEventListener('DOMContentLoaded', () => {
-        loadCustomersFromLocalStorage();
-        updateAllTabs();
+    function showHistoryDetails(id) {
+        const item = history.find(h => h.id === id);
+        if (!item) return;
+
+        let detailsHtml = `
+            <p><strong>Chi phí máy:</strong> ${formatCurrency(item.details.computerCost)}</p>
+            <h6>Dịch vụ đã dùng:</h6>
+            <ul>
+                ${item.details.services.map(s => `<li>${s.name} x ${s.quantity} (${formatCurrency(s.price)})</li>`).join('')}
+            </ul>
+        `;
+        alert(detailsHtml.replace(/<[^>]*>/g, '\n'));
+    }
+    
+    // --- Tab Thống kê ---
+    function renderStatistics() {
+        // Cập nhật tổng quan
+        const totalRevenue = history.reduce((sum, item) => sum + item.totalAmount, 0);
+        const totalCustomers = new Set(history.map(item => item.customerName)).size;
+        const activeComputers = computers.filter(c => c.status === 'active').length;
+        document.getElementById('totalRevenue').textContent = formatCurrency(totalRevenue);
+        document.getElementById('totalCustomers').textContent = customers.length;
+        document.getElementById('activeComputers').textContent = `${activeComputers}/${computers.length}`;
+
+        // Doanh thu theo loại máy
+        const revenueByType = { standard: 0, vip: 0 };
+        history.forEach(item => {
+            const computer = computers.find(c => c.name === item.computerName);
+            if (computer) {
+                revenueByType[computer.type] += item.details.computerCost;
+            }
+        });
         
-        // Thêm event listener cho các tab
-        const tabs = document.querySelectorAll('.nav-tabs a');
-        tabs.forEach(tab => {
-            tab.addEventListener('shown.bs.tab', () => {
-                const activeTabId = document.querySelector('.tab-pane.fade.show.active').getAttribute('id');
-                switch (activeTabId) {
-                    case 'booking':
-                        renderBookingDashboard();
-                        break;
-                    case 'customer':
-                        renderCustomers();
-                        break;
-                    case 'computer':
-                        renderComputers();
-                        break;
-                    case 'service':
-                        renderServices();
-                        break;
-                    case 'history':
-                        renderHistory();
-                        break;
-                    case 'statistics':
-                        renderStatistics();
-                        break;
-                    case 'games':
-                        renderGames();
-                        break;
-                }
+        const totalMachineRevenue = revenueByType.standard + revenueByType.vip;
+        const revenueByTypeChart = document.getElementById('revenueByTypeChart');
+        revenueByTypeChart.innerHTML = `
+            <div class="chart-bar" style="height: ${totalMachineRevenue > 0 ? (revenueByType.standard / totalMachineRevenue) * 100 : 0}%">
+                <div class="bar" style="height: 100%;"></div>
+                <div class="bar-label">Thường</div>
+            </div>
+            <div class="chart-bar" style="height: ${totalMachineRevenue > 0 ? (revenueByType.vip / totalMachineRevenue) * 100 : 0}%">
+                <div class="bar bg-warning" style="height: 100%;"></div>
+                <div class="bar-label">VIP</div>
+            </div>
+        `;
+
+        // Dịch vụ phổ biến nhất
+        const serviceCount = {};
+        history.forEach(item => {
+            item.details.services.forEach(s => {
+                serviceCount[s.name] = (serviceCount[s.name] || 0) + s.quantity;
             });
         });
+        const mostPopularService = Object.keys(serviceCount).sort((a, b) => serviceCount[b] - serviceCount[a])[0] || '---';
+        document.getElementById('mostPopularService').textContent = mostPopularService;
+    }
+
+    // --- Khởi tạo khi load trang ---
+    document.addEventListener('DOMContentLoaded', () => {
+        renderBookingDashboard();
+        renderCustomerList();
+        renderComputerTable();
+        renderServiceList();
+        renderHistory();
+        renderStatistics();
+
+        // Sự kiện chuyển tab để cập nhật dữ liệu
+        document.getElementById('history-tab').addEventListener('click', renderHistory);
+        document.getElementById('statistics-tab').addEventListener('click', renderStatistics);
     });
 </script>
-
 </body>
 </html>
