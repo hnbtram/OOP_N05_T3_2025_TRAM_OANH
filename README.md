@@ -43,10 +43,10 @@
 <img src ="picture/máy 1.png">
 
 ##### 3. CRUD_ThanhToan
-<img src ="picture/Crud_ThanhToan.png">
+<img src ="picture/thanhtoan.png"> 
 
 ##### 4. CRUD_DichVu
-<img src ="picture/Crub_ThueMay.png">
+<img src ="picture/thuemay.png"> 
 
 ##### 5. CRUD_ThueMay
 <img src ="picture/Crub_GiaoDich.png">
