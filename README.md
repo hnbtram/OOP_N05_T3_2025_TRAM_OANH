@@ -40,7 +40,7 @@
 <img src = "picture/khách.png">
 
 ##### 2. CRUD_MayTinh
-<img src ="picture/máy 1.png">
+<img src ="picture/máy 1.png">
 
 ##### 3. CRUD_ThanhToan
 <img src ="picture/Crud_ThanhToan.png">
