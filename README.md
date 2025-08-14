@@ -37,7 +37,7 @@
 
 ### Sơ đồ activiy
 ##### 1. CRUD_KhachHang
-<img src = "picture/khách.png">
+<img src = "picture/khách.png">
 
 ##### 2. CRUD_MayTinh
 <img src ="picture/máy 1.png">
