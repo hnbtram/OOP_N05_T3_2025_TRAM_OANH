@@ -43,13 +43,13 @@
 <img src ="picture/máy 1.png">
 
 ##### 3. CRUD_ThanhToan
-<img src ="picture/thanhtoan.png"> 
+<img src ="picture/thanhtoan.jpg"> 
 
 ##### 4. CRUD_DichVu
-<img src ="picture/thuemay.png"> 
+<img src ="picture/dichvu.jpg"> 
 
 ##### 5. CRUD_ThueMay
-<img src ="picture/Crub_GiaoDich.png">
+<img src ="picture/thuemay.jpg">
 
 ## 🚀 Công nghệ sử dụng
 - **Ngôn ngữ**: Java 17
