@@ -33,7 +33,7 @@
 ## 🛠️ Sơ đồ
 
 ### Sơ đồ class diagram
-<img src = "picture/class_diagram.png">
+<img src = "picture/lop.png">
 
 ### Sơ đồ activiy
 ##### 1. CRUD_KhachHang
