@@ -62,6 +62,12 @@
 | 1 | Hoàng Nhật Bảo Trâm | 24100260 | https://github.com/hnbtram | 24100260@st.phenikaa-uni.edu.vn |
 | 2 | Nguyễn Thị Kim Oanh | 24100459 | https://github.com/oanhmau | 24100459@st.phenikaa-uni.edu.vn |
 
+## Liên kết dự án
+- link repo Readme: https://github.com/hnbtram/OOP_N05_T3_2025_TRAM_OANH/blob/main/README.md
+- link codespace: https://fluffy-palm-tree-g47pq566xxxvcv5rx.github.dev/
+- link public: https://fluffy-palm-tree-g47pq566xxxvcv5rx8080.app.github.dev/netOanhTram
+- link Youtube-demo: https://youtu.be/JHfYlQTClxQ
+
 ## 📞 Liên hệ
 - **Giảng viên hướng dẫn**: Nguyễn Lệ Thu
 - **Lớp**: OOP_N05 - Kỳ 3 năm 2025
