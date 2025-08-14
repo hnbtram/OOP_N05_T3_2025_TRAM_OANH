@@ -33,14 +33,14 @@
 ## 🛠️ Sơ đồ
 
 ### Sơ đồ class diagram
-<img src = "picture/class_diagram.png">
+<img src = "picture/lop.png">
 
 ### Sơ đồ activiy
 ##### 1. CRUD_KhachHang
-<img src = "picture/crud_khachhang.png">
+<img src = "picture/khách.png">
 
 ##### 2. CRUD_MayTinh
-<img src ="picture/crud_maytinh.png">
+<img src ="picture/máy 1.png">
 
 ##### 3. CRUD_ThanhToan
 <img src ="picture/Crud_ThanhToan.png">
